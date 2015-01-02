@@ -69,6 +69,7 @@ typedef struct {
 	gchar			*device_path;
 	gchar			*object_path;
 	gchar			*title;
+	gchar			*sibling_id;
 	guint			 assigned_slot;
 	gdouble			 complete;
 	GMutex			 mutex;
@@ -104,6 +105,7 @@ gmw_device_free (GmwDevice *device)
 	g_free (device->device_path);
 	g_free (device->object_path);
 	g_free (device->title);
+	g_free (device->sibling_id);
 	g_object_unref (device->udisks_block);
 	g_free (device);
 }
@@ -146,6 +148,7 @@ gmw_activate_cb (GApplication *application, GmwPrivate *priv)
 static void
 gmw_update_ui (GmwPrivate *priv, guint idx,
 	       const gchar *icon_name,
+	       const gchar *sibling_id,
 	       gdouble progress,
 	       const gchar *status)
 {
@@ -164,6 +167,7 @@ gmw_update_ui (GmwPrivate *priv, guint idx,
 	/* set label */
 	label_str = g_strdup_printf ("label_%02i", idx);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, label_str));
+	gtk_label_set_label (GTK_LABEL (w), sibling_id);
 	gtk_widget_set_visible (w, icon_name != NULL);
 
 	/* set progress */
@@ -200,13 +204,14 @@ gmw_refresh_ui (GmwPrivate *priv)
 	guint i;
 
 	for (i = 0; i < 10; i++)
-		gmw_update_ui (priv, i + 1, NULL, -1.f, NULL);
+		gmw_update_ui (priv, i + 1, NULL, NULL, -1.f, NULL);
 	for (i = 0; i < priv->devices->len; i++) {
 		device = g_ptr_array_index (priv->devices, i);
 		g_mutex_lock (&device->mutex);
 		gmw_update_ui (priv,
 			       device->assigned_slot,
 			       gmw_device_state_to_icon (device->state),
+			       device->sibling_id,
 			       device->complete,
 			       device->title);
 		g_mutex_unlock (&device->mutex);
@@ -951,6 +956,29 @@ gmw_udisks_unmount_filesystems (GmwDevice *device)
 }
 
 /**
+ * gmw_udisks_get_sibling_id:
+ **/
+static gchar *
+gmw_udisks_get_sibling_id (UDisksDrive *udisks_drive)
+{
+	const gchar *sibling_id;
+	guint len;
+	_cleanup_strv_free_ gchar **split = NULL;
+
+	/* get the sibling ID, which is normally the USB path */
+	sibling_id = udisks_drive_get_sibling_id (udisks_drive);
+	if (sibling_id == NULL || sibling_id[0] == '\0')
+		return g_strdup ("???");
+	split = g_strsplit (sibling_id, "/", -1);
+
+	/* split up and get the second to last element */
+	len = g_strv_length (split);
+	if (len < 3)
+		return g_strdup ("/???");
+	return g_strdup (split[len -2]);
+}
+
+/**
  * gmw_udisks_object_add:
  **/
 static void
@@ -965,6 +993,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	_cleanup_object_unref_ GDBusInterface *iface_fs = NULL;
 	_cleanup_object_unref_ GDBusInterface *iface_part = NULL;
 	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
+	_cleanup_object_unref_ UDisksDrive *udisks_drive = NULL;
 	_cleanup_object_unref_ UDisksObjectInfo *object_info = NULL;
 	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
 
@@ -1006,6 +1035,13 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 		return;
 	}
 
+	/* get the drive */
+	udisks_drive = udisks_client_get_drive_for_block (priv->udisks_client, udisks_block);
+	if (udisks_drive == NULL) {
+		g_debug ("%s has no drive", device_path);
+		return;
+	}
+
 	/* add this */
 	object_info = udisks_client_get_object_info (priv->udisks_client, udisks_object);
 	device = g_new0 (GmwDevice, 1);
@@ -1016,6 +1052,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->udisks_block = g_object_ref (udisks_block);
 	device->state = GMW_DEVICE_STATE_STARTUP;
 	device->title = g_strdup (device->device_name);
+	device->sibling_id = gmw_udisks_get_sibling_id (udisks_drive);
 	device->is_valid = FALSE;
 	device->complete = -1.f;
 	g_mutex_init (&device->mutex);
