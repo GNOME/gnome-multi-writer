@@ -1151,7 +1151,7 @@ main (int argc, char **argv)
 			  G_CALLBACK (gmw_activate_cb), priv);
 	/* set verbose? */
 	if (verbose)
-		g_setenv ("G_MESSAGES_DEBUG", "ChClient", FALSE);
+		g_setenv ("G_MESSAGES_DEBUG", "GnomeMultiWriter", FALSE);
 
 	/* wait */
 	status = g_application_run (G_APPLICATION (priv->application), argc, argv);
