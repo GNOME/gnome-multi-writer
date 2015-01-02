@@ -216,6 +216,10 @@ gmw_refresh_ui (GmwPrivate *priv)
 	gtk_widget_set_visible (w, priv->threads_running > 0);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_start"));
 	gtk_widget_set_visible (w, priv->threads_running == 0 && priv->devices->len > 0);
+
+	/* set stack */
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "stack_main"));
+	gtk_stack_set_visible_child_name (GTK_STACK (w), priv->devices->len > 0 ? "status" : "usb");
 }
 
 /**
@@ -858,6 +862,16 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
 	g_signal_connect (w, "clicked",
 			  G_CALLBACK (gmw_cancel_cb), priv);
+
+	/* setup USB image */
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_usb"));
+	pixbuf = gdk_pixbuf_new_from_resource_at_scale ("/org/gnome/MultiWriter/usb.svg",
+							-1, 48, TRUE, &error);
+	if (pixbuf == NULL) {
+		g_warning ("failed to load usb.svg: %s", error->message);
+		return;
+	}
+	gtk_image_set_from_pixbuf (GTK_IMAGE (w), pixbuf);
 
 	/* get previously loaded image */
 	filename = g_settings_get_string (priv->settings, "filename");

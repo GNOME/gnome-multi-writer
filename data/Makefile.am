@@ -14,10 +14,14 @@ UI_FILES =						\
 	gmw-main.ui					\
 	gmw-menus.ui
 
+SVG_FILES =						\
+	usb.svg
+
 EXTRA_DIST =						\
-	$(gsettings_SCHEMAS)				\
 	$(desktop_in_files)				\
+	$(gsettings_SCHEMAS)				\
 	$(pkgdata_DATA)					\
+	$(SVG_FILES)					\
 	$(UI_FILES)
 
 clean-local :
