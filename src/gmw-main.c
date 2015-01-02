@@ -995,8 +995,13 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 
 	/* ignore small or large devices */
 	device_size = udisks_block_get_size (udisks_block) / (1000 * 1000);
-	if (device_size < 1000 || device_size > 1000 * 16) {
+	if (device_size < 1000) {
 		g_debug ("%s is too small [%u]",
+			 device_path, (guint) device_size);
+		return;
+	}
+	if (device_size > 1000 * 16) {
+		g_debug ("%s is too large [%u]",
 			 device_path, (guint) device_size);
 		return;
 	}
