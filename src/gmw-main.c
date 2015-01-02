@@ -70,6 +70,7 @@ typedef struct {
 	gchar			*title;
 	guint			 assigned_slot;
 	gdouble			 complete;
+	GMutex			 mutex;
 } GmwDevice;
 
 /**
@@ -97,6 +98,7 @@ gmw_device_state_to_icon (GmwDeviceState device_state)
 static void
 gmw_device_free (GmwDevice *device)
 {
+	g_mutex_clear (&device->mutex);
 	g_free (device->device_name);
 	g_free (device->device_path);
 	g_free (device->object_path);
@@ -200,11 +202,13 @@ gmw_refresh_ui (GmwPrivate *priv)
 		gmw_update_ui (priv, i + 1, NULL, -1.f, NULL);
 	for (i = 0; i < priv->devices->len; i++) {
 		device = g_ptr_array_index (priv->devices, i);
+		g_mutex_lock (&device->mutex);
 		gmw_update_ui (priv,
 			       device->assigned_slot,
 			       gmw_device_state_to_icon (device->state),
 			       device->complete,
 			       device->title);
+		g_mutex_unlock (&device->mutex);
 	}
 
 	/* update buttons */
@@ -233,11 +237,13 @@ gmw_device_set_state (GmwDevice *device,
 		      GmwDeviceState device_state,
 		      const gchar *title)
 {
+	g_mutex_lock (&device->mutex);
 	g_free (device->title);
 	device->state = device_state;
 	device->title = g_strdup (title);
 	if (device_state == GMW_DEVICE_STATE_FAILED)
 		device->is_valid = FALSE;
+	g_mutex_unlock (&device->mutex);
 	g_idle_add (gmw_refresh_in_idle_cb, device->priv);
 }
 
@@ -982,6 +988,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->title = g_strdup (device->device_name);
 	device->is_valid = FALSE;
 	device->complete = -1.f;
+	g_mutex_init (&device->mutex);
 
 	/* find next available slot */
 	for (i = 0; i < 10; i++) {
