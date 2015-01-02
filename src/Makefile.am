@@ -13,6 +13,7 @@ bin_PROGRAMS =						\
 	gnome-multi-writer
 
 gnome_multi_writer_LDADD =				\
+	$(CANBERRA_LIBS)				\
 	$(GLIB_LIBS)					\
 	$(GTK_LIBS)					\
 	$(GUSB_LIBS)					\

@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <canberra-gtk.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
 #include <gio/gunixoutputstream.h>
@@ -273,6 +274,13 @@ gmw_copy_done (GmwPrivate *priv)
 					      GMW_DEVICE_STATE_SUCCESS,
 					      _("Image written successfully"));
 		}
+
+		/* play sound */
+		ca_context_play (ca_gtk_context_get (), 0,
+				 CA_PROP_EVENT_ID, "complete",
+				 CA_PROP_APPLICATION_NAME, _("GNOME MultiWriter"),
+				 CA_PROP_EVENT_DESCRIPTION, _("Image written successfully"),
+				 NULL);
 	}
 
 	g_mutex_unlock (&priv->mutex_shared);
