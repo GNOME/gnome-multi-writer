@@ -269,7 +269,6 @@ gmw_copy_done (GmwPrivate *priv)
 					      GMW_DEVICE_STATE_SUCCESS,
 					      _("Image written successfully"));
 		}
-		gmw_refresh_ui (priv);
 	}
 
 	g_mutex_unlock (&priv->mutex_shared);
