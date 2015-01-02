@@ -319,6 +319,8 @@ gmw_device_write (GmwDevice *device,
 						      &fd_list,
 						      priv->cancellable,
 						      error)) {
+		if (error != NULL)
+			g_dbus_error_strip_remote_error (*error);
 		goto out;
 	}
 	fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), error);
@@ -440,6 +442,8 @@ gmw_device_verify (GmwDevice *device,
 						     &fd_list,
 						     priv->cancellable,
 						     error)) {
+		if (error != NULL)
+			g_dbus_error_strip_remote_error (*error);
 		goto out;
 	}
 	fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), error);
