@@ -11,6 +11,7 @@
         <property name="can_focus">False</property>
         <property name="halign">center</property>
         <property name="valign">start</property>
+        <property name="margin_top">6</property>
         <property name="hexpand">False</property>
         <property name="border_width">12</property>
         <property name="row_spacing">12</property>
@@ -137,11 +138,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image01">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -151,11 +150,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image02">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -165,11 +162,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image03">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -179,11 +174,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image04">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -193,11 +186,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image05">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -207,11 +198,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image06">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -221,11 +210,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image07">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -235,11 +222,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image08">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -249,11 +234,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image09">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -263,11 +246,9 @@
         </child>
         <child>
           <object class="GtkImage" id="image10">
-            <property name="width_request">48</property>
-            <property name="height_request">48</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-dialog-error</property>
+            <property name="icon_name">drive-harddisk-usb</property>
             <property name="icon_size">6</property>
           </object>
           <packing>
@@ -284,7 +265,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">0</property>
           </packing>
         </child>
@@ -297,7 +278,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">1</property>
           </packing>
         </child>
@@ -310,7 +291,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">2</property>
           </packing>
         </child>
@@ -323,7 +304,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">3</property>
           </packing>
         </child>
@@ -336,7 +317,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">4</property>
           </packing>
         </child>
@@ -349,7 +330,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">5</property>
           </packing>
         </child>
@@ -362,7 +343,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">6</property>
           </packing>
         </child>
@@ -375,7 +356,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">7</property>
           </packing>
         </child>
@@ -388,7 +369,7 @@
             <property name="xalign">0</property>
           </object>
           <packing>
-            <property name="left_attach">2</property>
+            <property name="left_attach">3</property>
             <property name="top_attach">8</property>
           </packing>
         </child>
@@ -399,6 +380,117 @@
             <property name="label">Failed to copy</property>
             <property name="width_chars">20</property>
             <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">9</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar01">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+            <property name="fraction">0.5</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar02">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar03">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar04">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar05">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar06">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar07">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar08">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar09">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">8</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar10">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">center</property>
           </object>
           <packing>
             <property name="left_attach">2</property>

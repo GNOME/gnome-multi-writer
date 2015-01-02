@@ -37,8 +37,8 @@
 typedef struct {
 	GFile			*image_file;
 	guint64			 image_file_size;
-	GMutex			 mutex_noname;
-	GPtrArray		*block_devices;
+	GMutex			 mutex_shared;
+	GPtrArray		*devices;
 	GSettings		*settings;
 	GtkApplication		*application;
 	GtkBuilder		*builder;
@@ -46,6 +46,7 @@ typedef struct {
 	GUsbContext		*usb_ctx;
 	UDisksClient		*udisks_client;
 	guint			 threads_running;
+	gboolean		 done_polkit_auth;
 } GmwPrivate;
 
 typedef enum {
@@ -68,6 +69,7 @@ typedef struct {
 	gchar			*object_path;
 	gchar			*title;
 	guint			 assigned_slot;
+	gdouble			 complete;
 } GmwDevice;
 
 /**
@@ -79,9 +81,9 @@ gmw_device_state_to_icon (GmwDeviceState device_state)
 	if (device_state == GMW_DEVICE_STATE_STARTUP)
 		return "drive-harddisk-usb";
 	if (device_state == GMW_DEVICE_STATE_WRITE)
-		return "edit-undo";
+		return "drive-harddisk-usb";
 	if (device_state == GMW_DEVICE_STATE_VERIFY)
-		return "edit-redo";
+		return "drive-harddisk-usb";
 	if (device_state == GMW_DEVICE_STATE_SUCCESS)
 		return "emblem-default";
 	if (device_state == GMW_DEVICE_STATE_FAILED)
@@ -103,14 +105,11 @@ gmw_device_free (GmwDevice *device)
 	g_free (device);
 }
 
-#if 0
 /**
  * gmw_error_dialog:
  **/
 static void
-gmw_error_dialog (GmwPrivate *priv,
-			      const gchar *title,
-			      const gchar *message)
+gmw_error_dialog (GmwPrivate *priv, const gchar *title, const gchar *message)
 {
 	GtkWindow *window;
 	GtkWidget *dialog;
@@ -126,7 +125,6 @@ gmw_error_dialog (GmwPrivate *priv,
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
 }
-#endif
 
 /**
  * gmw_activate_cb:
@@ -144,17 +142,20 @@ gmw_activate_cb (GApplication *application, GmwPrivate *priv)
  **/
 static void
 gmw_update_ui (GmwPrivate *priv, guint idx,
-	       const gchar *icon_name, const gchar *status)
+	       const gchar *icon_name,
+	       gdouble progress,
+	       const gchar *status)
 {
 	GtkWidget *w;
 	_cleanup_free_ gchar *img_str = NULL;
 	_cleanup_free_ gchar *label_status_str = NULL;
 	_cleanup_free_ gchar *label_str = NULL;
+	_cleanup_free_ gchar *progress_str = NULL;
 
 	/* set image */
 	img_str = g_strdup_printf ("image%02i", idx);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, img_str));
-	gtk_image_set_from_icon_name (GTK_IMAGE (w), icon_name, GTK_ICON_SIZE_DIALOG);
+	gtk_image_set_from_icon_name (GTK_IMAGE (w), icon_name, GTK_ICON_SIZE_BUTTON);
 	gtk_widget_set_visible (w, icon_name != NULL);
 
 	/* set label */
@@ -162,24 +163,18 @@ gmw_update_ui (GmwPrivate *priv, guint idx,
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, label_str));
 	gtk_widget_set_visible (w, icon_name != NULL);
 
+	/* set progress */
+	progress_str = g_strdup_printf ("progressbar%02i", idx);
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, progress_str));
+	gtk_widget_set_visible (w, progress > 0.f);
+	if (progress > 0.f)
+		gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w), progress);
+
 	/* set status string */
 	label_status_str = g_strdup_printf ("label_status_%02i", idx);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, label_status_str));
 	gtk_label_set_label (GTK_LABEL (w), status);
 	gtk_widget_set_visible (w, label_status_str != NULL);
-}
-
-/**
- * gmw_update_cancel_buttons:
- **/
-static void
-gmw_update_cancel_buttons (GmwPrivate *priv, gboolean in_progress)
-{
-	GtkWidget *w;
-	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
-	gtk_widget_set_visible (w, in_progress);
-	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_start"));
-	gtk_widget_set_visible (w, !in_progress);
 }
 
 /**
@@ -198,17 +193,25 @@ static void
 gmw_refresh_ui (GmwPrivate *priv)
 {
 	GmwDevice *device;
+	GtkWidget *w;
 	guint i;
 
 	for (i = 0; i < 10; i++)
-		gmw_update_ui (priv, i + 1, NULL, NULL);
-	for (i = 0; i < priv->block_devices->len; i++) {
-		device = g_ptr_array_index (priv->block_devices, i);
+		gmw_update_ui (priv, i + 1, NULL, -1.f, NULL);
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
 		gmw_update_ui (priv,
 			       device->assigned_slot,
 			       gmw_device_state_to_icon (device->state),
+			       device->complete,
 			       device->title);
 	}
+
+	/* update buttons */
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
+	gtk_widget_set_visible (w, priv->threads_running > 0);
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_start"));
+	gtk_widget_set_visible (w, priv->threads_running == 0 && priv->devices->len > 0);
 }
 
 /**
@@ -247,22 +250,23 @@ gmw_copy_done (GmwPrivate *priv)
 	GmwDevice *device;
 	guint i;
 
-	g_mutex_lock (&priv->mutex_noname);
+	g_mutex_lock (&priv->mutex_shared);
 
 	if (--priv->threads_running == 0) {
 		g_debug ("all done!");
-		for (i = 0; i < priv->block_devices->len; i++) {
-			device = g_ptr_array_index (priv->block_devices, i);
+		for (i = 0; i < priv->devices->len; i++) {
+			device = g_ptr_array_index (priv->devices, i);
+			device->complete = -1.f;
 			if (!device->is_valid)
 				continue;
 			gmw_device_set_state (device,
 					      GMW_DEVICE_STATE_SUCCESS,
-					      "Image written successfully");
+					      _("Image written successfully"));
 		}
-		gmw_update_cancel_buttons (priv, FALSE);
+		gmw_refresh_ui (priv);
 	}
 
-	g_mutex_unlock (&priv->mutex_noname);
+	g_mutex_unlock (&priv->mutex_shared);
 }
 
 /**
@@ -323,7 +327,6 @@ gmw_device_write (GmwDevice *device,
 		gsize bytes_to_read;
 		gsize bytes_read;
 		gssize bytes_written;
-		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
 		if (bytes_to_read + bytes_completed > priv->image_file_size)
@@ -338,8 +341,10 @@ gmw_device_write (GmwDevice *device,
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
 					     G_IO_ERROR_CANCELLED)) {
-				g_propagate_error (error, error_local);
-				error_local = NULL;
+				g_set_error_literal (error,
+						     G_IO_ERROR,
+						     G_IO_ERROR_CANCELLED,
+						     _("Cancelled"));
 				goto out;
 			}
 			g_set_error (error, 1, 0,
@@ -368,26 +373,22 @@ gmw_device_write (GmwDevice *device,
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
 					     G_IO_ERROR_CANCELLED)) {
-				g_propagate_error (error, error_local);
-				error_local = NULL;
+				g_set_error_literal (error,
+						     G_IO_ERROR,
+						     G_IO_ERROR_CANCELLED,
+						     _("Cancelled"));
 				goto out;
 			}
-			g_set_error (error, 1, 0,
-				     "Error writing %" G_GSIZE_FORMAT
-				     " bytes to %" G_GUINT64_FORMAT ": %s",
-				     bytes_read,
-				     bytes_completed,
-				     error_local->message);
+			g_set_error_literal (error, 1, 0, error_local->message);
 			goto out;
 		}
 		bytes_completed += bytes_written;
 
 		/* update UI */
-		title = g_strdup_printf ("Writing image... %" G_GUINT64_FORMAT "%%",
-					 bytes_completed * 100 / priv->image_file_size);
+		device->complete = (gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size);
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_WRITE,
-				      title);
+				      _("Writing image…"));
 	}
 
 	/* success */
@@ -435,7 +436,6 @@ gmw_device_verify (GmwDevice *device,
 						     error)) {
 		goto out;
 	}
-
 	fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), error);
 	if (fd == -1)
 		goto out;
@@ -448,7 +448,6 @@ gmw_device_verify (GmwDevice *device,
 	while (bytes_completed < priv->image_file_size) {
 		gsize bytes_to_read;
 		gsize bytes_read;
-		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
 		if (bytes_to_read + bytes_completed > priv->image_file_size)
@@ -464,8 +463,10 @@ gmw_device_verify (GmwDevice *device,
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
 					     G_IO_ERROR_CANCELLED)) {
-				g_propagate_error (error, error_local);
-				error_local = NULL;
+				g_set_error_literal (error,
+						     G_IO_ERROR,
+						     G_IO_ERROR_CANCELLED,
+						     _("Cancelled"));
 				goto out;
 			}
 			g_set_error (error, 1, 0,
@@ -496,8 +497,10 @@ gmw_device_verify (GmwDevice *device,
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
 					     G_IO_ERROR_CANCELLED)) {
-				g_propagate_error (error, error_local);
-				error_local = NULL;
+				g_set_error_literal (error,
+						     G_IO_ERROR,
+						     G_IO_ERROR_CANCELLED,
+						     _("Cancelled"));
 				goto out;
 			}
 			g_set_error (error, 1, 0,
@@ -529,11 +532,10 @@ gmw_device_verify (GmwDevice *device,
 		bytes_completed += bytes_read;
 
 		/* update UI */
-		title = g_strdup_printf ("Verifying image... %" G_GUINT64_FORMAT "%%",
-					 bytes_completed * 100 / priv->image_file_size);
+		device->complete = 0.5f + ((gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size));
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_VERIFY,
-				      title);
+				      _("Verifying image…"));
 	}
 
 	/* success */
@@ -622,7 +624,7 @@ gmw_set_image_filename (GmwPrivate *priv, const gchar *filename)
 				  NULL,
 				  &error);
 	if (info == NULL) {
-		g_warning ("Failed to open file: %s", error->message);
+		gmw_error_dialog (priv, _("Failed to open"), error->message);
 		return;
 	}
 	priv->image_file_size = g_file_info_get_size (info);
@@ -663,6 +665,38 @@ gmw_import_filename (GmwPrivate *priv)
 }
 
 /**
+ * gmw_auth_dummy_restore:
+ **/
+static gboolean
+gmw_auth_dummy_restore (GmwDevice *device, GError **error)
+{
+	gboolean ret = FALSE;
+	gint fd = -1;
+	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
+	_cleanup_variant_unref_ GVariant *fd_index = NULL;
+
+	if (!udisks_block_call_open_for_restore_sync (device->udisks_block,
+						      g_variant_new ("a{sv}", NULL), /* options */
+						      NULL, /* fd_list */
+						      &fd_index,
+						      &fd_list,
+						      device->priv->cancellable,
+						      error)) {
+		goto out;
+	}
+	fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), error);
+	if (fd == -1)
+		goto out;
+
+	/* success */
+	ret = TRUE;
+out:
+	if (fd != -1)
+		g_close (fd, NULL);
+	return ret;
+}
+
+/**
  * gmw_start_button_cb:
  **/
 static void
@@ -670,6 +704,7 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 {
 	GmwDevice *device;
 	guint i;
+	_cleanup_error_free_ GError *error = NULL;
 
 	/* if nothing already set, request this now */
 	if (priv->image_file == NULL)
@@ -678,11 +713,25 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 		return;
 
 	g_cancellable_reset (priv->cancellable);
-	gmw_update_cancel_buttons (priv, TRUE);
-	priv->threads_running = priv->block_devices->len;
-	for (i = 0; i < priv->block_devices->len; i++) {
+
+	/* do a dummy call to get the PolicyKit auth */
+	if (!priv->done_polkit_auth) {
+		device = g_ptr_array_index (priv->devices, 0);
+		if (!gmw_auth_dummy_restore (device, &error)) {
+			gmw_error_dialog (device->priv,
+					  _("Failed to copy"),
+					  error->message);
+			return;
+		}
+		priv->done_polkit_auth = TRUE;
+	}
+
+	/* start a thread for each copy operation */
+	priv->threads_running = priv->devices->len;
+	gmw_refresh_ui (priv);
+	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *title = NULL;
-		device = g_ptr_array_index (priv->block_devices, i);
+		device = g_ptr_array_index (priv->devices, i);
 		device->is_valid = TRUE;
 		title = g_strdup_printf ("copy-thread-%i", i);
 		g_thread_new (title, gmw_copy_thread_cb, device);
@@ -810,8 +859,6 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	gmw_update_title (priv);
 	gmw_refresh_ui (priv);
 	gtk_widget_show (main_window);
-
-	gmw_update_cancel_buttons (priv, FALSE);
 }
 
 /**
@@ -823,8 +870,8 @@ gmw_get_device_by_slot (GmwPrivate *priv, guint slot)
 	GmwDevice *device;
 	guint i;
 
-	for (i = 0; i < priv->block_devices->len; i++) {
-		device = g_ptr_array_index (priv->block_devices, i);
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
 		if (device->assigned_slot == slot)
 			return device;
 	}
@@ -932,8 +979,9 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->object_path = g_strdup (object_path);
 	device->udisks_block = g_object_ref (udisks_block);
 	device->state = GMW_DEVICE_STATE_STARTUP;
-	device->title = g_strdup_printf ("Found device: %s", device->device_name);
-	device->is_valid = TRUE;
+	device->title = g_strdup (device->device_name);
+	device->is_valid = FALSE;
+	device->complete = -1.f;
 
 	/* find next available slot */
 	for (i = 0; i < 10; i++) {
@@ -946,7 +994,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	/* unmount filesystems on the block device */
 	gmw_udisks_unmount_filesystems (device);
 
-	g_ptr_array_add (priv->block_devices, device);
+	g_ptr_array_add (priv->devices, device);
 	g_debug ("Added %s [%lu]", device_path, device_size);
 }
 
@@ -976,10 +1024,10 @@ gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 
 	/* remove device */
 	tmp = g_dbus_object_get_object_path (dbus_object);
-	for (i = 0; i < priv->block_devices->len; i++) {
-		device = g_ptr_array_index (priv->block_devices, i);
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
 		if (g_strcmp0 (device->object_path, tmp) == 0) {
-			g_ptr_array_remove (priv->block_devices, device);
+			g_ptr_array_remove (priv->devices, device);
 			gmw_refresh_ui (priv);
 			break;
 		}
@@ -1054,10 +1102,10 @@ main (int argc, char **argv)
 	g_option_context_free (context);
 
 	priv = g_new0 (GmwPrivate, 1);
-	g_mutex_init (&priv->mutex_noname);
+	g_mutex_init (&priv->mutex_shared);
 	priv->cancellable = g_cancellable_new ();
 	priv->settings = g_settings_new ("org.gnome.MultiWriter");
-	priv->block_devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
+	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
 	priv->usb_ctx = g_usb_context_new (NULL);
 
 	/* connect to UDisks */
@@ -1089,8 +1137,8 @@ main (int argc, char **argv)
 		g_object_unref (priv->image_file);
 	if (priv->cancellable != NULL)
 		g_object_unref (priv->cancellable);
-	g_mutex_clear (&priv->mutex_noname);
-	g_ptr_array_unref (priv->block_devices);
+	g_mutex_clear (&priv->mutex_shared);
+	g_ptr_array_unref (priv->devices);
 	g_free (priv);
 	return status;
 }
