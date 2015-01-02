@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <menu id="app-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Import ISO file…</attribute>
+        <attribute name="action">app.import</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_About</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="action">app.quit</attribute>
+        <attribute name="accel"><![CDATA[<Ctrl>Q]]></attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

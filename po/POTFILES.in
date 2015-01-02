@@ -1,0 +1,7 @@
+[encoding: UTF-8]
+[type: gettext/glade]data/gmw-main.ui
+[type: gettext/glade]data/gmw-menus.ui
+data/appdata/org.gnome.MultiWriter.appdata.xml.in
+data/org.gnome.MultiWriter.gschema.xml
+data/org.gnome.MultiWriter.desktop.in
+src/gmw-main.c

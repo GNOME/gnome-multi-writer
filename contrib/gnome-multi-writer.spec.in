@@ -1,0 +1,70 @@
+%define alphatag                #ALPHATAG#
+
+Summary:   GNOME MultiWriter
+Name:      gnome-multi-writer
+Version:   #VERSION#
+Release:   0.#BUILD#%{?alphatag}%{?dist}
+License:   GPLv2+
+URL:       http://www.gnome.com/
+Source0:   http://people.freedesktop.org/~hughsient/releases/%{name}-%{version}.tar.xz
+
+BuildRequires: docbook-utils
+BuildRequires: gettext
+BuildRequires: glib2-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: gtk3-devel
+BuildRequires: intltool
+BuildRequires: itstool
+BuildRequires: libcanberra-devel >= 0.10
+BuildRequires: libgusb-devel >= 0.1.4
+BuildRequires: libtool
+BuildRequires: libudisks2-devel
+
+%description
+GNOME MultiWriter can be used to write an ISO file to multiple USB devices at once.
+
+%prep
+%setup -q
+
+%build
+%configure --disable-static
+
+make %{?_smp_mflags} V=1
+
+%install
+make install DESTDIR=$RPM_BUILD_ROOT
+
+find %{buildroot} -type f -name "*.la" -delete
+
+%find_lang %{name}
+
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
+%files
+%doc COPYING
+
+%files -f %{name}.lang
+%doc README AUTHORS NEWS COPYING
+%{_bindir}/gnome-multi-writer
+%{_datadir}/appdata/org.gnome.MultiWriter.appdata.xml
+%{_datadir}/applications/org.gnome.MultiWriter.desktop
+%{_datadir}/glib-2.0/schemas/org.gnome.MultiWriter.gschema.xml
+#%{_datadir}/gnome-multi-writer
+#%dir %{_datadir}/gnome-multi-writer
+%{_mandir}/man1/gnome-multi-writer.1.gz
+
+%changelog
+* #LONGDATE# Richard Hughes <richard@hughsie.com> #VERSION#-0.#BUILD##ALPHATAG#
+- Update from git

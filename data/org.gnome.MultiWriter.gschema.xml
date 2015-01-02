@@ -1,0 +1,9 @@
+<schemalist>
+  <schema id="org.gnome.MultiWriter" path="/org/gnome/MultiWriter/">
+    <key name="filename" type="s">
+      <default>''</default>
+      <summary>The filename to write to the USB disks</summary>
+      <description>The filename of the ISO image to write to the connected USB disks.</description>
+    </key>
+  </schema>
+</schemalist>
