@@ -27,36 +27,31 @@ GNOME MultiWriter can be used to write an ISO file to multiple USB devices at on
 
 %build
 %configure --disable-static
-
 make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-
+%make_install
 find %{buildroot} -type f -name "*.la" -delete
 
 %find_lang %{name}
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ] ; then
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+    /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-%files
-%doc COPYING
+/usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
 %doc README AUTHORS NEWS COPYING
-%{_bindir}/gnome-multi-writer
+%{_bindir}/%{name}
 %{_datadir}/appdata/org.gnome.MultiWriter.appdata.xml
 %{_datadir}/applications/org.gnome.MultiWriter.desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.MultiWriter.gschema.xml
