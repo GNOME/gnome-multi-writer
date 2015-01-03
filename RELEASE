@@ -16,6 +16,15 @@ New Features:
 Bugfixes:
 --------------------------------------------------------------------------------
 
+2. Update translations
+
+cd po
+make gnome-multi-writer.pot
+INTLTOOL_EXTRACT="/usr/bin/intltool-extract" XGETTEXT="/usr/bin/xgettext --no-location" srcdir=. /usr/bin/intltool-update --gettext-package gnome-multi-writer --pot
+tx push --source
+tx pull --all
+git add *.po
+
 3. Commit changes in git:
 
 git commit -a -m "Release version 3.15.1"
