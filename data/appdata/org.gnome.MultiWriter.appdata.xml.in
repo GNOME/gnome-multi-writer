@@ -29,8 +29,16 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image>http://people.freedesktop.org/~hughsient/temp/gmw-startup.png</image>
+      <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-startup.png</image>
       <_caption>Initial screen for the application</_caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-progress.png</image>
+      <_caption>Writing and verifying images</_caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-finished.png</image>
+      <_caption>All devices have been written</_caption>
     </screenshot>
   </screenshots>
   <url type="homepage">https://github.com/hughsie/gnome-multi-writer</url>
