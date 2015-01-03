@@ -657,7 +657,6 @@ gmw_import_filename (GmwPrivate *priv)
 	GtkWidget *d;
 	GtkWidget *w;
 	_cleanup_error_free_ GError *error = NULL;
-	const gchar *filename = NULL;
 	_cleanup_object_unref_ GFile *file = NULL;
 
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
@@ -673,6 +672,7 @@ gmw_import_filename (GmwPrivate *priv)
 	gtk_file_filter_add_pattern (filter, "*.img");
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (d), filter);
 	if (gtk_dialog_run (GTK_DIALOG (d)) == GTK_RESPONSE_ACCEPT) {
+		_cleanup_free_ gchar *filename = NULL;
 		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (d));
 		gmw_set_image_filename (priv, filename);
 		gmw_update_title (priv);
@@ -826,8 +826,8 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	GtkWidget *main_window;
 	GtkWidget *w;
 	gint retval;
-	const gchar *filename;
 	_cleanup_error_free_ GError *error = NULL;
+	_cleanup_free_ gchar *filename = NULL;
 	_cleanup_object_unref_ GdkPixbuf *pixbuf = NULL;
 
 	/* add application menu items */
