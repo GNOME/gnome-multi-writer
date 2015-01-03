@@ -185,11 +185,16 @@ gmw_refresh_ui (GmwPrivate *priv)
 
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
+		_cleanup_free_ gchar *sibling_markup = NULL;
+
 		device = g_ptr_array_index (priv->devices, i);
 		g_mutex_lock (&device->mutex);
 
 		/* add sibling-id */
-		w = gtk_label_new (device->sibling_id);
+		w = gtk_label_new (NULL);
+		sibling_markup = g_strdup_printf ("<tt><small>%s</small></tt>",
+						  device->sibling_id);
+		gtk_label_set_markup (GTK_LABEL (w), sibling_markup);
 		g_object_set (w, "xalign", 1.f, NULL);
 		gtk_grid_attach (GTK_GRID (grid), w, 0, i, 1, 1);
 
