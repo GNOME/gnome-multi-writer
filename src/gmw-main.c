@@ -599,7 +599,7 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 			      GMW_DEVICE_STATE_SUCCESS,
 			      _("Image written successfully"));
 out:
-	g_timeout_add (500, gmw_refresh_in_idle_cb, priv);
+	g_timeout_add_seconds (2, gmw_refresh_in_idle_cb, priv);
 	g_input_stream_close (G_INPUT_STREAM (image_stream), NULL, NULL);
 	gmw_copy_done (priv);
 }
