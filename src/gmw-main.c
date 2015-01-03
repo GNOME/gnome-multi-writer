@@ -29,7 +29,7 @@
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <locale.h>
-#include <math.h>
+#include <stdlib.h>
 #include <udisks/udisks.h>
 
 #include "gmw-cleanup.h"
@@ -1123,10 +1123,10 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 int
 main (int argc, char **argv)
 {
-	GmwPrivate *priv;
+	GmwPrivate *priv = NULL;
 	GOptionContext *context;
 	gboolean verbose = FALSE;
-	int status = 0;
+	int status = EXIT_SUCCESS;
 	_cleanup_error_free_ GError *error = NULL;
 	const GOptionEntry options[] = {
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
@@ -1148,10 +1148,11 @@ main (int argc, char **argv)
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	g_option_context_add_main_entries (context, options, NULL);
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
-		g_warning ("%s: %s", _("Failed to parse command line options"),
-			   error->message);
+		status = EXIT_FAILURE;
+		g_print ("%s: %s\n", _("Failed to parse command line options"),
+			 error->message);
+		goto out;
 	}
-	g_option_context_free (context);
 
 	priv = g_new0 (GmwPrivate, 1);
 	g_mutex_init (&priv->mutex_shared);
@@ -1174,20 +1175,23 @@ main (int argc, char **argv)
 
 	/* wait */
 	status = g_application_run (G_APPLICATION (priv->application), argc, argv);
-
-	g_object_unref (priv->application);
-	if (priv->builder != NULL)
-		g_object_unref (priv->builder);
-	if (priv->settings != NULL)
-		g_object_unref (priv->settings);
-	if (priv->udisks_client != NULL)
-		g_object_unref (priv->udisks_client);
-	if (priv->image_file != NULL)
-		g_object_unref (priv->image_file);
-	if (priv->cancellable != NULL)
-		g_object_unref (priv->cancellable);
-	g_mutex_clear (&priv->mutex_shared);
-	g_ptr_array_unref (priv->devices);
-	g_free (priv);
+out:
+	g_option_context_free (context);
+	if (priv != NULL) {
+		if (priv->builder != NULL)
+			g_object_unref (priv->builder);
+		if (priv->settings != NULL)
+			g_object_unref (priv->settings);
+		if (priv->udisks_client != NULL)
+			g_object_unref (priv->udisks_client);
+		if (priv->image_file != NULL)
+			g_object_unref (priv->image_file);
+		if (priv->cancellable != NULL)
+			g_object_unref (priv->cancellable);
+		g_object_unref (priv->application);
+		g_mutex_clear (&priv->mutex_shared);
+		g_ptr_array_unref (priv->devices);
+		g_free (priv);
+	}
 	return status;
 }
