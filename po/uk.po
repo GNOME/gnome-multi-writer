@@ -1,0 +1,164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Yuri Chornoivan <yurchor@ukr.net>, 2012-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: colorhug-client\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-03 20:03+0000\n"
+"PO-Revision-Date: 2015-01-03 20:51+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/projects/p/colorhug-client/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../data/gmw-menus.ui.h:1
+msgid "Import ISO file…"
+msgstr "Імпортувати файл ISO…"
+
+#: ../data/gmw-menus.ui.h:2
+msgid "_About"
+msgstr "_Про програму"
+
+#: ../data/gmw-menus.ui.h:3
+msgid "_Quit"
+msgstr "Ви_йти"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:1
+#: ../data/org.gnome.MultiWriter.desktop.in.h:1
+msgid "MultiWriter"
+msgstr "MultiWriter"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
+#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:819
+msgid "Write an ISO file to multiple USB devices at once"
+msgstr "Виконує запис файла ISO на декілька пристроїв USB одночасно"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:3
+msgid ""
+"GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
+"at once. Once an .img or .iso file has been chosen it can be written to an "
+"unlimited number of USB devices simultaneously. Supported drive sizes are "
+"between 1Gb and 32Gb."
+msgstr "GNOME MultiWriter можна скористатися для запису файла ISO на декілька пристроїв USB одночасно. Щойно ви вкажете файл .img або .iso, програма зможе виконати його записування на довільну кількість пристроїв USB одночасно. Передбачено підтримку пристроїв розміром від 1 ГБ до 32 ГБ."
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
+msgid ""
+"MultiWriter was originally written as part of the ColorHug project but was "
+"split off as an independent application in 2015."
+msgstr "Початкову версію MultiWriter було створено як частину проекту ColorHug, а потім відокремлено у 2015 році."
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:5
+msgid "People have used MultiWriter in a few different ways:"
+msgstr "MultiWriter можна скористатися для виконання декількох різних завдань:"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:6
+msgid "To copy a specific ISO for QA testing for a small number of users"
+msgstr "Для запису певного образу ISO для тестування невеликою групою користувачів"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:7
+msgid "To create a GNOME LiveCD of Fedora Rawhide for a code sprint"
+msgstr "Для створення образу портативної системи з GNOME Fedora Rawhide для зустрічі програмістів"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:8
+msgid "To create hundreds of LiveUSB drives for the ColorHug project"
+msgstr "Для створення сотень носіїв портативної системи для проекту ColorHug"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:9
+msgid "Initial screen for the application"
+msgstr "Початкове вікно програми"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:10
+msgid "Writing and verifying images"
+msgstr "Запис і перевірка образів"
+
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
+msgid "All devices have been written"
+msgstr "Запис виконано на усі пристрої"
+
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:1
+msgid "The filename to write to the USB disks"
+msgstr "Назва файла, який слід записати на диски USB"
+
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:2
+msgid "The filename of the ISO image to write to the connected USB disks."
+msgstr "Назва файла образу ISO, який слід записати на з’єднані диски USB."
+
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:3
+msgid "The maximum number of threads to use"
+msgstr "Максимальна кількість потоків обробки"
+
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:4
+msgid "The maximum number of parallel threads to use when copying data."
+msgstr "Максимальна кількість потоків паралельної обробки під час копіювання даних."
+
+#: ../data/org.gnome.MultiWriter.desktop.in.h:3
+msgid "Image;Writer;ISO;USB;"
+msgstr "Image;Writer;ISO;USB;образ;запис;ісо;юсбі;"
+
+#. TRANSLATORS: this is the application name
+#. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: ../src/gmw-main.c:295 ../src/gmw-main.c:817 ../src/gmw-main.c:1155
+msgid "GNOME MultiWriter"
+msgstr "GNOME MultiWriter"
+
+#: ../src/gmw-main.c:296 ../src/gmw-main.c:625
+msgid "Image written successfully"
+msgstr "Образ успішно записано"
+
+#: ../src/gmw-main.c:379 ../src/gmw-main.c:411 ../src/gmw-main.c:504
+#: ../src/gmw-main.c:538
+msgid "Cancelled"
+msgstr "Скасовано"
+
+#: ../src/gmw-main.c:423
+msgid "Writing image…"
+msgstr "Записуємо образ…"
+
+#: ../src/gmw-main.c:573
+msgid "Verifying image…"
+msgstr "Перевіряємо образ…"
+
+#: ../src/gmw-main.c:670
+msgid "Failed to open"
+msgstr "Не вдалося відкрити"
+
+#: ../src/gmw-main.c:689
+msgid "Choose image to write"
+msgstr "Виберіть образ для запису"
+
+#: ../src/gmw-main.c:692
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: ../src/gmw-main.c:693
+msgid "Import"
+msgstr "Імпортувати"
+
+#: ../src/gmw-main.c:765
+msgid "Failed to copy"
+msgstr "Не вдалося скопіювати"
+
+#. TRANSLATORS: this is the title of the about window
+#: ../src/gmw-main.c:815
+msgid "About GNOME MultiWriter"
+msgstr "Про GNOME MultiWriter"
+
+#: ../src/gmw-main.c:823
+msgid "translator-credits"
+msgstr "Юрій Чорноіван <yurchor@ukr.net>"
+
+#. TRANSLATORS: command line option
+#: ../src/gmw-main.c:1142
+msgid "Show extra debugging information"
+msgstr "Показувати додаткові дані для усування вад"
+
+#: ../src/gmw-main.c:1160
+msgid "Failed to parse command line options"
+msgstr "Не вдалося обробити параметри командного рядка"

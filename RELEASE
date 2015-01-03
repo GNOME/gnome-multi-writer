@@ -22,7 +22,7 @@ cd po
 make gnome-multi-writer.pot
 INTLTOOL_EXTRACT="/usr/bin/intltool-extract" XGETTEXT="/usr/bin/xgettext --no-location" srcdir=. /usr/bin/intltool-update --gettext-package gnome-multi-writer --pot
 tx push --source
-tx pull --all
+tx pull --all --minimum-perc=20
 git add *.po
 
 3. Commit changes in git:
