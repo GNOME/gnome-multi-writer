@@ -70,7 +70,6 @@ typedef struct {
 	gchar			*object_path;
 	gchar			*title;
 	gchar			*sibling_id;
-	guint			 assigned_slot;
 	gdouble			 complete;
 	GMutex			 mutex;
 } GmwDevice;
@@ -143,48 +142,6 @@ gmw_activate_cb (GApplication *application, GmwPrivate *priv)
 }
 
 /**
- * gmw_update_ui:
- **/
-static void
-gmw_update_ui (GmwPrivate *priv, guint idx,
-	       const gchar *icon_name,
-	       const gchar *sibling_id,
-	       gdouble progress,
-	       const gchar *status)
-{
-	GtkWidget *w;
-	_cleanup_free_ gchar *img_str = NULL;
-	_cleanup_free_ gchar *label_status_str = NULL;
-	_cleanup_free_ gchar *label_str = NULL;
-	_cleanup_free_ gchar *progress_str = NULL;
-
-	/* set image */
-	img_str = g_strdup_printf ("image%02i", idx);
-	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, img_str));
-	gtk_image_set_from_icon_name (GTK_IMAGE (w), icon_name, GTK_ICON_SIZE_BUTTON);
-	gtk_widget_set_visible (w, icon_name != NULL);
-
-	/* set label */
-	label_str = g_strdup_printf ("label_%02i", idx);
-	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, label_str));
-	gtk_label_set_label (GTK_LABEL (w), sibling_id);
-	gtk_widget_set_visible (w, icon_name != NULL);
-
-	/* set progress */
-	progress_str = g_strdup_printf ("progressbar%02i", idx);
-	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, progress_str));
-	gtk_widget_set_visible (w, progress > 0.f);
-	if (progress > 0.f)
-		gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w), progress);
-
-	/* set status string */
-	label_status_str = g_strdup_printf ("label_status_%02i", idx);
-	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, label_status_str));
-	gtk_label_set_label (GTK_LABEL (w), status);
-	gtk_widget_set_visible (w, label_status_str != NULL);
-}
-
-/**
  * gmw_cancel_cb:
  **/
 static void
@@ -194,28 +151,77 @@ gmw_cancel_cb (GtkWidget *widget, GmwPrivate *priv)
 }
 
 /**
+ * gmw_devices_sort_cb:
+ **/
+static gint
+gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
+{
+	GmwDevice *device_a = *((GmwDevice **) a);
+	GmwDevice *device_b = *((GmwDevice **) b);
+	return g_strcmp0 (device_a->sibling_id, device_b->sibling_id);
+}
+
+/**
  * gmw_refresh_ui:
  **/
 static void
 gmw_refresh_ui (GmwPrivate *priv)
 {
+	GList *l;
 	GmwDevice *device;
+	GtkWidget *grid;
 	GtkWidget *w;
 	guint i;
+	_cleanup_list_free_ GList *children = NULL;
 
-	for (i = 0; i < 10; i++)
-		gmw_update_ui (priv, i + 1, NULL, NULL, -1.f, NULL);
+	/* remove old children */
+	grid = GTK_WIDGET (gtk_builder_get_object (priv->builder, "grid_status"));
+	children = gtk_container_get_children (GTK_CONTAINER (grid));
+	for (l = children; l != NULL; l = l->next) {
+		w = GTK_WIDGET (l->data);
+		gtk_widget_destroy (w);
+	}
+
+	/* sort the list */
+	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
+
+	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
 		device = g_ptr_array_index (priv->devices, i);
 		g_mutex_lock (&device->mutex);
-		gmw_update_ui (priv,
-			       device->assigned_slot,
-			       gmw_device_state_to_icon (device->state),
-			       device->sibling_id,
-			       device->complete,
-			       device->title);
+
+		/* add sibling-id */
+		w = gtk_label_new (device->sibling_id);
+		g_object_set (w, "xalign", 1.f, NULL);
+		gtk_grid_attach (GTK_GRID (grid), w, 0, i, 1, 1);
+
+		/* add icon */
+		w = gtk_image_new ();
+		gtk_image_set_from_icon_name (GTK_IMAGE (w),
+					      gmw_device_state_to_icon (device->state),
+					      GTK_ICON_SIZE_BUTTON);
+		gtk_grid_attach (GTK_GRID (grid), w, 1, i, 1, 1);
+
+		/* add optional progressbar */
+		if (device->complete > 0.f) {
+			w = gtk_progress_bar_new ();
+			gtk_widget_set_valign (w, GTK_ALIGN_CENTER);
+			gtk_grid_attach (GTK_GRID (grid), w, 2, i, 1, 1);
+			gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w), device->complete);
+		}
+
+		/* add optional status text */
+		if (device->title != NULL) {
+			w = gtk_label_new (device->title);
+			g_object_set (w, "xalign", 0.f, NULL);
+			gtk_label_set_width_chars (GTK_LABEL (w), 20);
+			gtk_grid_attach (GTK_GRID (grid), w, 3, i, 1, 1);
+		}
+
 		g_mutex_unlock (&device->mutex);
 	}
+
+	gtk_widget_show_all (grid);
 
 	/* update buttons */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
@@ -859,7 +865,7 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 
 	main_window = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
 	gtk_application_add_window (priv->application, GTK_WINDOW (main_window));
-	gtk_widget_set_size_request (main_window, 760, 250);
+	gtk_widget_set_size_request (main_window, 600, 200);
 
 	/* Hide window first so that the dialogue resizes itself without redrawing */
 	gtk_widget_hide (main_window);
@@ -895,23 +901,6 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	gmw_update_title (priv);
 	gmw_refresh_ui (priv);
 	gtk_widget_show (main_window);
-}
-
-/**
- * gmw_get_device_by_slot:
- **/
-static GmwDevice *
-gmw_get_device_by_slot (GmwPrivate *priv, guint slot)
-{
-	GmwDevice *device;
-	guint i;
-
-	for (i = 0; i < priv->devices->len; i++) {
-		device = g_ptr_array_index (priv->devices, i);
-		if (device->assigned_slot == slot)
-			return device;
-	}
-	return NULL;
 }
 
 /**
@@ -988,7 +977,6 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	const gchar *device_path;
 	const gchar *object_path;
 	guint64 device_size;
-	guint i;
 	_cleanup_object_unref_ GDBusInterface *iface_block = NULL;
 	_cleanup_object_unref_ GDBusInterface *iface_fs = NULL;
 	_cleanup_object_unref_ GDBusInterface *iface_part = NULL;
@@ -1056,14 +1044,6 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->is_valid = FALSE;
 	device->complete = -1.f;
 	g_mutex_init (&device->mutex);
-
-	/* find next available slot */
-	for (i = 0; i < 10; i++) {
-		if (gmw_get_device_by_slot (priv, i + 1) == NULL) {
-			device->assigned_slot = i + 1;
-			break;
-		}
-	}
 
 	/* unmount filesystems on the block device */
 	gmw_udisks_unmount_filesystems (device);

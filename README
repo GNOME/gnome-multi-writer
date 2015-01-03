@@ -1,8 +1,10 @@
               GNOME MultiWriter
 
 GNOME MultiWriter can be used to write an ISO file to multiple USB devices at
-once. Once an .img or .iso file is chosen it can be written to up to 24 USB
-devices simultaneously. Supported drive sizes are between 1Gb and 32Gb.
+once. Once an .img or .iso file has been chosen it can be written to an
+unlimited number of devices simultaneously.
+
+Supported drive sizes are between 1Gb and 32Gb.
 
 MultiWriter was originally written as part of the ColorHug project but  was
 split off as an independent application in 2015.
