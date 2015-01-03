@@ -33,7 +33,7 @@
       <_caption>Initial screen for the application</_caption>
     </screenshot>
   </screenshots>
-  <url type="homepage">http://www.gnome.com/</url>
+  <url type="homepage">https://github.com/hughsie/gnome-multi-writer</url>
   <url type="bugtracker">https://github.com/gnome/gnome-multi-writer/issues</url>
   <update_contact>richard_at_hughsie.com</update_contact>
 </component>
