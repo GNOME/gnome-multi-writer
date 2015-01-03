@@ -28,7 +28,6 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <gusb.h>
 #include <locale.h>
 #include <math.h>
 #include <udisks/udisks.h>
@@ -44,7 +43,6 @@ typedef struct {
 	GtkApplication		*application;
 	GtkBuilder		*builder;
 	GCancellable		*cancellable;
-	GUsbContext		*usb_ctx;
 	UDisksClient		*udisks_client;
 	guint			 threads_running;
 	gboolean		 done_polkit_auth;
@@ -1160,7 +1158,6 @@ main (int argc, char **argv)
 	priv->cancellable = g_cancellable_new ();
 	priv->settings = g_settings_new ("org.gnome.MultiWriter");
 	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
-	priv->usb_ctx = g_usb_context_new (NULL);
 
 	/* connect to UDisks */
 	udisks_client_new (NULL, gmw_udisks_client_connect_cb, priv);
@@ -1179,8 +1176,6 @@ main (int argc, char **argv)
 	status = g_application_run (G_APPLICATION (priv->application), argc, argv);
 
 	g_object_unref (priv->application);
-	if (priv->usb_ctx != NULL)
-		g_object_unref (priv->usb_ctx);
 	if (priv->builder != NULL)
 		g_object_unref (priv->builder);
 	if (priv->settings != NULL)

@@ -2,7 +2,6 @@ AM_CPPFLAGS =						\
 	$(CANBERRA_CFLAGS)				\
 	$(GLIB_CFLAGS)					\
 	$(GTK_CFLAGS)					\
-	$(GUSB_CFLAGS)					\
 	$(SOUP_CFLAGS)					\
 	$(UDISKS_CFLAGS)				\
 	-DG_LOG_DOMAIN=\"GnomeMultiWriter\"		\
@@ -16,7 +15,6 @@ gnome_multi_writer_LDADD =				\
 	$(CANBERRA_LIBS)				\
 	$(GLIB_LIBS)					\
 	$(GTK_LIBS)					\
-	$(GUSB_LIBS)					\
 	$(UDISKS_LIBS)
 
 gnome_multi_writer_CFLAGS =				\
