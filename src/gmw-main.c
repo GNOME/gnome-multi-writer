@@ -60,7 +60,6 @@ typedef enum {
 
 typedef struct {
 	GmwDeviceState		 state;
-	GmwPrivate		*priv;
 	UDisksBlock		*udisks_block;
 	gchar			*device_name;
 	gchar			*device_path;
@@ -256,7 +255,6 @@ gmw_device_set_state (GmwDevice *device,
 	device->state = device_state;
 	device->title = g_strdup (title);
 	g_mutex_unlock (&device->mutex);
-	g_idle_add (gmw_refresh_in_idle_cb, device->priv);
 }
 
 /**
@@ -296,11 +294,11 @@ gmw_get_aligned_buffer (gint buffer_size, guchar **buffer)
  * gmw_device_write:
  **/
 static gboolean
-gmw_device_write (GmwDevice *device,
+gmw_device_write (GmwPrivate *priv,
+		  GmwDevice *device,
 		  GInputStream *image_stream,
 		  GError **error)
 {
-	GmwPrivate *priv = device->priv;
 	const gint buffer_size = (1 * 1024 * 1024); /* default to 1 MiB blocks */
 	gboolean ret = FALSE;
 	gint fd = -1;
@@ -398,6 +396,7 @@ gmw_device_write (GmwDevice *device,
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_WRITE,
 				      _("Writing image…"));
+		g_idle_add (gmw_refresh_in_idle_cb, priv);
 	}
 
 	/* success */
@@ -412,11 +411,11 @@ out:
  * gmw_device_verify:
  **/
 static gboolean
-gmw_device_verify (GmwDevice *device,
+gmw_device_verify (GmwPrivate *priv,
+		   GmwDevice *device,
 		   GInputStream *image_stream,
 		   GError **error)
 {
-	GmwPrivate *priv = device->priv;
 	const gint buffer_size = (1 * 1024 * 1024); /* default to 1 MiB blocks */
 	gboolean ret = FALSE;
 	gint fd = -1;
@@ -547,6 +546,7 @@ gmw_device_verify (GmwDevice *device,
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_VERIFY,
 				      _("Verifying image…"));
+		g_idle_add (gmw_refresh_in_idle_cb, priv);
 	}
 
 	/* success */
@@ -578,7 +578,7 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	}
 
 	/* write */
-	if (!gmw_device_write (device, image_stream, &error)) {
+	if (!gmw_device_write (priv, device, image_stream, &error)) {
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_FAILED,
 				      error->message);
@@ -586,7 +586,7 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	}
 
 	/* verify */
-	if (!gmw_device_verify (device, image_stream, &error)) {
+	if (!gmw_device_verify (priv, device, image_stream, &error)) {
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_FAILED,
 				      error->message);
@@ -685,7 +685,7 @@ gmw_import_filename (GmwPrivate *priv)
  * gmw_auth_dummy_restore:
  **/
 static gboolean
-gmw_auth_dummy_restore (GmwDevice *device, GError **error)
+gmw_auth_dummy_restore (GmwPrivate *priv, GmwDevice *device, GError **error)
 {
 	gboolean ret = FALSE;
 	gint fd = -1;
@@ -697,7 +697,7 @@ gmw_auth_dummy_restore (GmwDevice *device, GError **error)
 						      NULL, /* fd_list */
 						      &fd_index,
 						      &fd_list,
-						      device->priv->cancellable,
+						      priv->cancellable,
 						      error)) {
 		goto out;
 	}
@@ -734,8 +734,8 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 	/* do a dummy call to get the PolicyKit auth */
 	if (!priv->done_polkit_auth) {
 		device = g_ptr_array_index (priv->devices, 0);
-		if (!gmw_auth_dummy_restore (device, &error)) {
-			gmw_error_dialog (device->priv,
+		if (!gmw_auth_dummy_restore (priv, device, &error)) {
+			gmw_error_dialog (priv,
 					  _("Failed to copy"),
 					  error->message);
 			return;
@@ -904,7 +904,7 @@ gmw_udisks_unmount_cb (GObject *source_object,
  * gmw_udisks_unmount_filesystems:
  **/
 static void
-gmw_udisks_unmount_filesystems (GmwDevice *device)
+gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device)
 {
 	_cleanup_free_ gchar *object_path_child = NULL;
 	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
@@ -912,7 +912,7 @@ gmw_udisks_unmount_filesystems (GmwDevice *device)
 	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
 
 	object_path_child = g_strdup_printf ("%s1", device->object_path);
-	udisks_object = udisks_client_get_object (device->priv->udisks_client,
+	udisks_object = udisks_client_get_object (priv->udisks_client,
 						  object_path_child);
 	if (udisks_object == NULL)
 		return;
@@ -921,7 +921,7 @@ gmw_udisks_unmount_filesystems (GmwDevice *device)
 		return;
 	udisks_filesystem_call_unmount (udisks_fs,
 					g_variant_new ("a{sv}", NULL), /* options */
-					device->priv->cancellable,
+					priv->cancellable,
 					gmw_udisks_unmount_cb,
 					device);
 }
@@ -1015,7 +1015,6 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	/* add this */
 	object_info = udisks_client_get_object_info (priv->udisks_client, udisks_object);
 	device = g_new0 (GmwDevice, 1);
-	device->priv = priv;
 	device->device_name = g_strdup (udisks_object_info_get_name (object_info));
 	device->device_path = g_strdup (device_path);
 	device->object_path = g_strdup (object_path);
@@ -1027,7 +1026,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	g_mutex_init (&device->mutex);
 
 	/* unmount filesystems on the block device */
-	gmw_udisks_unmount_filesystems (device);
+	gmw_udisks_unmount_filesystems (priv, device);
 
 	g_ptr_array_add (priv->devices, device);
 	g_debug ("Added %s [%lu]", device_path, device_size);
