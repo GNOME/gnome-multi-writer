@@ -44,7 +44,7 @@ typedef struct {
 	GtkBuilder		*builder;
 	GCancellable		*cancellable;
 	UDisksClient		*udisks_client;
-	guint			 threads_running;
+	GThreadPool		*thread_pool;
 	gboolean		 done_polkit_auth;
 } GmwPrivate;
 
@@ -62,7 +62,6 @@ typedef struct {
 	GmwDeviceState		 state;
 	GmwPrivate		*priv;
 	UDisksBlock		*udisks_block;
-	gboolean		 is_valid;
 	gchar			*device_name;
 	gchar			*device_path;
 	gchar			*object_path;
@@ -223,9 +222,10 @@ gmw_refresh_ui (GmwPrivate *priv)
 
 	/* update buttons */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
-	gtk_widget_set_visible (w, priv->threads_running > 0);
+	gtk_widget_set_visible (w, g_thread_pool_get_num_threads (priv->thread_pool) > 0);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_start"));
-	gtk_widget_set_visible (w, priv->threads_running == 0 && priv->devices->len > 0);
+	gtk_widget_set_visible (w, g_thread_pool_get_num_threads (priv->thread_pool) == 0 &&
+				   priv->devices->len > 0);
 
 	/* set stack */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "stack_main"));
@@ -255,8 +255,6 @@ gmw_device_set_state (GmwDevice *device,
 	g_free (device->title);
 	device->state = device_state;
 	device->title = g_strdup (title);
-	if (device_state == GMW_DEVICE_STATE_FAILED)
-		device->is_valid = FALSE;
 	g_mutex_unlock (&device->mutex);
 	g_idle_add (gmw_refresh_in_idle_cb, device->priv);
 }
@@ -267,31 +265,14 @@ gmw_device_set_state (GmwDevice *device,
 static void
 gmw_copy_done (GmwPrivate *priv)
 {
-	GmwDevice *device;
-	guint i;
-
 	g_mutex_lock (&priv->mutex_shared);
-
-	if (--priv->threads_running == 0) {
-		g_debug ("all done!");
-		for (i = 0; i < priv->devices->len; i++) {
-			device = g_ptr_array_index (priv->devices, i);
-			device->complete = -1.f;
-			if (!device->is_valid)
-				continue;
-			gmw_device_set_state (device,
-					      GMW_DEVICE_STATE_SUCCESS,
-					      _("Image written successfully"));
-		}
-
-		/* play sound */
+	if (g_thread_pool_get_num_threads (priv->thread_pool) == 1) {
 		ca_context_play (ca_gtk_context_get (), 0,
 				 CA_PROP_EVENT_ID, "complete",
 				 CA_PROP_APPLICATION_NAME, _("GNOME MultiWriter"),
 				 CA_PROP_EVENT_DESCRIPTION, _("Image written successfully"),
 				 NULL);
 	}
-
 	g_mutex_unlock (&priv->mutex_shared);
 }
 
@@ -579,11 +560,11 @@ out:
 /**
  * gmw_copy_thread_cb:
  **/
-static gpointer
-gmw_copy_thread_cb (gpointer data)
+static void
+gmw_copy_thread_cb (gpointer data, gpointer user_data)
 {
 	GmwDevice *device = (GmwDevice *) data;
-	GmwPrivate *priv = device->priv;
+	GmwPrivate *priv = (GmwPrivate *) user_data;
 	_cleanup_error_free_ GError *error = NULL;
 	_cleanup_object_unref_ GInputStream *image_stream = NULL;
 
@@ -611,10 +592,16 @@ gmw_copy_thread_cb (gpointer data)
 				      error->message);
 		goto out;
 	}
+
+	/* no longer show progressbar */
+	device->complete = -1.f;
+	gmw_device_set_state (device,
+			      GMW_DEVICE_STATE_SUCCESS,
+			      _("Image written successfully"));
 out:
+	g_timeout_add (500, gmw_refresh_in_idle_cb, priv);
 	g_input_stream_close (G_INPUT_STREAM (image_stream), NULL, NULL);
 	gmw_copy_done (priv);
-	return NULL;
 }
 
 /**
@@ -757,14 +744,11 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 	}
 
 	/* start a thread for each copy operation */
-	priv->threads_running = priv->devices->len;
 	gmw_refresh_ui (priv);
 	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *title = NULL;
 		device = g_ptr_array_index (priv->devices, i);
-		device->is_valid = TRUE;
-		title = g_strdup_printf ("copy-thread-%i", i);
-		g_thread_new (title, gmw_copy_thread_cb, device);
+		g_thread_pool_push (priv->thread_pool, device, &error);
 	}
 }
 
@@ -1039,7 +1023,6 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->state = GMW_DEVICE_STATE_STARTUP;
 	device->title = g_strdup (device->device_name);
 	device->sibling_id = gmw_udisks_get_sibling_id (udisks_drive);
-	device->is_valid = FALSE;
 	device->complete = -1.f;
 	g_mutex_init (&device->mutex);
 
@@ -1158,6 +1141,14 @@ main (int argc, char **argv)
 	g_mutex_init (&priv->mutex_shared);
 	priv->cancellable = g_cancellable_new ();
 	priv->settings = g_settings_new ("org.gnome.MultiWriter");
+	priv->thread_pool = g_thread_pool_new (gmw_copy_thread_cb, priv,
+					       g_settings_get_uint (priv->settings, "max-threads"),
+					       FALSE, &error);
+	if (priv->thread_pool == NULL) {
+		status = EXIT_FAILURE;
+		g_print ("Failed to create thread pool: %s\n", error->message);
+		goto out;
+	}
 	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
 
 	/* connect to UDisks */
@@ -1189,6 +1180,7 @@ out:
 		if (priv->cancellable != NULL)
 			g_object_unref (priv->cancellable);
 		g_object_unref (priv->application);
+		g_thread_pool_free (priv->thread_pool, TRUE, TRUE);
 		g_mutex_clear (&priv->mutex_shared);
 		g_ptr_array_unref (priv->devices);
 		g_free (priv);

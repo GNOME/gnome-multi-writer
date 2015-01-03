@@ -5,5 +5,10 @@
       <summary>The filename to write to the USB disks</summary>
       <description>The filename of the ISO image to write to the connected USB disks.</description>
     </key>
+    <key name="max-threads" type="u">
+      <default>10</default>
+      <summary>The maximum number of threads to use</summary>
+      <description>The maximum number of parallel threads to use when copying data.</description>
+    </key>
   </schema>
 </schemalist>
