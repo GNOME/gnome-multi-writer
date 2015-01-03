@@ -46,6 +46,8 @@ typedef struct {
 	UDisksClient		*udisks_client;
 	GThreadPool		*thread_pool;
 	gboolean		 done_polkit_auth;
+	guint			 idle_id;
+	GMutex			 idle_id_mutex;
 } GmwPrivate;
 
 typedef enum {
@@ -239,7 +241,25 @@ gmw_refresh_in_idle_cb (gpointer user_data)
 {
 	GmwPrivate *priv = (GmwPrivate *) user_data;
 	gmw_refresh_ui (priv);
+
+	/* we've been run */
+	g_mutex_lock (&priv->idle_id_mutex);
+	priv->idle_id = 0;
+	g_mutex_unlock (&priv->idle_id_mutex);
 	return FALSE;
+}
+
+/**
+ * gmw_refresh_in_idle:
+ **/
+static void
+gmw_refresh_in_idle (GmwPrivate *priv)
+{
+	g_mutex_lock (&priv->idle_id_mutex);
+	if (priv->idle_id != 0)
+		g_source_remove (priv->idle_id);
+	priv->idle_id = g_timeout_add (50, gmw_refresh_in_idle_cb, priv);
+	g_mutex_unlock (&priv->idle_id_mutex);
 }
 
 /**
@@ -396,7 +416,7 @@ gmw_device_write (GmwPrivate *priv,
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_WRITE,
 				      _("Writing image…"));
-		g_idle_add (gmw_refresh_in_idle_cb, priv);
+		gmw_refresh_in_idle (priv);
 	}
 
 	/* success */
@@ -546,7 +566,7 @@ gmw_device_verify (GmwPrivate *priv,
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_VERIFY,
 				      _("Verifying image…"));
-		g_idle_add (gmw_refresh_in_idle_cb, priv);
+		gmw_refresh_in_idle (priv);
 	}
 
 	/* success */
@@ -599,6 +619,7 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 			      GMW_DEVICE_STATE_SUCCESS,
 			      _("Image written successfully"));
 out:
+	gmw_refresh_in_idle (priv);
 	g_timeout_add_seconds (2, gmw_refresh_in_idle_cb, priv);
 	g_input_stream_close (G_INPUT_STREAM (image_stream), NULL, NULL);
 	gmw_copy_done (priv);
@@ -1138,6 +1159,7 @@ main (int argc, char **argv)
 
 	priv = g_new0 (GmwPrivate, 1);
 	g_mutex_init (&priv->mutex_shared);
+	g_mutex_init (&priv->idle_id_mutex);
 	priv->cancellable = g_cancellable_new ();
 	priv->settings = g_settings_new ("org.gnome.MultiWriter");
 	priv->thread_pool = g_thread_pool_new (gmw_copy_thread_cb, priv,
@@ -1181,6 +1203,7 @@ out:
 		g_object_unref (priv->application);
 		g_thread_pool_free (priv->thread_pool, TRUE, TRUE);
 		g_mutex_clear (&priv->mutex_shared);
+		g_mutex_clear (&priv->idle_id_mutex);
 		g_ptr_array_unref (priv->devices);
 		g_free (priv);
 	}
