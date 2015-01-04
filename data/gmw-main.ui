@@ -96,11 +96,11 @@
       <object class="GtkHeaderBar" id="header">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="title">MultiWriter</property>
+        <property name="title" translatable="yes" comments="TRANSLATORS: Application window title">MultiWriter</property>
         <property name="show_close_button">True</property>
         <child>
           <object class="GtkButton" id="button_start">
-            <property name="label" context="Starts the capture process">Start Copying</property>
+            <property name="label" translatable="yes" comments="TRANSLATORS: button to start the copy">Start Copying</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>

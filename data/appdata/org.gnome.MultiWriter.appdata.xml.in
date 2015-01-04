@@ -4,9 +4,12 @@
   <id>org.gnome.MultiWriter.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
+  <!-- TRANSLATORS: the application name -->
   <_name>MultiWriter</_name>
+  <!-- TRANSLATORS: one-line description for the app -->
   <_summary>Write an ISO file to multiple USB devices at once</_summary>
   <description>
+    <!-- TRANSLATORS: AppData description marketing paragraph -->
     <_p>
       GNOME MultiWriter can be used to write an ISO file to multiple USB devices
       at once.
@@ -14,30 +17,38 @@
       unlimited number of USB devices simultaneously.
       Supported drive sizes are between 1Gb and 32Gb.
     </_p>
+    <!-- TRANSLATORS: the ColorHug is an open hardware product, don't translate the name -->
     <_p>
       MultiWriter was originally written as part of the ColorHug project but
       was split off as an independent application in 2015.
     </_p>
+    <!-- TRANSLATORS: 'People' refers to different users of the software -->
     <_p>
       People have used MultiWriter in a few different ways:
     </_p>
     <ul>
+      <!-- TRANSLATORS: QA refers to quality assurance, aka people testing stuff -->
       <_li>To copy a specific ISO for QA testing for a small number of users</_li>
-      <_li>To create a GNOME LiveCD of Fedora Rawhide for a code sprint</_li>
-      <_li>To create hundreds of LiveUSB drives for the ColorHug project</_li>
+      <!-- TRANSLATORS: GNOME refers to the desktop environment -->
+      <_li>To share a LiveUSB image of GNOME for a code sprint</_li>
+      <!-- TRANSLATORS: USB flash drives here refer to the storage pendrive things -->
+      <_li>To create hundreds of USB flash drives for the ColorHug project</_li>
     </ul>
   </description>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-startup.png</image>
+      <!-- TRANSLATORS: the 1st screenshot caption -->
       <_caption>Initial screen for the application</_caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-progress.png</image>
+      <!-- TRANSLATORS: the 2nd screenshot caption -->
       <_caption>Writing and verifying images</_caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-finished.png</image>
+      <!-- TRANSLATORS: the 3rd screenshot caption -->
       <_caption>All devices have been written</_caption>
     </screenshot>
   </screenshots>

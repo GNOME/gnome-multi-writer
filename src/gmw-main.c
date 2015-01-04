@@ -292,7 +292,9 @@ gmw_copy_done (GmwPrivate *priv)
 	if (g_thread_pool_get_num_threads (priv->thread_pool) == 1) {
 		ca_context_play (ca_gtk_context_get (), 0,
 				 CA_PROP_EVENT_ID, "complete",
+				 /* TRANSLATORS: the application name */
 				 CA_PROP_APPLICATION_NAME, _("GNOME MultiWriter"),
+				 /* TRANSLATORS: the success sound description */
 				 CA_PROP_EVENT_DESCRIPTION, _("Image written successfully"),
 				 NULL);
 	}
@@ -376,6 +378,7 @@ gmw_device_write (GmwPrivate *priv,
 				g_set_error_literal (error,
 						     G_IO_ERROR,
 						     G_IO_ERROR_CANCELLED,
+						     /* TRANSLATORS: copy aborted */
 						     _("Cancelled"));
 				goto out;
 			}
@@ -408,6 +411,7 @@ gmw_device_write (GmwPrivate *priv,
 				g_set_error_literal (error,
 						     G_IO_ERROR,
 						     G_IO_ERROR_CANCELLED,
+						     /* TRANSLATORS: copy aborted */
 						     _("Cancelled"));
 				goto out;
 			}
@@ -420,6 +424,7 @@ gmw_device_write (GmwPrivate *priv,
 		device->complete = (gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size);
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_WRITE,
+				      /* TRANSLATORS: we're writing the image to the USB device */
 				      _("Writing image…"));
 		gmw_refresh_in_idle (priv);
 	}
@@ -501,6 +506,7 @@ gmw_device_verify (GmwPrivate *priv,
 				g_set_error_literal (error,
 						     G_IO_ERROR,
 						     G_IO_ERROR_CANCELLED,
+						     /* TRANSLATORS: copy aborted */
 						     _("Cancelled"));
 				goto out;
 			}
@@ -535,6 +541,7 @@ gmw_device_verify (GmwPrivate *priv,
 				g_set_error_literal (error,
 						     G_IO_ERROR,
 						     G_IO_ERROR_CANCELLED,
+						     /* TRANSLATORS: copy aborted */
 						     _("Cancelled"));
 				goto out;
 			}
@@ -570,6 +577,8 @@ gmw_device_verify (GmwPrivate *priv,
 		device->complete = 0.5f + ((gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size));
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_VERIFY,
+				      /* TRANSLATORS: We're verifying the USB
+				       * device contains the correct image data */
 				      _("Verifying image…"));
 		gmw_refresh_in_idle (priv);
 	}
@@ -622,6 +631,8 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	device->complete = -1.f;
 	gmw_device_set_state (device,
 			      GMW_DEVICE_STATE_SUCCESS,
+			      /* TRANSLATORS: The image has been written to
+			       * one device, not all of them yet */
 			      _("Image written successfully"));
 out:
 	gmw_refresh_in_idle (priv);
@@ -667,6 +678,7 @@ gmw_set_image_filename (GmwPrivate *priv, const gchar *filename)
 				  NULL,
 				  &error);
 	if (info == NULL) {
+		/* TRANSLATORS: we couldn't open the ISO file the user chose */
 		gmw_error_dialog (priv, _("Failed to open"), error->message);
 		return;
 	}
@@ -686,14 +698,18 @@ gmw_import_filename (GmwPrivate *priv)
 	_cleanup_object_unref_ GFile *file = NULL;
 
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
+	/* TRANSLATORS: window title for the file-chooser */
 	d = gtk_file_chooser_dialog_new (_("Choose image to write"),
 					 GTK_WINDOW (w),
 					 GTK_FILE_CHOOSER_ACTION_OPEN,
+					 /* TRANSLATORS: button title */
 					 _("Cancel"), GTK_RESPONSE_CANCEL,
+					 /* TRANSLATORS: button title */
 					 _("Import"), GTK_RESPONSE_ACCEPT,
 					 NULL);
 	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, "ISO files");
+	/* TRANSLATORS: the file filter description, e.g. *.iso */
+	gtk_file_filter_set_name (filter, _("ISO files"));
 	gtk_file_filter_add_pattern (filter, "*.iso");
 	gtk_file_filter_add_pattern (filter, "*.img");
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (d), filter);
@@ -762,6 +778,8 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 		device = g_ptr_array_index (priv->devices, 0);
 		if (!gmw_auth_dummy_restore (priv, device, &error)) {
 			gmw_error_dialog (priv,
+					  /* TRANSLATORS: error dialog title:
+					   * we probably didn't authenticate */
 					  _("Failed to copy"),
 					  error->message);
 			return;
@@ -811,15 +829,17 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 	icon_theme = gtk_icon_theme_get_default ();
 	logo = gtk_icon_theme_load_icon (icon_theme, "drive-harddisk-usb", 256, 0, NULL);
 	gtk_show_about_dialog (parent,
-			       /* TRANSLATORS: this is the title of the about window */
+			       /* TRANSLATORS: the title of the about window */
 			       "title", _("About GNOME MultiWriter"),
-			       /* TRANSLATORS: this is the application name */
+			       /* TRANSLATORS: the application name for the about UI */
 			       "program-name", _("GNOME MultiWriter"),
 			       "authors", authors,
+			       /* TRANSLATORS: one-line description for the app */
 			       "comments", _("Write an ISO file to multiple USB devices at once"),
 			       "copyright", copyright,
 			       "license-type", GTK_LICENSE_GPL_2_0,
 			       "logo", logo,
+			       /* TRANSLATORS: you can put your name here :) */
 			       "translator-credits", _("translator-credits"),
 			       "version", VERSION,
 			       NULL);
@@ -1157,6 +1177,7 @@ main (int argc, char **argv)
 	g_option_context_add_main_entries (context, options, NULL);
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
 		status = EXIT_FAILURE;
+		/* TRANSLATORS: the user has sausages for fingers */
 		g_print ("%s: %s\n", _("Failed to parse command line options"),
 			 error->message);
 		goto out;

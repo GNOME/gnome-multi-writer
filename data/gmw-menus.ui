@@ -4,17 +4,17 @@
   <menu id="app-menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">Import ISO file…</attribute>
+        <attribute name="label" translatable="yes" comments="TRANSLATORS: app menu item for the file chooser">Import ISO file…</attribute>
         <attribute name="action">app.import</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label" translatable="yes">_About</attribute>
+        <attribute name="label" translatable="yes" comments="TRANSLATORS: app menu item for the About UI">_About</attribute>
         <attribute name="action">app.about</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="label" translatable="yes" comments="TRANSLATORS: app menu item for Quit">_Quit</attribute>
         <attribute name="action">app.quit</attribute>
         <attribute name="accel"><![CDATA[<Ctrl>Q]]></attribute>
       </item>
