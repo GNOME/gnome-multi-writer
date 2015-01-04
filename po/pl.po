@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Aviary.pl <gnomepl@aviary.pl>, 2014
-# Piotr Drąg <piotrdrag@gmail.com>, 2014
+# Piotr Drąg <piotrdrag@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-03 20:08+0000\n"
-"PO-Revision-Date: 2015-01-03 20:20+0000\n"
-"Last-Translator: Richard Hughes <richard@hughsie.com>\n"
+"PO-Revision-Date: 2015-01-04 11:31+0000\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/gnome-multi-writer/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +39,7 @@ msgid ""
 "at once. Once an .img or .iso file has been chosen it can be written to an "
 "unlimited number of USB devices simultaneously. Supported drive sizes are "
 "between 1Gb and 32Gb."
-msgstr ""
+msgstr "GNOME MultiWriter może być używany do zapisywania pliku ISO na wiele urządzeń USB jednocześnie. Po wybraniu pliku .img lub .iso można go zapisać na wielu urządzeniach w tym samym czasie. Obsługiwane są rozmiary urządzeń od 1 GB do 32 GB."
 
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
@@ -62,10 +62,10 @@ msgid "Initial screen for the application"
 msgstr "Początkowy ekran programu"
 
 msgid "Writing and verifying images"
-msgstr ""
+msgstr "Zapisywanie i sprawdzanie poprawności obrazów"
 
 msgid "All devices have been written"
-msgstr ""
+msgstr "Wszystkie urządzenia zostały zapisane"
 
 msgid "The filename to write to the USB disks"
 msgstr "Nazwa pliku do zapisania na dyskach USB"
@@ -74,10 +74,10 @@ msgid "The filename of the ISO image to write to the connected USB disks."
 msgstr "Nazwa pliku obrazu ISO do zapisania na podłączonych dyskach USB."
 
 msgid "The maximum number of threads to use"
-msgstr ""
+msgstr "Maksymalna liczba używanych wątków"
 
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr ""
+msgstr "Maksymalna liczba równoległych wątków używanych podczas kopiowania danych."
 
 msgid "Image;Writer;ISO;USB;"
 msgstr "Obraz;Zapisywanie;ISO;USB;"

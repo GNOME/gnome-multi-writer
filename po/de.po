@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-03 20:08+0000\n"
-"PO-Revision-Date: 2015-01-03 22:17+0000\n"
+"PO-Revision-Date: 2015-01-04 08:43+0000\n"
 "Last-Translator: Christoph Wickert <christoph.wickert@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/gnome-multi-writer/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,7 @@ msgid "The maximum number of parallel threads to use when copying data."
 msgstr "Maximale Anzahl der zu nutzenden Threads beim Kopieren von Daten."
 
 msgid "Image;Writer;ISO;USB;"
-msgstr "Image;Writer;ISO;USB;"
+msgstr "Abbild;Schreiben;ISO;USB;"
 
 #. TRANSLATORS: this is the application name
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
@@ -118,7 +118,7 @@ msgid "About GNOME MultiWriter"
 msgstr "Info zu GNOME MultiWriter"
 
 msgid "translator-credits"
-msgstr "Christoph Wickert <cwickert@fedoraproject.org>"
+msgstr "Christoph Wickert <cwickert@fedoraproject.org> 2015"
 
 #. TRANSLATORS: command line option
 msgid "Show extra debugging information"

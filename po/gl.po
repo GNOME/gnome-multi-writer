@@ -3,125 +3,126 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Fran Diéguez <frandieguez@ubuntu.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-03 20:08+0000\n"
-"PO-Revision-Date: 2015-01-03 20:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Galician (Spain) (http://www.transifex.com/projects/p/gnome-multi-writer/language/gl_ES/)\n"
+"PO-Revision-Date: 2015-01-04 12:37+0000\n"
+"Last-Translator: Richard Hughes <richard@hughsie.com>\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/gnome-multi-writer/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: gl_ES\n"
+"Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Import ISO file…"
-msgstr ""
+msgstr "Importar ficheiro ISO…"
 
 msgid "_About"
-msgstr ""
+msgstr "_Sobre"
 
 msgid "_Quit"
-msgstr ""
+msgstr "_Saír"
 
 msgid "MultiWriter"
-msgstr ""
+msgstr "MultiEscritor"
 
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr ""
+msgstr "Escribe un ficheiro ISO en varios dispositivos USB á vez"
 
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Once an .img or .iso file has been chosen it can be written to an "
 "unlimited number of USB devices simultaneously. Supported drive sizes are "
 "between 1Gb and 32Gb."
-msgstr ""
+msgstr "GNOME MultiEscritor pode usarse para escribir un ficheiro ISO en varios dispositivos USB á vez. En canto escolla un ficheiro .img ou .iso poderá escribir un número ilimitado de dispositivos USB simultaneamente. Admítense tamaños de unidades entre 1Gb e 32Gb."
 
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
-msgstr ""
+msgstr "MultiEscritor foi orixinalmente escrito como parte do proxecto ColorHug e despois separouse nun aplicativo independente en 2015."
 
 msgid "People have used MultiWriter in a few different ways:"
-msgstr ""
+msgstr "Pode usar MultiWriter de varias formas:"
 
 msgid "To copy a specific ISO for QA testing for a small number of users"
-msgstr ""
+msgstr "Para copiar un ficheiro ISO específico para usar en probas de QA para un pequeno número de usuarios"
 
 msgid "To create a GNOME LiveCD of Fedora Rawhide for a code sprint"
-msgstr ""
+msgstr "Para crear unha LiveCD de GNOME de Fedora Rawhide para usar nun sprint de código"
 
 msgid "To create hundreds of LiveUSB drives for the ColorHug project"
-msgstr ""
+msgstr "Para crear centos de unidades LiveUSB para o proxecto ColorHug"
 
 msgid "Initial screen for the application"
-msgstr ""
+msgstr "Pantalla inicial do aplicativo"
 
 msgid "Writing and verifying images"
-msgstr ""
+msgstr "Escribindo e verificando imaxes"
 
 msgid "All devices have been written"
-msgstr ""
+msgstr "Todos os dispositivos foron escritos"
 
 msgid "The filename to write to the USB disks"
-msgstr ""
+msgstr "O nome do ficheiro a escribir nos discos USB"
 
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr ""
+msgstr "O nome do ficheiro da imaxe de ISO a escribir nos discos USB conectados."
 
 msgid "The maximum number of threads to use"
-msgstr ""
+msgstr "O número máximo dos fíos a usar"
 
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr ""
+msgstr "O número máximo de fios en paralelo a usar para a copia de datos."
 
 msgid "Image;Writer;ISO;USB;"
-msgstr ""
+msgstr "Imaxe;Escribir;ISO;USB;"
 
 #. TRANSLATORS: this is the application name
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
 msgid "GNOME MultiWriter"
-msgstr ""
+msgstr "GNOME MultiEscritor"
 
 msgid "Image written successfully"
-msgstr ""
+msgstr "Imaxe escrita con éxito"
 
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 msgid "Writing image…"
-msgstr ""
+msgstr "Escribindo imaxe…"
 
 msgid "Verifying image…"
-msgstr ""
+msgstr "Verificando imaxe…"
 
 msgid "Failed to open"
-msgstr ""
+msgstr "Produciuse un fallo ao abrir"
 
 msgid "Choose image to write"
-msgstr ""
+msgstr "Escolla a imaxe a escribir"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 msgid "Failed to copy"
-msgstr ""
+msgstr "Produciuse un fallo ao copiar"
 
 #. TRANSLATORS: this is the title of the about window
 msgid "About GNOME MultiWriter"
-msgstr ""
+msgstr "Sobre GNOME MultiWriter"
 
 msgid "translator-credits"
-msgstr ""
+msgstr "Fran Dieguez <frandieguez@gnome.org>, 2015"
 
 #. TRANSLATORS: command line option
 msgid "Show extra debugging information"
-msgstr ""
+msgstr "Mostra información de depuración adicional"
 
 msgid "Failed to parse command line options"
-msgstr ""
+msgstr "Produciuse un fallo ao analizar as opcións de liña de ordes"
