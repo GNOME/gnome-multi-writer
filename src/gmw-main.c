@@ -46,6 +46,7 @@ typedef struct {
 	UDisksClient		*udisks_client;
 	GThreadPool		*thread_pool;
 	gboolean		 done_polkit_auth;
+	guint			 inhibit_id;
 	guint			 idle_id;
 	GMutex			 idle_id_mutex;
 } GmwPrivate;
@@ -297,6 +298,12 @@ gmw_copy_done (GmwPrivate *priv)
 				 /* TRANSLATORS: the success sound description */
 				 CA_PROP_EVENT_DESCRIPTION, _("Image written successfully"),
 				 NULL);
+
+		/* allow suspend now */
+		if (priv->inhibit_id != 0) {
+			gtk_application_uninhibit (priv->application, priv->inhibit_id);
+			priv->inhibit_id = 0;
+		}
 	}
 	g_mutex_unlock (&priv->mutex_shared);
 }
@@ -762,6 +769,7 @@ static void
 gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 {
 	GmwDevice *device;
+	GtkWindow *window;
 	guint i;
 	_cleanup_error_free_ GError *error = NULL;
 
@@ -786,6 +794,15 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 		}
 		priv->done_polkit_auth = TRUE;
 	}
+
+	/* don't allow suspend */
+	window = GTK_WINDOW (gtk_builder_get_object (priv->builder, "dialog_main"));
+	priv->inhibit_id = gtk_application_inhibit (priv->application,
+						    window,
+						    GTK_APPLICATION_INHIBIT_SUSPEND |
+						    GTK_APPLICATION_INHIBIT_LOGOUT,
+						    /* TRANSLATORS: the inhibit reason */
+						    _("Writing ISO to devices"));
 
 	/* start a thread for each copy operation */
 	gmw_refresh_ui (priv);
