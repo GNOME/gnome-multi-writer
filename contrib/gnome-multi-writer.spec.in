@@ -1,6 +1,6 @@
 %define alphatag                #ALPHATAG#
 
-Summary:   GNOME MultiWriter
+Summary:   Write an ISO file to multiple USB devices at once
 Name:      gnome-multi-writer
 Version:   #VERSION#
 Release:   0.#BUILD#%{?alphatag}%{?dist}
@@ -8,32 +8,34 @@ License:   GPLv2+
 URL:       https://github.com/hughsie/gnome-multi-writer
 Source0:   http://people.freedesktop.org/~hughsient/releases/%{name}-%{version}.tar.xz
 
+BuildRequires: desktop-file-utils
 BuildRequires: docbook-utils
 BuildRequires: gettext
 BuildRequires: glib2-devel
-BuildRequires: gobject-introspection-devel
 BuildRequires: gtk3-devel
 BuildRequires: intltool
 BuildRequires: itstool
 BuildRequires: libcanberra-devel >= 0.10
-BuildRequires: libtool
 BuildRequires: libudisks2-devel
 
 %description
-GNOME MultiWriter can be used to write an ISO file to multiple USB devices at once.
+GNOME MultiWriter can be used to write an ISO file to multiple USB devices
+simultaneously.
 
 %prep
 %setup -q
 
 %build
-%configure --disable-static
+%configure
 make %{?_smp_mflags} V=1
 
 %install
 %make_install
-find %{buildroot} -type f -name "*.la" -delete
 
 %find_lang %{name}
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -55,8 +57,6 @@ fi
 %{_datadir}/appdata/org.gnome.MultiWriter.appdata.xml
 %{_datadir}/applications/org.gnome.MultiWriter.desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.MultiWriter.gschema.xml
-#%{_datadir}/gnome-multi-writer
-#%dir %{_datadir}/gnome-multi-writer
 %{_mandir}/man1/gnome-multi-writer.1.gz
 
 %changelog
