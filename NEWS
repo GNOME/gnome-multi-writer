@@ -1,6 +1,19 @@
 Version 3.15.1
 ~~~~~~~~~~~~~~
-Released: 2015-01-02
+Released: 2015-01-05
 
 Notes:
  - Initial tarball release
+
+New Features:
+ - 16 translations, see https://www.transifex.com/projects/p/gnome-multi-writer/
+ - Copy an ISO image to an unlimited number of devices (Richard Hughes)
+ - Inhibit suspend when copying data (Richard Hughes)
+ - Play a sound when all the images have been written (Richard Hughes)
+ - Show an image when there are no suitable drives plugged in (Richard Hughes)
+
+Bugfixes:
+ - Show the USB connection address in the UI (Richard Hughes)
+ - Update example spec file (Igor Gnatenko)
+ - Use a progressbar and smaller icons in the main UI (Richard Hughes)
+ - Use a thread pool to allocate threads (Richard Hughes)

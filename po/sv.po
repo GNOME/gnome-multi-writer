@@ -3,21 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Aviary.pl <gnomepl@aviary.pl>, 2014-2015
-# Piotr Drąg <piotrdrag@gmail.com>, 2014-2015
+# Andreas Henriksson <andreas+github@fatal.se>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-04 13:41+0000\n"
-"PO-Revision-Date: 2015-01-05 08:31+0000\n"
-"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish (http://www.transifex.com/projects/p/gnome-multi-writer/language/pl/)\n"
+"PO-Revision-Date: 2015-01-04 17:01+0000\n"
+"Last-Translator: Andreas Henriksson <andreas+github@fatal.se>\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/gnome-multi-writer/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
@@ -26,23 +25,23 @@ msgstr "MultiWriter"
 
 #. TRANSLATORS: button to start the copy
 msgid "Start Copying"
-msgstr "Rozpocznij kopiowanie"
+msgstr "Starta kopiering"
 
 #. TRANSLATORS: app menu item for the file chooser
 msgid "Import ISO file…"
-msgstr "Zaimportuj plik ISO…"
+msgstr "Importera ISO-fil..."
 
 #. TRANSLATORS: app menu item for the About UI
 msgid "_About"
-msgstr "_O programie"
+msgstr "_Om"
 
 #. TRANSLATORS: app menu item for Quit
 msgid "_Quit"
-msgstr "Za_kończ"
+msgstr "_Avsluta"
 
 #. TRANSLATORS: one-line description for the app
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr "Zapisywanie pliku ISO na wielu urządzeniach USB jednocześnie"
+msgstr "Skriv en ISO-fil till multipla USB-enheter samtidigt"
 
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
@@ -50,62 +49,62 @@ msgid ""
 "at once. Once an .img or .iso file has been chosen it can be written to an "
 "unlimited number of USB devices simultaneously. Supported drive sizes are "
 "between 1Gb and 32Gb."
-msgstr "GNOME MultiWriter może być używany do zapisywania pliku ISO na wiele urządzeń USB jednocześnie. Po wybraniu pliku .img lub .iso można go zapisać na wielu urządzeniach w tym samym czasie. Obsługiwane są rozmiary urządzeń od 1 GB do 32 GB."
+msgstr "GNOME MultiWriter kan användas för att skriva en ISO-fil till multipla USB-enheter samtidigt. När en .img- eller .iso-fil har valts kan den skrivas till ett obegränsat antal USB-enheter samtidigt. Enhets-storlekar är mellan 1Gb till 32Gb stöds."
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
 #. name
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
-msgstr "MultiWriter został pierwotnie napisany jako część projektu ColorHug, ale został on wydzielony jako niezależny program w 2015 roku."
+msgstr "MultiWriter skrevs utsprungligen som en del av ColorHug-projektet men delades av som en separat applikation under 2015."
 
 #. TRANSLATORS: 'People' refers to different users of the software
 msgid "People have used MultiWriter in a few different ways:"
-msgstr "MultiWriter może być używany na kilka sposobów:"
+msgstr "Folk har använt MultiWriter på ett flertal olika vis:"
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff
 msgid "To copy a specific ISO for QA testing for a small number of users"
-msgstr "Aby skopiować konkretny plik ISO do celów testowych dla małej liczby użytkowników"
+msgstr "Att kopiera en specifik ISO för QA-testning för ett litet antal användare"
 
 #. TRANSLATORS: GNOME refers to the desktop environment
 msgid "To share a LiveUSB image of GNOME for a code sprint"
-msgstr "Aby utworzyć LiveUSB z GNOME na sprint programistyczny"
+msgstr "För att dela en LiveUSB-avbildning av GNOME för en kodsprint"
 
 #. TRANSLATORS: USB flash drives here refer to the storage pendrive things
 msgid "To create hundreds of USB flash drives for the ColorHug project"
-msgstr "Aby utworzyć setki dysków USB dla projektu ColorHug"
+msgstr "Att skapa hundratals USB-flashenheter för ColorHug-projektet"
 
 #. TRANSLATORS: the 1st screenshot caption
 msgid "Initial screen for the application"
-msgstr "Początkowy ekran programu"
+msgstr "Initial skärmbild för applikationen"
 
 #. TRANSLATORS: the 2nd screenshot caption
 msgid "Writing and verifying images"
-msgstr "Zapisywanie i sprawdzanie poprawności obrazów"
+msgstr "Skrivning och verifiering av avbildningar"
 
 #. TRANSLATORS: the 3rd screenshot caption
 msgid "All devices have been written"
-msgstr "Wszystkie urządzenia zostały zapisane"
+msgstr "Alla enheter har skrivits"
 
 #. TRANSLATORS: schema summary
 msgid "The filename to write to the USB disks"
-msgstr "Nazwa pliku do zapisania na dyskach USB"
+msgstr "Filnamnet att skriva till USB-diskar"
 
 #. TRANSLATORS: schema description
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr "Nazwa pliku obrazu ISO do zapisania na podłączonych dyskach USB."
+msgstr "Filnamnet av ISO-avbildningen att skriva till anslutna USB-diskar."
 
 #. TRANSLATORS: schema summary
 msgid "The maximum number of threads to use"
-msgstr "Maksymalna liczba używanych wątków"
+msgstr "Maximalt antal trådar att använda"
 
 #. TRANSLATORS: schema description
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr "Maksymalna liczba równoległych wątków używanych podczas kopiowania danych."
+msgstr "Det maximala antalet parallella trådar att använda vid kopiering av data."
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 msgid "Image;Writer;ISO;USB;"
-msgstr "Obraz;Zapisywanie;ISO;USB;"
+msgstr "Avbildning;Skrivning;ISO;USB;"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
@@ -117,62 +116,62 @@ msgstr "GNOME MultiWriter"
 #. TRANSLATORS: The image has been written to
 #. * one device, not all of them yet
 msgid "Image written successfully"
-msgstr "Pomyślnie zapisano obraz"
+msgstr "Skrivning av avbildning lyckades"
 
 #. TRANSLATORS: copy aborted
 msgid "Cancelled"
-msgstr "Anulowano"
+msgstr "Avbruten"
 
 #. TRANSLATORS: we're writing the image to the USB device
 msgid "Writing image…"
-msgstr "Zapisywanie obrazu…"
+msgstr "Skriver avbildning..."
 
 #. TRANSLATORS: We're verifying the USB
 #. * device contains the correct image data
 msgid "Verifying image…"
-msgstr "Sprawdzanie poprawności obrazu…"
+msgstr "Verifierar avbildning..."
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
 msgid "Failed to open"
-msgstr "Otwarcie się nie powiodło"
+msgstr "Misslyckade att öppna"
 
 #. TRANSLATORS: window title for the file-chooser
 msgid "Choose image to write"
-msgstr "Wybór obrazu do zapisania"
+msgstr "Välj avbildning att skriva"
 
 #. TRANSLATORS: button title
 msgid "Cancel"
-msgstr "Anuluj"
+msgstr "Avbryt"
 
 #. TRANSLATORS: button title
 msgid "Import"
-msgstr "Zaimportuj"
+msgstr "Importera"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
 msgid "ISO files"
-msgstr "Pliki ISO"
+msgstr "ISO-filer"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
 msgid "Failed to copy"
-msgstr "Skopiowanie się nie powiodło"
+msgstr "Misslyckades att kopiera"
 
 #. TRANSLATORS: the inhibit reason
 msgid "Writing ISO to devices"
-msgstr "Zapisywanie pliku ISO na urządzenia"
+msgstr "Skriver ISO till enheter"
 
 #. TRANSLATORS: the title of the about window
 msgid "About GNOME MultiWriter"
-msgstr "Informacje o GNOME MultiWriter"
+msgstr "Om GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
 msgid "translator-credits"
-msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2015\nAviary.pl <gnomepl@aviary.pl>, 2015"
+msgstr "Andreas Henriksson"
 
 #. TRANSLATORS: command line option
 msgid "Show extra debugging information"
-msgstr "Wyświetla dodatkowe informacje debugowania"
+msgstr "Visa extra debug-information"
 
 #. TRANSLATORS: the user has sausages for fingers
 msgid "Failed to parse command line options"
-msgstr "Przetworzenie opcji wiersza poleceń się nie powiodło"
+msgstr "Misslyckades att tolka kommandorads-optioner"

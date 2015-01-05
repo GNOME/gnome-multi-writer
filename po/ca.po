@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-03 20:08+0000\n"
-"PO-Revision-Date: 2015-01-04 00:21+0000\n"
+"POT-Creation-Date: 2015-01-04 13:41+0000\n"
+"PO-Revision-Date: 2015-01-05 08:51+0000\n"
 "Last-Translator: Olivier Banus <olivier.banus@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/gnome-multi-writer/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -18,21 +18,32 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Import ISO file…"
-msgstr "Importar fitxer ISO ..."
-
-msgid "_About"
-msgstr "_Quant a"
-
-msgid "_Quit"
-msgstr "_Tanca"
-
+#. TRANSLATORS: Application window title
+#. TRANSLATORS: the application name
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
+#. TRANSLATORS: button to start the copy
+msgid "Start Copying"
+msgstr "Comença a copiar"
+
+#. TRANSLATORS: app menu item for the file chooser
+msgid "Import ISO file…"
+msgstr "Importar fitxer ISO ..."
+
+#. TRANSLATORS: app menu item for the About UI
+msgid "_About"
+msgstr "_Quant a"
+
+#. TRANSLATORS: app menu item for Quit
+msgid "_Quit"
+msgstr "_Tanca"
+
+#. TRANSLATORS: one-line description for the app
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Escriu un arxiu ISO a diversos dispositius USB a la vegada"
 
+#. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Once an .img or .iso file has been chosen it can be written to an "
@@ -40,83 +51,120 @@ msgid ""
 "between 1Gb and 32Gb."
 msgstr "GNOME MultiWriter es pot utilitzar per escriure un fitxer ISO a diversos dispositius USB a la vegada. Una vegada que s'ha triat un arxiu .img o .iso es pot escriure en un nombre il·limitat de dispositius USB al mateix temps. Les mides de disc suportats són entre 1Gb i 32Gb ."
 
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
+#. name
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr "MultiWriter va ser escrit originalment com a part del projecte ColorHug però es va separar com una aplicació independent al 2015."
 
+#. TRANSLATORS: 'People' refers to different users of the software
 msgid "People have used MultiWriter in a few different ways:"
 msgstr "La gent ha utilitzat MultiWriter de diverses maneres diferents :"
 
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff
 msgid "To copy a specific ISO for QA testing for a small number of users"
 msgstr "Per copiar una ISO específica per a les proves de control de qualitat per a un petit nombre d'usuaris"
 
-msgid "To create a GNOME LiveCD of Fedora Rawhide for a code sprint"
-msgstr "Per crear un LiveCD del GNOME de Fedora Rawhide per a un code sprint"
+#. TRANSLATORS: GNOME refers to the desktop environment
+msgid "To share a LiveUSB image of GNOME for a code sprint"
+msgstr "Per compartir una imatge LiveUSB de GNOME per a  un code sprint"
 
-msgid "To create hundreds of LiveUSB drives for the ColorHug project"
-msgstr "Per crear centenars d'unitats LiveUSB per al projecte ColorHug"
+#. TRANSLATORS: USB flash drives here refer to the storage pendrive things
+msgid "To create hundreds of USB flash drives for the ColorHug project"
+msgstr "Per crear centenars d'unitats USB per al projecte ColorHug"
 
+#. TRANSLATORS: the 1st screenshot caption
 msgid "Initial screen for the application"
 msgstr "Pantalla inicial de l'aplicació"
 
+#. TRANSLATORS: the 2nd screenshot caption
 msgid "Writing and verifying images"
 msgstr "Escriptura i verificació de les imatges"
 
+#. TRANSLATORS: the 3rd screenshot caption
 msgid "All devices have been written"
 msgstr "Tots els dispositius han estat escrits"
 
+#. TRANSLATORS: schema summary
 msgid "The filename to write to the USB disks"
 msgstr "Nom del fitxer per escriure en els dispositius USB"
 
+#. TRANSLATORS: schema description
 msgid "The filename of the ISO image to write to the connected USB disks."
 msgstr "Nom del fitxer de la imatge ISO per escriure en els dispositius USB connectats."
 
+#. TRANSLATORS: schema summary
 msgid "The maximum number of threads to use"
 msgstr "Nombre màxim de subprocessos per utilitzar"
 
+#. TRANSLATORS: schema description
 msgid "The maximum number of parallel threads to use when copying data."
 msgstr "Nombre màxim subprocessos per utilitzar en copiar dades."
 
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 msgid "Image;Writer;ISO;USB;"
 msgstr "Imatge;Writer;ISO;USB;"
 
-#. TRANSLATORS: this is the application name
+#. TRANSLATORS: the application name
+#. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
+#. TRANSLATORS: the success sound description
+#. TRANSLATORS: The image has been written to
+#. * one device, not all of them yet
 msgid "Image written successfully"
 msgstr "Imatge escrita amb èxit"
 
+#. TRANSLATORS: copy aborted
 msgid "Cancelled"
 msgstr "Cancel·lat"
 
+#. TRANSLATORS: we're writing the image to the USB device
 msgid "Writing image…"
 msgstr "Escrivint imatge ..."
 
+#. TRANSLATORS: We're verifying the USB
+#. * device contains the correct image data
 msgid "Verifying image…"
 msgstr "Verificant l'imatge ..."
 
+#. TRANSLATORS: we couldn't open the ISO file the user chose
 msgid "Failed to open"
 msgstr "Error en obrir"
 
+#. TRANSLATORS: window title for the file-chooser
 msgid "Choose image to write"
 msgstr "Tria la imatge per escriure"
 
+#. TRANSLATORS: button title
 msgid "Cancel"
 msgstr "Cancel·la"
 
+#. TRANSLATORS: button title
 msgid "Import"
 msgstr "Importa"
 
+#. TRANSLATORS: the file filter description, e.g. *.iso
+msgid "ISO files"
+msgstr "Arxius ISO"
+
+#. TRANSLATORS: error dialog title:
+#. * we probably didn't authenticate
 msgid "Failed to copy"
 msgstr "Error en copiar"
 
-#. TRANSLATORS: this is the title of the about window
+#. TRANSLATORS: the inhibit reason
+msgid "Writing ISO to devices"
+msgstr "Escrivint ISO als dispositius"
+
+#. TRANSLATORS: the title of the about window
 msgid "About GNOME MultiWriter"
 msgstr "Quant a GNOME MultiWriter"
 
+#. TRANSLATORS: you can put your name here :)
 msgid "translator-credits"
 msgstr "Crèdits de traducció"
 
@@ -124,5 +172,6 @@ msgstr "Crèdits de traducció"
 msgid "Show extra debugging information"
 msgstr "Mostra informació de depuració"
 
+#. TRANSLATORS: the user has sausages for fingers
 msgid "Failed to parse command line options"
 msgstr "Error analitzant opcions de la línia d'ordres"

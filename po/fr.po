@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# d4rkf4b <d4rkf4b@gmail.com>, 2015
 # geecko <geecko.dev@free.fr>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-03 20:08+0000\n"
-"PO-Revision-Date: 2015-01-03 23:20+0000\n"
-"Last-Translator: geecko <geecko.dev@free.fr>\n"
+"POT-Creation-Date: 2015-01-04 13:41+0000\n"
+"PO-Revision-Date: 2015-01-05 08:41+0000\n"
+"Last-Translator: d4rkf4b <d4rkf4b@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/gnome-multi-writer/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,21 +19,32 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Import ISO file…"
-msgstr "Importer un fichier ISO..."
-
-msgid "_About"
-msgstr "_À propos"
-
-msgid "_Quit"
-msgstr "_Quitter"
-
+#. TRANSLATORS: Application window title
+#. TRANSLATORS: the application name
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
+#. TRANSLATORS: button to start the copy
+msgid "Start Copying"
+msgstr "Démarrer la copie"
+
+#. TRANSLATORS: app menu item for the file chooser
+msgid "Import ISO file…"
+msgstr "Importer un fichier ISO..."
+
+#. TRANSLATORS: app menu item for the About UI
+msgid "_About"
+msgstr "_À propos"
+
+#. TRANSLATORS: app menu item for Quit
+msgid "_Quit"
+msgstr "_Quitter"
+
+#. TRANSLATORS: one-line description for the app
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Écrire un fichier ISO sur plusieurs périphériques USB à la fois"
 
+#. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Once an .img or .iso file has been chosen it can be written to an "
@@ -40,83 +52,120 @@ msgid ""
 "between 1Gb and 32Gb."
 msgstr "GNOME MultiWriter peut être utilisé pour écrire un fichier ISO sur de multiples périphériques USB à la fois. Après avoir choisi un fichier .img ou .iso, il peut être écrit sur un nombre illimité de périphériques USB simultanément. Les tailles supportées de lecteur sont de 1Go à 32Go."
 
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
+#. name
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr "MultiWriter a été écrit dans le cadre du projet ColorHug puis a été séparé en une application indépendante en 2015."
 
+#. TRANSLATORS: 'People' refers to different users of the software
 msgid "People have used MultiWriter in a few different ways:"
 msgstr "Des personnes ont utilisé MultiWriter de plusieurs manières différentes:"
 
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff
 msgid "To copy a specific ISO for QA testing for a small number of users"
 msgstr "Copier un ISO spécifique pour un test d'assurance qualité avec un petit nombre d'utilisateurs"
 
-msgid "To create a GNOME LiveCD of Fedora Rawhide for a code sprint"
-msgstr "Créer un LiveCD GNOME de Fedora Rawhide pour un sprint"
+#. TRANSLATORS: GNOME refers to the desktop environment
+msgid "To share a LiveUSB image of GNOME for a code sprint"
+msgstr "partager une image USB Live de GNOME pour un sprint de code"
 
-msgid "To create hundreds of LiveUSB drives for the ColorHug project"
-msgstr "Créer des centaines de lecteurs LiveUSB pour le projet ColorHug"
+#. TRANSLATORS: USB flash drives here refer to the storage pendrive things
+msgid "To create hundreds of USB flash drives for the ColorHug project"
+msgstr "créer plusieurs clés USB pour le projet ColorHug"
 
+#. TRANSLATORS: the 1st screenshot caption
 msgid "Initial screen for the application"
 msgstr "Écran d'accueil de l'application"
 
+#. TRANSLATORS: the 2nd screenshot caption
 msgid "Writing and verifying images"
 msgstr "Écrire et vérifier des images disque"
 
+#. TRANSLATORS: the 3rd screenshot caption
 msgid "All devices have been written"
 msgstr "Tous les périphériques ont été écrits"
 
+#. TRANSLATORS: schema summary
 msgid "The filename to write to the USB disks"
 msgstr "Le nom du fichier à écrire sur les lecteurs USB"
 
+#. TRANSLATORS: schema description
 msgid "The filename of the ISO image to write to the connected USB disks."
 msgstr "Le nom de fichier de l'image ISO à écrire sur les disques USB connectés."
 
+#. TRANSLATORS: schema summary
 msgid "The maximum number of threads to use"
 msgstr "Le nombre maximum de fils d'exécution à utiliser"
 
+#. TRANSLATORS: schema description
 msgid "The maximum number of parallel threads to use when copying data."
 msgstr "Le nombre maximum de fils d'exécution parallèles à utiliser lors de la copie de données."
 
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 msgid "Image;Writer;ISO;USB;"
 msgstr "Image;Écriture;ISO;USB;"
 
-#. TRANSLATORS: this is the application name
+#. TRANSLATORS: the application name
+#. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
+#. TRANSLATORS: the success sound description
+#. TRANSLATORS: The image has been written to
+#. * one device, not all of them yet
 msgid "Image written successfully"
 msgstr "Image écrite avec succès"
 
+#. TRANSLATORS: copy aborted
 msgid "Cancelled"
 msgstr "Annulé"
 
+#. TRANSLATORS: we're writing the image to the USB device
 msgid "Writing image…"
 msgstr "Écriture de l'image..."
 
+#. TRANSLATORS: We're verifying the USB
+#. * device contains the correct image data
 msgid "Verifying image…"
 msgstr "Vérification de l'image..."
 
+#. TRANSLATORS: we couldn't open the ISO file the user chose
 msgid "Failed to open"
 msgstr "Impossible d'ouvrir"
 
+#. TRANSLATORS: window title for the file-chooser
 msgid "Choose image to write"
 msgstr "Choisir l'image à écrire"
 
+#. TRANSLATORS: button title
 msgid "Cancel"
 msgstr "Annuler"
 
+#. TRANSLATORS: button title
 msgid "Import"
 msgstr "Importer"
 
+#. TRANSLATORS: the file filter description, e.g. *.iso
+msgid "ISO files"
+msgstr "Importer un fichier ISO"
+
+#. TRANSLATORS: error dialog title:
+#. * we probably didn't authenticate
 msgid "Failed to copy"
 msgstr "Impossible de copier"
 
-#. TRANSLATORS: this is the title of the about window
+#. TRANSLATORS: the inhibit reason
+msgid "Writing ISO to devices"
+msgstr "Écriture de l'ISO sur le disque"
+
+#. TRANSLATORS: the title of the about window
 msgid "About GNOME MultiWriter"
 msgstr "À propos de GNOME MultiWriter"
 
+#. TRANSLATORS: you can put your name here :)
 msgid "translator-credits"
 msgstr "Clément Guérin <geecko.dev@free.fr>"
 
@@ -124,5 +173,6 @@ msgstr "Clément Guérin <geecko.dev@free.fr>"
 msgid "Show extra debugging information"
 msgstr "Montre des informations de déboguage supplémentaires"
 
+#. TRANSLATORS: the user has sausages for fingers
 msgid "Failed to parse command line options"
 msgstr "Impossible de traiter les options de ligne de commande"
