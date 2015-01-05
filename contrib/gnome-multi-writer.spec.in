@@ -16,6 +16,7 @@ BuildRequires: gtk3-devel
 BuildRequires: intltool
 BuildRequires: itstool
 BuildRequires: libcanberra-devel >= 0.10
+BuildRequires: libgusb-devel >= 0.1.4
 BuildRequires: libudisks2-devel
 
 %description

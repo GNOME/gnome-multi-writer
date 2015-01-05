@@ -28,6 +28,7 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
+#include <gusb.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <udisks/udisks.h>
@@ -43,6 +44,7 @@ typedef struct {
 	GtkApplication		*application;
 	GtkBuilder		*builder;
 	GCancellable		*cancellable;
+	GUsbContext		*usb_ctx;
 	UDisksClient		*udisks_client;
 	GThreadPool		*thread_pool;
 	gboolean		 done_polkit_auth;
@@ -990,26 +992,183 @@ gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device)
 }
 
 /**
+ * gmw_sysfs_get_busnum:
+ **/
+static guint8
+gmw_sysfs_get_busnum (const gchar *filename)
+{
+	_cleanup_free_ gchar *data = NULL;
+	_cleanup_free_ gchar *path = NULL;
+	path = g_build_filename (filename, "busnum", NULL);
+	if (!g_file_get_contents (path, &data, NULL, NULL))
+		return 0;
+	return g_ascii_strtoull (data, NULL, 10);
+}
+
+/**
+ * gmw_sysfs_get_devnum:
+ **/
+static guint8
+gmw_sysfs_get_devnum (const gchar *filename)
+{
+	_cleanup_free_ gchar *data = NULL;
+	_cleanup_free_ gchar *path = NULL;
+	path = g_build_filename (filename, "devnum", NULL);
+	if (!g_file_get_contents (path, &data, NULL, NULL))
+		return 0;
+	return g_ascii_strtoull (data, NULL, 10);
+}
+
+#if G_USB_CHECK_VERSION(0,2,4)
+typedef struct {
+	guint16		 parent_vid;		/* +1 */
+	guint16		 parent_pid;		/* +1 */
+	guint16		 grandparent_vid;	/* +2, or 0x0000 */
+	guint16		 grandparent_pid;	/* +2, or 0x0000 */
+	guint16		 child_vid;		/* -1, or 0x0000 */
+	guint16		 child_pid;		/* -1, or 0x0000 */
+	guint8		 port_number;		/* electrical, not physical */
+	const gchar	*platform_id;		/* new label */
+} GmwQuirk;
+#endif
+
+/**
+ * gmw_udisks_get_quirk_id:
+ **/
+static gchar *
+gmw_udisks_get_quirk_id (GmwPrivate *priv, GUsbDevice *usb_device)
+{
+#if G_USB_CHECK_VERSION(0,2,4)
+	guint i;
+	guint j;
+	_cleanup_object_unref_ GUsbDevice *usb_parent = NULL;
+	_cleanup_object_unref_ GUsbDevice *usb_grandparent = NULL;
+	const GmwQuirk quirks[] = {
+		/*
+		 * Orico PIO Series Hub
+		 *
+		 *  [USB]
+		 *    |
+		 * [0x1a40:0x0101] --- [____0x1a40:0x0201_____]
+		 *    |   |   |         |   |   |   |    |   |
+		 *    #1  #2  #3        #4  #5  #6  #10  #9  #8
+		 */
+		{ 0x1a40, 0x0101, 0x0000, 0x0000, 0x1a40, 0x0201, 0x01, "#01" },
+		{ 0x1a40, 0x0101, 0x0000, 0x0000, 0x1a40, 0x0201, 0x02, "#02" },
+		{ 0x1a40, 0x0101, 0x0000, 0x0000, 0x1a40, 0x0201, 0x03, "#03" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x01, "#04" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x02, "#05" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x03, "#06" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x04, "#07" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x07, "#08" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x06, "#09" },
+		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x05, "#10" },
+		/* last entry */
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x00, NULL }
+	};
+
+	usb_parent = g_usb_device_get_parent (usb_device);
+	usb_grandparent = g_usb_device_get_parent (usb_parent);
+	g_debug ("Quirk info: 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%02x",
+		 g_usb_device_get_vid (usb_parent),
+		 g_usb_device_get_pid (usb_parent),
+		 g_usb_device_get_vid (usb_grandparent),
+		 g_usb_device_get_pid (usb_grandparent),
+		 g_usb_device_get_port_number (usb_device));
+
+	for (i = 0; quirks[i].platform_id != NULL; i++) {
+		/* check grandparent */
+		if (usb_grandparent != NULL && quirks[i].grandparent_vid != 0x0000) {
+			if (quirks[i].grandparent_vid != g_usb_device_get_vid (usb_grandparent))
+				continue;
+			if (quirks[i].grandparent_pid != g_usb_device_get_pid (usb_grandparent))
+				continue;
+		}
+
+		/* check parent */
+		if (usb_parent != NULL && quirks[i].parent_vid != 0x0000) {
+			if (quirks[i].parent_vid != g_usb_device_get_vid (usb_parent))
+				continue;
+			if (quirks[i].parent_pid != g_usb_device_get_pid (usb_parent))
+				continue;
+		}
+
+		/* check children */
+		if (usb_parent != NULL && quirks[i].child_vid != 0x0000) {
+			GUsbDevice *tmp;
+			gboolean child_exists = FALSE;
+			_cleanup_ptrarray_unref_ GPtrArray *children = NULL;
+
+			/* the specified child just has to exist once */
+			children = g_usb_device_get_children (usb_parent);
+			for (j = 0; j < children->len; j++) {
+				tmp = g_ptr_array_index (children, j);
+				if (g_usb_device_get_vid (tmp) == quirks[i].child_vid &&
+				    g_usb_device_get_pid (tmp) == quirks[i].child_pid) {
+					child_exists = TRUE;
+					break;
+				}
+			}
+			if (!child_exists)
+				continue;
+		}
+
+		/* check port number */
+		if (quirks[i].port_number != 0x00) {
+			if (quirks[i].port_number != g_usb_device_get_port_number (usb_device))
+				continue;
+		}
+
+		/* we got an override */
+		return g_strdup (quirks[i].platform_id);
+	}
+#endif
+	return NULL;
+}
+
+/**
  * gmw_udisks_get_sibling_id:
  **/
 static gchar *
-gmw_udisks_get_sibling_id (UDisksDrive *udisks_drive)
+gmw_udisks_get_sibling_id (GmwPrivate *priv, UDisksDrive *udisks_drive)
 {
 	const gchar *sibling_id;
-	guint len;
+	gchar *parent_id = NULL;
+	gchar *quirk_id;
+	guint8 busnum;
+	guint8 devnum;
+	_cleanup_object_unref_ GUsbDevice *usb_device = NULL;
 	_cleanup_strv_free_ gchar **split = NULL;
 
 	/* get the sibling ID, which is normally the USB path */
 	sibling_id = udisks_drive_get_sibling_id (udisks_drive);
 	if (sibling_id == NULL || sibling_id[0] == '\0')
 		return g_strdup ("???");
-	split = g_strsplit (sibling_id, "/", -1);
 
-	/* split up and get the second to last element */
-	len = g_strv_length (split);
-	if (len < 3)
-		return g_strdup ("/???");
-	return g_strdup (split[len -2]);
+	/* find the USB device using GUsb */
+	parent_id = g_path_get_dirname (sibling_id);
+	busnum = gmw_sysfs_get_busnum (parent_id);
+	devnum = gmw_sysfs_get_devnum (parent_id);
+	if (busnum == 0x00 || devnum == 0x00) {
+		g_warning ("Failed to get busnum for %s", parent_id);
+		return g_path_get_basename (parent_id);
+	}
+	usb_device = g_usb_context_find_by_bus_address (priv->usb_ctx,
+							busnum,
+							devnum,
+							NULL);
+	if (usb_device == NULL) {
+		g_warning ("Failed to find %02x:%02x", busnum, devnum);
+		return g_path_get_basename (parent_id);
+	}
+
+	/* can we get the ID from a quirk */
+	quirk_id = gmw_udisks_get_quirk_id (priv, usb_device);
+	if (quirk_id != NULL)
+		return quirk_id;
+
+	/* return the bare platform ID */
+	return g_strdup (g_usb_device_get_platform_id (usb_device) + 7);
 }
 
 /**
@@ -1084,7 +1243,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->udisks_block = g_object_ref (udisks_block);
 	device->state = GMW_DEVICE_STATE_STARTUP;
 	device->title = g_strdup (device->device_name);
-	device->sibling_id = gmw_udisks_get_sibling_id (udisks_drive);
+	device->sibling_id = gmw_udisks_get_sibling_id (priv, udisks_drive);
 	device->complete = -1.f;
 	g_mutex_init (&device->mutex);
 
@@ -1214,6 +1373,7 @@ main (int argc, char **argv)
 		goto out;
 	}
 	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
+	priv->usb_ctx = g_usb_context_new (NULL);
 
 	/* connect to UDisks */
 	udisks_client_new (NULL, gmw_udisks_client_connect_cb, priv);
@@ -1239,6 +1399,8 @@ out:
 			g_object_unref (priv->settings);
 		if (priv->udisks_client != NULL)
 			g_object_unref (priv->udisks_client);
+		if (priv->usb_ctx != NULL)
+			g_object_unref (priv->usb_ctx);
 		if (priv->image_file != NULL)
 			g_object_unref (priv->image_file);
 		if (priv->cancellable != NULL)
