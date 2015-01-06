@@ -38,8 +38,8 @@
 typedef struct {
 	GFile			*image_file;
 	guint64			 image_file_size;
-	GMutex			 mutex_shared;
 	GPtrArray		*devices;
+	GMutex			 devices_mutex;
 	GSettings		*settings;
 	GtkApplication		*application;
 	GtkBuilder		*builder;
@@ -47,8 +47,10 @@ typedef struct {
 	GUsbContext		*usb_ctx;
 	UDisksClient		*udisks_client;
 	GThreadPool		*thread_pool;
+	GMutex			 thread_pool_mutex;
 	gboolean		 done_polkit_auth;
 	guint			 inhibit_id;
+	guint			 throughput_id;
 	guint			 idle_id;
 	GMutex			 idle_id_mutex;
 } GmwPrivate;
@@ -72,6 +74,8 @@ typedef struct {
 	gchar			*title;
 	gchar			*sibling_id;
 	gdouble			 complete;
+	gdouble			 throughput_w;
+	gdouble			 throughput_r;
 	GMutex			 mutex;
 } GmwDevice;
 
@@ -291,7 +295,7 @@ gmw_device_set_state (GmwDevice *device,
 static void
 gmw_copy_done (GmwPrivate *priv)
 {
-	g_mutex_lock (&priv->mutex_shared);
+	g_mutex_lock (&priv->thread_pool_mutex);
 	if (g_thread_pool_get_num_threads (priv->thread_pool) == 1) {
 		ca_context_play (ca_gtk_context_get (), 0,
 				 CA_PROP_EVENT_ID, "complete",
@@ -307,7 +311,7 @@ gmw_copy_done (GmwPrivate *priv)
 			priv->inhibit_id = 0;
 		}
 	}
-	g_mutex_unlock (&priv->mutex_shared);
+	g_mutex_unlock (&priv->thread_pool_mutex);
 }
 
 /**
@@ -340,10 +344,12 @@ gmw_device_write (GmwPrivate *priv,
 	gint fd = -1;
 	guchar *buffer = NULL;
 	guint64 bytes_completed = 0;
+	guint64 bytes_throughput = 0;
 	_cleanup_error_free_ GError *error_local = NULL;
 	_cleanup_free_ guchar *buffer_unaligned = NULL;
 	_cleanup_object_unref_ GOutputStream *device_stream = NULL;
 	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
+	_cleanup_timer_destroy_ GTimer *timer = NULL;
 	_cleanup_variant_unref_ GVariant *fd_index = NULL;
 
 	/* get fd from udisks */
@@ -366,10 +372,13 @@ gmw_device_write (GmwPrivate *priv,
 	/* read huge blocks and write it to the output device */
 	buffer_unaligned = gmw_get_aligned_buffer (buffer_size, &buffer);
 	bytes_completed = 0;
+	timer = g_timer_new ();
 	while (bytes_completed < priv->image_file_size) {
+		gdouble elapsed;
 		gsize bytes_to_read;
 		gsize bytes_read;
 		gssize bytes_written;
+		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
 		if (bytes_to_read + bytes_completed > priv->image_file_size)
@@ -428,19 +437,33 @@ gmw_device_write (GmwPrivate *priv,
 			goto out;
 		}
 		bytes_completed += bytes_written;
+		bytes_throughput += bytes_written;
 
 		/* update UI */
+		elapsed = g_timer_elapsed (timer, NULL);
+		if (elapsed > 1.f) {
+			device->throughput_w = (gdouble) bytes_throughput / elapsed;
+			g_timer_reset (timer);
+			bytes_throughput = 0;
+		}
 		device->complete = (gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size);
-		gmw_device_set_state (device,
-				      GMW_DEVICE_STATE_WRITE,
-				      /* TRANSLATORS: we're writing the image to the USB device */
-				      _("Writing…"));
+		if (device->throughput_w > 0.f) {
+			/* TRANSLATORS: we're writing the image to the device
+			 * and we now know the speed */
+			title = g_strdup_printf (_("Writing at %.1f MB/s…"),
+						 device->throughput_w / (1000 * 1000));
+		} else {
+			/* TRANSLATORS: we're writing the image to the USB device */
+			title = g_strdup (_("Writing…"));
+		}
+		gmw_device_set_state (device, GMW_DEVICE_STATE_WRITE, title);
 		gmw_refresh_in_idle (priv);
 	}
 
 	/* success */
 	ret = TRUE;
 out:
+	device->throughput_w = 0.f;
 	if (device_stream != NULL)
 		g_output_stream_close (G_OUTPUT_STREAM (device_stream), NULL, NULL);
 	return ret;
@@ -458,14 +481,16 @@ gmw_device_verify (GmwPrivate *priv,
 	const gint buffer_size = (1 * 1024 * 1024); /* default to 1 MiB blocks */
 	gboolean ret = FALSE;
 	gint fd = -1;
-	guchar *buffer_src = NULL;
 	guchar *buffer_dest = NULL;
+	guchar *buffer_src = NULL;
 	guint64 bytes_completed = 0;
+	guint64 bytes_throughput = 0;
 	_cleanup_error_free_ GError *error_local = NULL;
 	_cleanup_free_ guchar *buffer_unaligned_src = NULL;
 	_cleanup_free_ guchar *buffer_unaligned_dest = NULL;
 	_cleanup_object_unref_ GInputStream *device_stream = NULL;
 	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
+	_cleanup_timer_destroy_ GTimer *timer = NULL;
 	_cleanup_variant_unref_ GVariant *fd_index = NULL;
 
 	/* rewind */
@@ -494,9 +519,12 @@ gmw_device_verify (GmwPrivate *priv,
 	buffer_unaligned_src = gmw_get_aligned_buffer (buffer_size, &buffer_src);
 	buffer_unaligned_dest = gmw_get_aligned_buffer (buffer_size, &buffer_dest);
 	bytes_completed = 0;
+	timer = g_timer_new ();
 	while (bytes_completed < priv->image_file_size) {
+		gdouble elapsed;
 		gsize bytes_to_read;
 		gsize bytes_read;
+		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
 		if (bytes_to_read + bytes_completed > priv->image_file_size)
@@ -581,23 +609,90 @@ gmw_device_verify (GmwPrivate *priv,
 		}
 
 		bytes_completed += bytes_read;
+		bytes_throughput += bytes_read;
+
+		/* update UI */
+		elapsed = g_timer_elapsed (timer, NULL);
+		if (elapsed > 1.f) {
+			device->throughput_r = (gdouble) bytes_throughput / elapsed;
+			g_timer_reset (timer);
+			bytes_throughput = 0;
+		}
 
 		/* update UI */
 		device->complete = 0.5f + ((gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size));
-		gmw_device_set_state (device,
-				      GMW_DEVICE_STATE_VERIFY,
-				      /* TRANSLATORS: We're verifying the USB
-				       * device contains the correct image data */
-				      _("Verifying…"));
+		if (device->throughput_r > 0.f) {
+			/* TRANSLATORS: We're verifying the USB device contains
+			 * the correct image data and we now know the speed */
+			title = g_strdup_printf (_("Verifying at %.1f MB/s…"),
+						 device->throughput_r / (1000 * 1000));
+		} else {
+			/* TRANSLATORS: We're verifying the USB device contains
+			 * the correct image data */
+			title = g_strdup (_("Verifying…"));
+		}
+		gmw_device_set_state (device, GMW_DEVICE_STATE_WRITE, title);
 		gmw_refresh_in_idle (priv);
 	}
 
 	/* success */
 	ret = TRUE;
 out:
+	device->throughput_r = 0.f;
 	if (device_stream != NULL)
 		g_input_stream_close (G_INPUT_STREAM (device_stream), NULL, NULL);
 	return ret;
+}
+
+/**
+ * gmw_refresh_titlebar:
+ **/
+static void
+gmw_refresh_titlebar (GmwPrivate *priv)
+{
+	GmwDevice *device;
+	GtkWidget *w;
+	gdouble throughput_r = 0.f;
+	gdouble throughput_w = 0.f;
+	guint i;
+	_cleanup_string_free_ GString *title = NULL;
+
+	/* find the throughput totals */
+	g_mutex_lock (&priv->devices_mutex);
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
+		g_mutex_lock (&device->mutex);
+		throughput_r += device->throughput_r;
+		throughput_w += device->throughput_w;
+		g_mutex_unlock (&device->mutex);
+	}
+	g_mutex_unlock (&priv->devices_mutex);
+
+	/* set the title */
+	title = g_string_new (_("MultiWriter"));
+	if (throughput_w > 0.f) {
+		g_string_append_printf (title, " → %.0f MB/s",
+					throughput_w / (1000 * 1000));
+	}
+	if (throughput_r > 0.f) {
+		_cleanup_free_ gchar *tmp = NULL;
+		tmp = g_strdup_printf ("%.0f MB/s → ",
+				       throughput_r / (1000 * 1000));
+		g_string_prepend (title, tmp);
+	}
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "header"));
+	gtk_header_bar_set_title (GTK_HEADER_BAR (w), title->str);
+}
+
+/**
+ * gmw_refresh_titlebar_idle_cb:
+ **/
+static gboolean
+gmw_refresh_titlebar_idle_cb (gpointer user_data)
+{
+	GmwPrivate *priv = (GmwPrivate *) user_data;
+	gmw_refresh_titlebar (priv);
+	return G_SOURCE_REMOVE;
 }
 
 /**
@@ -646,7 +741,12 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 			       * and verified to *one* device, not all */
 			      _("Written successfully"));
 out:
+	if (priv->throughput_id > 0) {
+		g_source_remove (priv->throughput_id);
+		priv->throughput_id = 0;
+	}
 	gmw_refresh_in_idle (priv);
+	g_idle_add (gmw_refresh_titlebar_idle_cb, priv);
 	g_timeout_add_seconds (2, gmw_refresh_in_idle_cb, priv);
 	g_input_stream_close (G_INPUT_STREAM (image_stream), NULL, NULL);
 	gmw_copy_done (priv);
@@ -767,6 +867,17 @@ out:
 }
 
 /**
+ * gmw_throughput_update_titlebar_cb:
+ **/
+static gboolean
+gmw_throughput_update_titlebar_cb (gpointer user_data)
+{
+	GmwPrivate *priv = (GmwPrivate *) user_data;
+	gmw_refresh_titlebar (priv);
+	return G_SOURCE_CONTINUE;
+}
+
+/**
  * gmw_start_button_cb:
  **/
 static void
@@ -798,6 +909,10 @@ gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
 		}
 		priv->done_polkit_auth = TRUE;
 	}
+
+	/* update the global stats */
+	priv->throughput_id =
+		g_timeout_add_seconds (1, gmw_throughput_update_titlebar_cb, priv);
 
 	/* don't allow suspend */
 	window = GTK_WINDOW (gtk_builder_get_object (priv->builder, "dialog_main"));
@@ -1262,7 +1377,9 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	/* unmount filesystems on the block device */
 	gmw_udisks_unmount_filesystems (priv, device);
 
+	g_mutex_lock (&priv->devices_mutex);
 	g_ptr_array_add (priv->devices, device);
+	g_mutex_unlock (&priv->devices_mutex);
 	g_debug ("Added %s [%lu]", device_path, device_size);
 }
 
@@ -1372,7 +1489,8 @@ main (int argc, char **argv)
 	}
 
 	priv = g_new0 (GmwPrivate, 1);
-	g_mutex_init (&priv->mutex_shared);
+	g_mutex_init (&priv->thread_pool_mutex);
+	g_mutex_init (&priv->devices_mutex);
 	g_mutex_init (&priv->idle_id_mutex);
 	priv->cancellable = g_cancellable_new ();
 	priv->settings = g_settings_new ("org.gnome.MultiWriter");
@@ -1419,7 +1537,8 @@ out:
 			g_object_unref (priv->cancellable);
 		g_object_unref (priv->application);
 		g_thread_pool_free (priv->thread_pool, TRUE, TRUE);
-		g_mutex_clear (&priv->mutex_shared);
+		g_mutex_clear (&priv->thread_pool_mutex);
+		g_mutex_clear (&priv->devices_mutex);
 		g_mutex_clear (&priv->idle_id_mutex);
 		g_ptr_array_unref (priv->devices);
 		g_free (priv);
