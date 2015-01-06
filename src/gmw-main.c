@@ -434,7 +434,7 @@ gmw_device_write (GmwPrivate *priv,
 		gmw_device_set_state (device,
 				      GMW_DEVICE_STATE_WRITE,
 				      /* TRANSLATORS: we're writing the image to the USB device */
-				      _("Writing image…"));
+				      _("Writing…"));
 		gmw_refresh_in_idle (priv);
 	}
 
@@ -588,7 +588,7 @@ gmw_device_verify (GmwPrivate *priv,
 				      GMW_DEVICE_STATE_VERIFY,
 				      /* TRANSLATORS: We're verifying the USB
 				       * device contains the correct image data */
-				      _("Verifying image…"));
+				      _("Verifying…"));
 		gmw_refresh_in_idle (priv);
 	}
 
@@ -642,9 +642,9 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	device->complete = -1.f;
 	gmw_device_set_state (device,
 			      GMW_DEVICE_STATE_SUCCESS,
-			      /* TRANSLATORS: The image has been written to
-			       * one device, not all of them yet */
-			      _("Image written successfully"));
+			      /* TRANSLATORS: The image has been written
+			       * and verified to *one* device, not all */
+			      _("Written successfully"));
 out:
 	gmw_refresh_in_idle (priv);
 	g_timeout_add_seconds (2, gmw_refresh_in_idle_cb, priv);
@@ -709,8 +709,8 @@ gmw_import_filename (GmwPrivate *priv)
 	_cleanup_object_unref_ GFile *file = NULL;
 
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
-	/* TRANSLATORS: window title for the file-chooser */
-	d = gtk_file_chooser_dialog_new (_("Choose image to write"),
+	/* TRANSLATORS: window title for the file-chooser, file is an ISO */
+	d = gtk_file_chooser_dialog_new (_("Choose the file to write"),
 					 GTK_WINDOW (w),
 					 GTK_FILE_CHOOSER_ACTION_OPEN,
 					 /* TRANSLATORS: button title */
