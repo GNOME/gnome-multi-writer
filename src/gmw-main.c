@@ -176,6 +176,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 	GmwDevice *device;
 	GtkWidget *grid;
 	GtkWidget *w;
+	const guint max_devices_per_column = 10;
 	guint i;
 	_cleanup_list_free_ GList *children = NULL;
 
@@ -193,30 +194,34 @@ gmw_refresh_ui (GmwPrivate *priv)
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *sibling_markup = NULL;
+		guint row = i % max_devices_per_column;
+		guint col = (i / max_devices_per_column) * 4;
 
 		device = g_ptr_array_index (priv->devices, i);
 		g_mutex_lock (&device->mutex);
 
 		/* add sibling-id */
 		w = gtk_label_new (NULL);
+		if (col > 0)
+			gtk_widget_set_margin_start (w, 30);
 		sibling_markup = g_strdup_printf ("<tt><small>%s</small></tt>",
 						  device->sibling_id);
 		gtk_label_set_markup (GTK_LABEL (w), sibling_markup);
 		g_object_set (w, "xalign", 1.f, NULL);
-		gtk_grid_attach (GTK_GRID (grid), w, 0, i, 1, 1);
+		gtk_grid_attach (GTK_GRID (grid), w, col + 0, row, 1, 1);
 
 		/* add icon */
 		w = gtk_image_new ();
 		gtk_image_set_from_icon_name (GTK_IMAGE (w),
 					      gmw_device_state_to_icon (device->state),
 					      GTK_ICON_SIZE_BUTTON);
-		gtk_grid_attach (GTK_GRID (grid), w, 1, i, 1, 1);
+		gtk_grid_attach (GTK_GRID (grid), w, col + 1, row, 1, 1);
 
 		/* add optional progressbar */
 		if (device->complete > 0.f) {
 			w = gtk_progress_bar_new ();
 			gtk_widget_set_valign (w, GTK_ALIGN_CENTER);
-			gtk_grid_attach (GTK_GRID (grid), w, 2, i, 1, 1);
+			gtk_grid_attach (GTK_GRID (grid), w, col + 2, row, 1, 1);
 			gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w), device->complete);
 		}
 
@@ -225,7 +230,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 			w = gtk_label_new (device->title);
 			g_object_set (w, "xalign", 0.f, NULL);
 			gtk_label_set_width_chars (GTK_LABEL (w), 20);
-			gtk_grid_attach (GTK_GRID (grid), w, 3, i, 1, 1);
+			gtk_grid_attach (GTK_GRID (grid), w, col + 3, row, 1, 1);
 		}
 
 		g_mutex_unlock (&device->mutex);
