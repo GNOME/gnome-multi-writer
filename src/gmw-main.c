@@ -1097,6 +1097,7 @@ gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device)
 	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
 	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
 	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
+	_cleanup_strv_free_ gchar **mtab = NULL;
 
 	object_path_child = g_strdup_printf ("%s1", device->object_path);
 	udisks_object = udisks_client_get_object (priv->udisks_client,
@@ -1106,6 +1107,10 @@ gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device)
 	udisks_fs = udisks_object_get_filesystem (udisks_object);
 	if (udisks_fs == NULL)
 		return;
+	mtab = udisks_filesystem_dup_mount_points (udisks_fs);
+	if (mtab == NULL || mtab[0] == NULL)
+		return;
+	g_debug ("Unmount %s from %s", mtab[0], object_path_child);
 	udisks_filesystem_call_unmount (udisks_fs,
 					g_variant_new ("a{sv}", NULL), /* options */
 					priv->cancellable,
