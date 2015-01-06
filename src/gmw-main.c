@@ -1072,8 +1072,8 @@ gmw_udisks_get_quirk_id (GmwPrivate *priv, GUsbDevice *usb_device)
 	g_debug ("Quirk info: 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%02x",
 		 g_usb_device_get_vid (usb_parent),
 		 g_usb_device_get_pid (usb_parent),
-		 g_usb_device_get_vid (usb_grandparent),
-		 g_usb_device_get_pid (usb_grandparent),
+		 usb_grandparent ? g_usb_device_get_vid (usb_grandparent) : 0x0,
+		 usb_grandparent ? g_usb_device_get_pid (usb_grandparent) : 0x0,
 		 g_usb_device_get_port_number (usb_device));
 
 	for (i = 0; quirks[i].platform_id != NULL; i++) {
