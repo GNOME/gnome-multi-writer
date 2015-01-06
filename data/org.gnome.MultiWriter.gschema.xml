@@ -14,5 +14,12 @@
       <!-- TRANSLATORS: schema description -->
       <description>The maximum number of parallel threads to use when copying data.</description>
     </key>
+    <key name="enable-verify" type="b">
+      <default>true</default>
+      <!-- TRANSLATORS: schema summary -->
+      <summary>Verify the ISO image was written correctly</summary>
+      <!-- TRANSLATORS: schema description -->
+      <description>Read and verify the ISO image from each device after writing is complete.</description>
+    </key>
   </schema>
 </schemalist>

@@ -629,11 +629,13 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	}
 
 	/* verify */
-	if (!gmw_device_verify (priv, device, image_stream, &error)) {
-		gmw_device_set_state (device,
-				      GMW_DEVICE_STATE_FAILED,
-				      error->message);
-		goto out;
+	if (g_settings_get_boolean (priv->settings, "enable-verify")) {
+		if (!gmw_device_verify (priv, device, image_stream, &error)) {
+			gmw_device_set_state (device,
+					      GMW_DEVICE_STATE_FAILED,
+					      error->message);
+			goto out;
+		}
 	}
 
 	/* no longer show progressbar */
