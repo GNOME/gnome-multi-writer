@@ -169,21 +169,16 @@ gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 static void
 gmw_refresh_ui (GmwPrivate *priv)
 {
-	GList *l;
 	GmwDevice *device;
 	GtkWidget *grid;
 	GtkWidget *w;
 	const guint max_devices_per_column = 10;
 	guint i;
-	_cleanup_list_free_ GList *children = NULL;
 
 	/* remove old children */
 	grid = GTK_WIDGET (gtk_builder_get_object (priv->builder, "grid_status"));
-	children = gtk_container_get_children (GTK_CONTAINER (grid));
-	for (l = children; l != NULL; l = l->next) {
-		w = GTK_WIDGET (l->data);
-		gtk_widget_destroy (w);
-	}
+	gtk_container_foreach (GTK_CONTAINER (grid),
+			       (GtkCallback) gtk_widget_destroy, priv);
 
 	/* sort the list */
 	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
