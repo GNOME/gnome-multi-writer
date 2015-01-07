@@ -105,9 +105,14 @@ gmw_cancel_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 static gint
 gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 {
-	GmwDevice *device_a = *((GmwDevice **) a);
-	GmwDevice *device_b = *((GmwDevice **) b);
-	return g_strcmp0 (device_a->sibling_id, device_b->sibling_id);
+	GmwDevice *deva = *((GmwDevice **) a);
+	GmwDevice *devb = *((GmwDevice **) b);
+	_cleanup_free_ gchar *keya = NULL;
+	_cleanup_free_ gchar *keyb = NULL;
+
+	keya = g_strdup_printf ("%s-%s", deva->connection_id, deva->device_label);
+	keyb = g_strdup_printf ("%s-%s", devb->connection_id, devb->device_label);
+	return g_strcmp0 (keya, keyb);
 }
 
 /**
@@ -129,7 +134,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
-		_cleanup_free_ gchar *sibling_markup = NULL;
+		_cleanup_free_ gchar *label_markup = NULL;
 		_cleanup_free_ gchar *title = NULL;
 		guint row = i % max_devices_per_column;
 		guint col = (i / max_devices_per_column) * 4;
@@ -137,13 +142,19 @@ gmw_refresh_ui (GmwPrivate *priv)
 		device = g_ptr_array_index (priv->devices, i);
 		g_mutex_lock (&device->mutex);
 
-		/* add sibling-id */
+		/* add label */
 		w = gtk_label_new (NULL);
 		if (col > 0)
 			gtk_widget_set_margin_start (w, 30);
-		sibling_markup = g_strdup_printf ("<tt><small>%s</small></tt>",
-						  device->sibling_id);
-		gtk_label_set_markup (GTK_LABEL (w), sibling_markup);
+		if (device->device_label != NULL) {
+			label_markup = g_strdup_printf ("<tt><small>%s [%s]</small></tt>",
+							device->connection_id,
+							device->device_label);
+		} else {
+			label_markup = g_strdup_printf ("<tt><small>%s</small></tt>",
+							device->connection_id);
+		}
+		gtk_label_set_markup (GTK_LABEL (w), label_markup);
 		g_object_set (w, "xalign", 1.f, NULL);
 		gtk_grid_attach (GTK_GRID (grid), w, col + 0, row, 1, 1);
 
@@ -1200,156 +1211,24 @@ gmw_sysfs_get_devnum (const gchar *filename)
 	return g_ascii_strtoull (data, NULL, 10);
 }
 
-#if G_USB_CHECK_VERSION(0,2,4)
-typedef struct {
-	guint16		 parent_vid;		/* +1 */
-	guint16		 parent_pid;		/* +1 */
-	guint16		 grandparent_vid;	/* +2, or 0x0000 */
-	guint16		 grandparent_pid;	/* +2, or 0x0000 */
-	guint16		 child_vid;		/* -1, or 0x0000 */
-	guint16		 child_pid;		/* -1, or 0x0000 */
-	guint8		 port_number;		/* electrical, not physical */
-	guint8		 chain_len;		/* internal chain number */
-	const gchar	*platform_id;		/* new label */
-} GmwQuirk;
-#endif
-
 /**
- * gmw_udisks_get_quirk_id:
+ * gmw_udisks_find_usb_device:
  **/
-static gchar *
-gmw_udisks_get_quirk_id (GmwPrivate *priv, GUsbDevice *usb_device)
+static void
+gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 {
-#if G_USB_CHECK_VERSION(0,2,4)
-	guint i;
-	guint j;
-	_cleanup_object_unref_ GUsbDevice *usb_hub = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_parent = NULL;
-	const GmwQuirk quirks[] = {
-		/*
-		 * Orico PIO Series Hub
-		 *
-		 *  [USB]
-		 *    |
-		 * [0x1a40:0x0101] --- [____0x1a40:0x0201_____]
-		 *    |   |   |         |   |   |   |    |   |
-		 *    #1  #2  #3        #4  #5  #6  #10  #9  #8
-		 */
-		{ 0x1a40, 0x0101, 0x0000, 0x0000, 0x1a40, 0x0201, 0x01, 0x00, "01" },
-		{ 0x1a40, 0x0101, 0x0000, 0x0000, 0x1a40, 0x0201, 0x02, 0x00, "02" },
-		{ 0x1a40, 0x0101, 0x0000, 0x0000, 0x1a40, 0x0201, 0x03, 0x00, "03" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x01, 0x01, "04" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x02, 0x01, "05" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x03, 0x01, "06" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x04, 0x01, "07" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x07, 0x01, "08" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x06, 0x01, "09" },
-		{ 0x1a40, 0x0201, 0x1a40, 0x0101, 0x0000, 0x0000, 0x05, 0x01, "10" },
-		/* last entry */
-		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x00, 0x00, NULL }
-	};
-
-	/* is this a USB hub already */
-	if (g_usb_device_get_device_class (usb_device) == 0x09) {
-		usb_hub = g_object_ref (usb_device);
-	} else {
-		usb_hub = g_usb_device_get_parent (usb_device);
-	}
-	usb_hub_parent = g_usb_device_get_parent (usb_hub);
-	g_debug ("Quirk info: 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%02x for 0x%04x:0x%04x",
-		 g_usb_device_get_vid (usb_hub),
-		 g_usb_device_get_pid (usb_hub),
-		 usb_hub_parent ? g_usb_device_get_vid (usb_hub_parent) : 0x0,
-		 usb_hub_parent ? g_usb_device_get_pid (usb_hub_parent) : 0x0,
-		 g_usb_device_get_port_number (usb_device),
-		 g_usb_device_get_vid (usb_device),
-		 g_usb_device_get_pid (usb_device));
-
-	for (i = 0; quirks[i].platform_id != NULL; i++) {
-		/* check grandparent */
-		if (usb_hub_parent != NULL && quirks[i].grandparent_vid != 0x0000) {
-			if (quirks[i].grandparent_vid != g_usb_device_get_vid (usb_hub_parent))
-				continue;
-			if (quirks[i].grandparent_pid != g_usb_device_get_pid (usb_hub_parent))
-				continue;
-		}
-
-		/* check parent */
-		if (usb_hub != NULL && quirks[i].parent_vid != 0x0000) {
-			if (quirks[i].parent_vid != g_usb_device_get_vid (usb_hub))
-				continue;
-			if (quirks[i].parent_pid != g_usb_device_get_pid (usb_hub))
-				continue;
-		}
-
-		/* check children */
-		if (usb_hub != NULL && quirks[i].child_vid != 0x0000) {
-			GUsbDevice *tmp;
-			gboolean child_exists = FALSE;
-			_cleanup_ptrarray_unref_ GPtrArray *children = NULL;
-
-			/* the specified child just has to exist once */
-			children = g_usb_device_get_children (usb_hub);
-			for (j = 0; j < children->len; j++) {
-				tmp = g_ptr_array_index (children, j);
-				if (g_usb_device_get_vid (tmp) == quirks[i].child_vid &&
-				    g_usb_device_get_pid (tmp) == quirks[i].child_pid) {
-					child_exists = TRUE;
-					break;
-				}
-			}
-			if (!child_exists)
-				continue;
-		}
-
-		/* check port number */
-		if (quirks[i].port_number != 0x00) {
-			if (quirks[i].port_number != g_usb_device_get_port_number (usb_device))
-				continue;
-		}
-
-		/* get the top-level port address prepended to the decal name */
-		if (usb_hub_parent != NULL && quirks[i].chain_len == 1) {
-			return g_strdup_printf ("%02x:%02x [%s]",
-						g_usb_device_get_bus (usb_hub_parent),
-						g_usb_device_get_address (usb_hub_parent),
-						quirks[i].platform_id);
-		}
-		return g_strdup_printf ("%02x:%02x [%s]",
-					g_usb_device_get_bus (usb_hub),
-					g_usb_device_get_address (usb_hub),
-					quirks[i].platform_id);
-	}
-#endif
-	return NULL;
-}
-
-/**
- * gmw_udisks_get_sibling_id:
- **/
-static gchar *
-gmw_udisks_get_sibling_id (GmwPrivate *priv, UDisksDrive *udisks_drive)
-{
-	const gchar *sibling_id;
-	gchar *parent_id = NULL;
-	gchar *quirk_id;
 	guint8 busnum;
 	guint8 devnum;
 	_cleanup_object_unref_ GUsbDevice *usb_device = NULL;
-	_cleanup_strv_free_ gchar **split = NULL;
-
-	/* get the sibling ID, which is normally the USB path */
-	sibling_id = udisks_drive_get_sibling_id (udisks_drive);
-	if (sibling_id == NULL || sibling_id[0] == '\0')
-		return g_strdup ("???");
 
 	/* find the USB device using GUsb */
-	parent_id = g_path_get_dirname (sibling_id);
-	busnum = gmw_sysfs_get_busnum (parent_id);
-	devnum = gmw_sysfs_get_devnum (parent_id);
+	if (device->sysfs_path == NULL)
+		return;
+	busnum = gmw_sysfs_get_busnum (device->sysfs_path);
+	devnum = gmw_sysfs_get_devnum (device->sysfs_path);
 	if (busnum == 0x00 || devnum == 0x00) {
-		g_warning ("Failed to get busnum for %s", parent_id);
-		return g_path_get_basename (parent_id);
+		g_warning ("Failed to get busnum for %s", device->sysfs_path);
+		return;
 	}
 	usb_device = g_usb_context_find_by_bus_address (priv->usb_ctx,
 							busnum,
@@ -1357,16 +1236,9 @@ gmw_udisks_get_sibling_id (GmwPrivate *priv, UDisksDrive *udisks_drive)
 							NULL);
 	if (usb_device == NULL) {
 		g_warning ("Failed to find %02x:%02x", busnum, devnum);
-		return g_path_get_basename (parent_id);
+		return;
 	}
-
-	/* can we get the ID from a quirk */
-	quirk_id = gmw_udisks_get_quirk_id (priv, usb_device);
-	if (quirk_id != NULL)
-		return quirk_id;
-
-	/* return the bare platform ID */
-	return g_strdup (g_usb_device_get_platform_id (usb_device) + 7);
+	gmw_device_set_usb_device (device, usb_device);
 }
 
 /**
@@ -1439,8 +1311,11 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device->device_path = g_strdup (device_path);
 	device->object_path = g_strdup (object_path);
 	device->udisks_block = g_object_ref (udisks_block);
-	device->sibling_id = gmw_udisks_get_sibling_id (priv, udisks_drive);
 	g_mutex_init (&device->mutex);
+
+	/* set a connection ID */
+	gmw_device_set_udisks_drive (device, udisks_drive);
+	gmw_udisks_find_usb_device (priv, device);
 
 	/* unmount filesystems on the block device */
 	gmw_udisks_unmount_filesystems (priv, device, FALSE);
@@ -1544,9 +1419,9 @@ gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv
 static gint
 gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
 {
-	GmwDevice *device_a = (GmwDevice *) a;
-	GmwDevice *device_b = (GmwDevice *) b;
-	return g_strcmp0 (device_a->sibling_id, device_b->sibling_id);
+	GmwDevice *deva = (GmwDevice *) a;
+	GmwDevice *devb = (GmwDevice *) b;
+	return g_strcmp0 (deva->connection_id, devb->connection_id);
 }
 
 /**

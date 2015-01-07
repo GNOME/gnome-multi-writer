@@ -24,6 +24,7 @@
 
 #include <gio/gio.h>
 #include <udisks/udisks.h>
+#include <gusb.h>
 
 G_BEGIN_DECLS
 
@@ -45,8 +46,10 @@ typedef struct {
 	GError			*error;
 	gchar			*device_name;
 	gchar			*device_path;
+	gchar			*device_label;
 	gchar			*object_path;
-	gchar			*sibling_id;
+	gchar			*connection_id;	/* the text that identifies the port */
+	gchar			*sysfs_path;
 	gdouble			 complete;
 	gdouble			 throughput_w;
 	gdouble			 throughput_r;
@@ -61,6 +64,14 @@ void		 gmw_device_set_state		(GmwDevice	*device,
 						 GmwDeviceState	 device_state);
 void		 gmw_device_set_error		(GmwDevice	*device,
 						 const GError	*error);
+void		 gmw_device_set_connection_id	(GmwDevice	*device,
+						 const gchar	*connection_id);
+void		 gmw_device_set_device_label	(GmwDevice	*device,
+						 const gchar	*device_label);
+void		 gmw_device_set_udisks_drive	(GmwDevice	*device,
+						 UDisksDrive	*udisks_drive);
+void		 gmw_device_set_usb_device	(GmwDevice	*device,
+						 GUsbDevice	*usb_device);
 void		 gmw_device_free		(GmwDevice	*device);
 
 G_END_DECLS
