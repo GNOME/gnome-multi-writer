@@ -78,6 +78,7 @@ typedef struct {
 	gdouble			 complete;
 	gdouble			 throughput_w;
 	gdouble			 throughput_r;
+	gdouble			 progress_write;
 	GMutex			 mutex;
 } GmwDevice;
 
@@ -469,7 +470,8 @@ gmw_device_write (GmwPrivate *priv,
 			g_timer_reset (timer);
 			bytes_throughput = 0;
 		}
-		device->complete = (gdouble) bytes_completed / (2.f * (gdouble) bytes_total);
+		device->complete = device->progress_write * (gdouble) bytes_completed /
+					(gdouble) bytes_total;
 		if (device->throughput_w > 0.f) {
 			/* TRANSLATORS: we're writing the image to the device
 			 * and we now know the speed */
@@ -643,7 +645,10 @@ gmw_device_verify (GmwPrivate *priv,
 		}
 
 		/* update UI */
-		device->complete = 0.5f + ((gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size));
+		device->complete = device->progress_write +
+			(1.0 - device->progress_write) *
+				((gdouble) bytes_completed /
+					(gdouble) priv->image_file_size);
 		if (device->throughput_r > 0.f) {
 			/* TRANSLATORS: We're verifying the USB device contains
 			 * the correct image data and we now know the speed */
@@ -728,6 +733,11 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	GmwPrivate *priv = (GmwPrivate *) user_data;
 	_cleanup_error_free_ GError *error = NULL;
 	_cleanup_object_unref_ GInputStream *image_stream = NULL;
+
+	/* set the factor for the write process */
+	device->progress_write = 0.75;
+	if (!g_settings_get_boolean (priv->settings, "enable-verify"))
+		device->progress_write = 1.0;
 
 	/* open input stream */
 	image_stream = (GInputStream *) g_file_read (priv->image_file, NULL, &error);
