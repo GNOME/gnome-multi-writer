@@ -911,10 +911,10 @@ gmw_throughput_update_titlebar_cb (gpointer user_data)
 }
 
 /**
- * gmw_start_clicked_cb:
+ * gmw_start_copy:
  **/
 static void
-gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
+gmw_start_copy (GmwPrivate *priv)
 {
 	GmwDevice *device;
 	GtkWindow *window;
@@ -964,6 +964,77 @@ gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 		device = g_ptr_array_index (priv->devices, i);
 		g_thread_pool_push (priv->thread_pool, device, &error);
 	}
+}
+
+/**
+ * gmw_start_confirm_response_cb:
+ **/
+static void
+gmw_start_confirm_response_cb (GtkDialog *dialog,
+			       GtkResponseType response_id,
+			       GmwPrivate *priv)
+{
+	if (response_id == GTK_RESPONSE_OK) {
+		g_settings_set_boolean (priv->settings, "show-warning", FALSE);
+		gmw_start_copy (priv);
+	}
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+/**
+ * gmw_start_clicked_cb:
+ **/
+static void
+gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
+{
+	GtkWidget *w;
+	GtkWidget *b;
+	GtkStyleContext *context;
+	_cleanup_string_free_ GString *str = g_string_new ("");
+
+	/* no confirmation required */
+	if (!g_settings_get_boolean (priv->settings, "show-warning")) {
+		gmw_start_copy (priv);
+		return;
+	}
+
+	/* create warning dialog */
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
+	w = gtk_message_dialog_new (GTK_WINDOW (w),
+				    GTK_DIALOG_DESTROY_WITH_PARENT |
+				    GTK_DIALOG_MODAL |
+				    GTK_DIALOG_USE_HEADER_BAR,
+				    GTK_MESSAGE_WARNING,
+				    GTK_BUTTONS_CANCEL,
+				    /* TRANSLATORS: window title for the warning dialog */
+				    "%s", _("Write to all disks?"));
+
+	/* use different message text for each setting */
+	if (g_settings_get_boolean (priv->settings, "blank-drive")) {
+		/* TRANSLATORS: check that we can nuke everything from all disks */
+		g_string_append (str, _("All data on the drives will be deleted."));
+	} else {
+		/* TRANSLATORS: if the image file is smaller than the disks and
+		 * we've disabled wiping the device we only write enough data
+		 * to transfer the image */
+		g_string_append (str, _("The ISO file is smaller than the "
+					"largest of the disks."));
+		g_string_append (str, " ");
+
+		/* TRANSLATORS: this could leave your personal files on the drive */
+		g_string_append (str, _("Some of the current contents of the "
+					"drives could be still found using "
+					"forensic tools even after copying."));
+	}
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (w), "%s", str->str);
+
+	/* TRANSLATORS: button text for the warning dialog */
+	b = gtk_dialog_add_button (GTK_DIALOG (w), _("I Understand"), GTK_RESPONSE_OK);
+	context = gtk_widget_get_style_context (b);
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_SUGGESTED_ACTION);
+	g_signal_connect (w, "response",
+			  G_CALLBACK (gmw_start_confirm_response_cb), priv);
+	gtk_window_present (GTK_WINDOW (w));
 }
 
 /**
@@ -1529,6 +1600,16 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 }
 
 /**
+ * gmw_settings_changed_cb:
+ **/
+static void
+gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv)
+{
+	if (g_strcmp0 (key, "blank-drive") == 0)
+		g_settings_set_boolean (settings, "show-warning", TRUE);
+}
+
+/**
  * main:
  **/
 int
@@ -1572,6 +1653,8 @@ main (int argc, char **argv)
 	g_mutex_init (&priv->idle_id_mutex);
 	priv->cancellable = g_cancellable_new ();
 	priv->settings = g_settings_new ("org.gnome.MultiWriter");
+	g_signal_connect (priv->settings, "changed",
+			  G_CALLBACK (gmw_settings_changed_cb), priv);
 	priv->thread_pool = g_thread_pool_new (gmw_copy_thread_cb, priv,
 					       g_settings_get_uint (priv->settings, "max-threads"),
 					       FALSE, &error);

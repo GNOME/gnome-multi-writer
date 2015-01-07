@@ -28,5 +28,12 @@
       <!-- TRANSLATORS: schema description -->
       <description>Read and verify the ISO image from each device after writing is complete.</description>
     </key>
+    <key name="show-warning" type="b">
+      <default>true</default>
+      <!-- TRANSLATORS: schema summary -->
+      <summary>Show a warning before writing to a drive</summary>
+      <!-- TRANSLATORS: schema description -->
+      <description>Show a warning dialog confirming that the device contents are to be erased.</description>
+    </key>
   </schema>
 </schemalist>
