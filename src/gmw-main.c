@@ -180,9 +180,6 @@ gmw_refresh_ui (GmwPrivate *priv)
 	gtk_container_foreach (GTK_CONTAINER (grid),
 			       (GtkCallback) gtk_widget_destroy, priv);
 
-	/* sort the list */
-	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
-
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *sibling_markup = NULL;
@@ -1524,6 +1521,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 
 	g_mutex_lock (&priv->devices_mutex);
 	g_ptr_array_add (priv->devices, device);
+	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
 	g_mutex_unlock (&priv->devices_mutex);
 	g_debug ("Added %s [%lu]", device_path, device_size);
 }
@@ -1558,6 +1556,7 @@ gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 		device = g_ptr_array_index (priv->devices, i);
 		if (g_strcmp0 (device->object_path, tmp) == 0) {
 			g_ptr_array_remove (priv->devices, device);
+			g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
 			gmw_refresh_ui (priv);
 			break;
 		}
