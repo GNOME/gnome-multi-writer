@@ -807,6 +807,64 @@ gmw_throughput_update_titlebar_cb (gpointer user_data)
 }
 
 /**
+ * gmw_udisks_unmount_cb:
+ **/
+static void
+gmw_udisks_unmount_cb (GObject *source_object,
+		       GAsyncResult *res,
+		       gpointer user_data)
+{
+	UDisksFilesystem *udisks_fs = UDISKS_FILESYSTEM (source_object);
+	_cleanup_error_free_ GError *error = NULL;
+
+	if (!udisks_filesystem_call_unmount_finish (udisks_fs, res, &error))
+		g_warning ("Failed to unmount filesystem: %s", error->message);
+}
+
+/**
+ * gmw_udisks_unmount_filesystems:
+ **/
+static void
+gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device, gboolean sync)
+{
+	_cleanup_error_free_ GError *error = NULL;
+	_cleanup_free_ gchar *object_path_child = NULL;
+	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
+	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
+	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
+	_cleanup_strv_free_ gchar **mtab = NULL;
+
+	object_path_child = g_strdup_printf ("%s1", device->object_path);
+	udisks_object = udisks_client_get_object (priv->udisks_client,
+						  object_path_child);
+	if (udisks_object == NULL)
+		return;
+	udisks_fs = udisks_object_get_filesystem (udisks_object);
+	if (udisks_fs == NULL)
+		return;
+	mtab = udisks_filesystem_dup_mount_points (udisks_fs);
+	if (mtab == NULL || mtab[0] == NULL) {
+		g_debug ("%s not mounted", object_path_child);
+		return;
+	}
+	g_debug ("Unmount %s from %s", mtab[0], object_path_child);
+	if (!sync) {
+		udisks_filesystem_call_unmount (udisks_fs,
+						g_variant_new ("a{sv}", NULL),
+						priv->cancellable,
+						gmw_udisks_unmount_cb,
+						device);
+		return;
+	}
+	if (!udisks_filesystem_call_unmount_sync (udisks_fs,
+						  g_variant_new ("a{sv}", NULL),
+						  priv->cancellable,
+						  &error)) {
+		g_warning ("Failed to unmount fs: %s", error->message);
+	}
+}
+
+/**
  * gmw_start_copy:
  **/
 static void
@@ -824,6 +882,12 @@ gmw_start_copy (GmwPrivate *priv)
 		return;
 
 	g_cancellable_reset (priv->cancellable);
+
+	/* unmount all filesystems */
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
+		gmw_udisks_unmount_filesystems (priv, device, TRUE);
+	}
 
 	/* do a dummy call to get the PolicyKit auth */
 	if (!priv->done_polkit_auth) {
@@ -1109,52 +1173,6 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 }
 
 /**
- * gmw_udisks_unmount_cb:
- **/
-static void
-gmw_udisks_unmount_cb (GObject *source_object,
-		       GAsyncResult *res,
-		       gpointer user_data)
-{
-	UDisksFilesystem *udisks_fs = UDISKS_FILESYSTEM (source_object);
-	_cleanup_error_free_ GError *error = NULL;
-
-	if (!udisks_filesystem_call_unmount_finish (udisks_fs, res, &error))
-		g_warning ("Failed to unmount filesystem: %s", error->message);
-}
-
-/**
- * gmw_udisks_unmount_filesystems:
- **/
-static void
-gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device)
-{
-	_cleanup_free_ gchar *object_path_child = NULL;
-	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
-	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
-	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
-	_cleanup_strv_free_ gchar **mtab = NULL;
-
-	object_path_child = g_strdup_printf ("%s1", device->object_path);
-	udisks_object = udisks_client_get_object (priv->udisks_client,
-						  object_path_child);
-	if (udisks_object == NULL)
-		return;
-	udisks_fs = udisks_object_get_filesystem (udisks_object);
-	if (udisks_fs == NULL)
-		return;
-	mtab = udisks_filesystem_dup_mount_points (udisks_fs);
-	if (mtab == NULL || mtab[0] == NULL)
-		return;
-	g_debug ("Unmount %s from %s", mtab[0], object_path_child);
-	udisks_filesystem_call_unmount (udisks_fs,
-					g_variant_new ("a{sv}", NULL), /* options */
-					priv->cancellable,
-					gmw_udisks_unmount_cb,
-					device);
-}
-
-/**
  * gmw_sysfs_get_busnum:
  **/
 static guint8
@@ -1425,7 +1443,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	g_mutex_init (&device->mutex);
 
 	/* unmount filesystems on the block device */
-	gmw_udisks_unmount_filesystems (priv, device);
+	gmw_udisks_unmount_filesystems (priv, device, FALSE);
 
 	g_mutex_lock (&priv->devices_mutex);
 	g_ptr_array_add (priv->devices, device);
