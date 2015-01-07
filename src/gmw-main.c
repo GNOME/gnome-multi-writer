@@ -34,6 +34,7 @@
 #include <udisks/udisks.h>
 
 #include "gmw-cleanup.h"
+#include "gmw-device.h"
 
 typedef struct {
 	GFile			*image_file;
@@ -56,60 +57,6 @@ typedef struct {
 	GtkWidget		*switch_verify;
 	GtkWidget		*switch_blank;
 } GmwPrivate;
-
-typedef enum {
-	GMW_DEVICE_STATE_UNKNOWN,
-	GMW_DEVICE_STATE_STARTUP,
-	GMW_DEVICE_STATE_WRITE,
-	GMW_DEVICE_STATE_VERIFY,
-	GMW_DEVICE_STATE_SUCCESS,
-	GMW_DEVICE_STATE_FAILED,
-	GMW_DEVICE_STATE_LAST
-} GmwDeviceState;
-
-typedef struct {
-	GmwDeviceState		 state;
-	UDisksBlock		*udisks_block;
-	gchar			*device_name;
-	gchar			*device_path;
-	gchar			*object_path;
-	gchar			*title;
-	gchar			*sibling_id;
-	gdouble			 complete;
-	gdouble			 throughput_w;
-	gdouble			 throughput_r;
-	gdouble			 progress_write;
-	GMutex			 mutex;
-} GmwDevice;
-
-/**
- * gmw_device_state_to_icon:
- **/
-static const gchar *
-gmw_device_state_to_icon (GmwDeviceState device_state)
-{
-	if (device_state == GMW_DEVICE_STATE_SUCCESS)
-		return "emblem-default";
-	if (device_state == GMW_DEVICE_STATE_FAILED)
-		return "drive-harddisk";
-	return "drive-harddisk-usb";
-}
-
-/**
- * gmw_device_free:
- **/
-static void
-gmw_device_free (GmwDevice *device)
-{
-	g_mutex_clear (&device->mutex);
-	g_free (device->device_name);
-	g_free (device->device_path);
-	g_free (device->object_path);
-	g_free (device->title);
-	g_free (device->sibling_id);
-	g_object_unref (device->udisks_block);
-	g_free (device);
-}
 
 /**
  * gmw_error_dialog:
@@ -183,6 +130,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *sibling_markup = NULL;
+		_cleanup_free_ gchar *title = NULL;
 		guint row = i % max_devices_per_column;
 		guint col = (i / max_devices_per_column) * 4;
 
@@ -202,7 +150,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 		/* add icon */
 		w = gtk_image_new ();
 		gtk_image_set_from_icon_name (GTK_IMAGE (w),
-					      gmw_device_state_to_icon (device->state),
+					      gmw_device_get_icon (device),
 					      GTK_ICON_SIZE_BUTTON);
 		gtk_grid_attach (GTK_GRID (grid), w, col + 1, row, 1, 1);
 
@@ -215,8 +163,9 @@ gmw_refresh_ui (GmwPrivate *priv)
 		}
 
 		/* add optional status text */
-		if (device->title != NULL) {
-			w = gtk_label_new (device->title);
+		title = gmw_device_get_description (device);
+		if (title != NULL) {
+			w = gtk_label_new (title);
 			g_object_set (w, "xalign", 0.f, NULL);
 			gtk_label_set_width_chars (GTK_LABEL (w), 20);
 			gtk_grid_attach (GTK_GRID (grid), w, col + 3, row, 1, 1);
@@ -266,21 +215,6 @@ gmw_refresh_in_idle (GmwPrivate *priv)
 		g_source_remove (priv->idle_id);
 	priv->idle_id = g_timeout_add (50, gmw_refresh_in_idle_cb, priv);
 	g_mutex_unlock (&priv->idle_id_mutex);
-}
-
-/**
- * gmw_device_set_state:
- **/
-static void
-gmw_device_set_state (GmwDevice *device,
-		      GmwDeviceState device_state,
-		      const gchar *title)
-{
-	g_mutex_lock (&device->mutex);
-	g_free (device->title);
-	device->state = device_state;
-	device->title = g_strdup (title);
-	g_mutex_unlock (&device->mutex);
 }
 
 /**
@@ -335,6 +269,7 @@ static gboolean
 gmw_device_write (GmwPrivate *priv,
 		  GmwDevice *device,
 		  GInputStream *image_stream,
+		  GCancellable *cancellable,
 		  GError **error)
 {
 	const gint buffer_size = (1 * 1024 * 1024); /* default to 1 MiB blocks */
@@ -358,7 +293,7 @@ gmw_device_write (GmwPrivate *priv,
 						      NULL, /* fd_list */
 						      &fd_index,
 						      &fd_list,
-						      priv->cancellable,
+						      cancellable,
 						      error)) {
 		if (error != NULL)
 			g_dbus_error_strip_remote_error (*error);
@@ -380,12 +315,12 @@ gmw_device_write (GmwPrivate *priv,
 		bytes_total = udisks_block_get_size (device->udisks_block);
 		fill_zeros = TRUE;
 	}
+	gmw_device_set_state (device, GMW_DEVICE_STATE_WRITE);
 	while (bytes_completed < bytes_total) {
 		gdouble elapsed;
 		gsize bytes_to_read;
 		gsize bytes_read;
 		gssize bytes_written;
-		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
 		if (bytes_to_read + bytes_completed > bytes_total)
@@ -395,7 +330,7 @@ gmw_device_write (GmwPrivate *priv,
 					      buffer,
 					      bytes_to_read,
 					      &bytes_read,
-					      priv->cancellable,
+					      cancellable,
 					      &error_local)) {
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
@@ -434,7 +369,7 @@ gmw_device_write (GmwPrivate *priv,
 		bytes_written = g_output_stream_write (device_stream,
 						       buffer,
 						       bytes_read,
-						       priv->cancellable,
+						       cancellable,
 						       &error_local);
 		if (bytes_written < 0) {
 			if (g_error_matches (error_local,
@@ -462,23 +397,13 @@ gmw_device_write (GmwPrivate *priv,
 		}
 		device->complete = device->progress_write * (gdouble) bytes_completed /
 					(gdouble) bytes_total;
-		if (device->throughput_w > 0.f) {
-			/* TRANSLATORS: we're writing the image to the device
-			 * and we now know the speed */
-			title = g_strdup_printf (_("Writing at %.1f MB/s…"),
-						 device->throughput_w / (1000 * 1000));
-		} else {
-			/* TRANSLATORS: we're writing the image to the USB device */
-			title = g_strdup (_("Writing…"));
-		}
-		gmw_device_set_state (device, GMW_DEVICE_STATE_WRITE, title);
 		gmw_refresh_in_idle (priv);
 	}
 
 	/* success */
 	ret = TRUE;
 out:
-	device->throughput_w = 0.f;
+	gmw_device_set_state (device, GMW_DEVICE_STATE_IDLE);
 	if (device_stream != NULL)
 		g_output_stream_close (G_OUTPUT_STREAM (device_stream), NULL, NULL);
 	return ret;
@@ -491,6 +416,7 @@ static gboolean
 gmw_device_verify (GmwPrivate *priv,
 		   GmwDevice *device,
 		   GInputStream *image_stream,
+		   GCancellable *cancellable,
 		   GError **error)
 {
 	const gint buffer_size = (1 * 1024 * 1024); /* default to 1 MiB blocks */
@@ -510,7 +436,7 @@ gmw_device_verify (GmwPrivate *priv,
 
 	/* rewind */
 	if (!g_seekable_seek (G_SEEKABLE (image_stream), 0,
-			      G_SEEK_SET, priv->cancellable, error))
+			      G_SEEK_SET, cancellable, error))
 		goto out;
 
 	/* get fd from udisks */
@@ -519,7 +445,7 @@ gmw_device_verify (GmwPrivate *priv,
 						     NULL, /* fd_list */
 						     &fd_index,
 						     &fd_list,
-						     priv->cancellable,
+						     cancellable,
 						     error)) {
 		if (error != NULL)
 			g_dbus_error_strip_remote_error (*error);
@@ -535,11 +461,11 @@ gmw_device_verify (GmwPrivate *priv,
 	buffer_unaligned_dest = gmw_get_aligned_buffer (buffer_size, &buffer_dest);
 	bytes_completed = 0;
 	timer = g_timer_new ();
+	gmw_device_set_state (device, GMW_DEVICE_STATE_VERIFY);
 	while (bytes_completed < priv->image_file_size) {
 		gdouble elapsed;
 		gsize bytes_to_read;
 		gsize bytes_read;
-		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
 		if (bytes_to_read + bytes_completed > priv->image_file_size)
@@ -550,7 +476,7 @@ gmw_device_verify (GmwPrivate *priv,
 					      buffer_src,
 					      bytes_to_read,
 					      &bytes_read,
-					      priv->cancellable,
+					      cancellable,
 					      &error_local)) {
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
@@ -585,7 +511,7 @@ gmw_device_verify (GmwPrivate *priv,
 					      buffer_dest,
 					      bytes_to_read,
 					      &bytes_read,
-					      priv->cancellable,
+					      cancellable,
 					      &error_local)) {
 			if (g_error_matches (error_local,
 					     G_IO_ERROR,
@@ -639,24 +565,13 @@ gmw_device_verify (GmwPrivate *priv,
 			(1.0 - device->progress_write) *
 				((gdouble) bytes_completed /
 					(gdouble) priv->image_file_size);
-		if (device->throughput_r > 0.f) {
-			/* TRANSLATORS: We're verifying the USB device contains
-			 * the correct image data and we now know the speed */
-			title = g_strdup_printf (_("Verifying at %.1f MB/s…"),
-						 device->throughput_r / (1000 * 1000));
-		} else {
-			/* TRANSLATORS: We're verifying the USB device contains
-			 * the correct image data */
-			title = g_strdup (_("Verifying…"));
-		}
-		gmw_device_set_state (device, GMW_DEVICE_STATE_WRITE, title);
 		gmw_refresh_in_idle (priv);
 	}
 
 	/* success */
 	ret = TRUE;
 out:
-	device->throughput_r = 0.f;
+	gmw_device_set_state (device, GMW_DEVICE_STATE_IDLE);
 	if (device_stream != NULL)
 		g_input_stream_close (G_INPUT_STREAM (device_stream), NULL, NULL);
 	return ret;
@@ -732,37 +647,28 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	/* open input stream */
 	image_stream = (GInputStream *) g_file_read (priv->image_file, NULL, &error);
 	if (image_stream == NULL) {
-		gmw_device_set_state (device,
-				      GMW_DEVICE_STATE_FAILED,
-				      error->message);
+		gmw_device_set_error (device, error);
 		goto out;
 	}
 
 	/* write */
-	if (!gmw_device_write (priv, device, image_stream, &error)) {
-		gmw_device_set_state (device,
-				      GMW_DEVICE_STATE_FAILED,
-				      error->message);
+	if (!gmw_device_write (priv, device, image_stream,
+			       priv->cancellable, &error)) {
+		gmw_device_set_error (device, error);
 		goto out;
 	}
 
 	/* verify */
 	if (g_settings_get_boolean (priv->settings, "enable-verify")) {
-		if (!gmw_device_verify (priv, device, image_stream, &error)) {
-			gmw_device_set_state (device,
-					      GMW_DEVICE_STATE_FAILED,
-					      error->message);
+		if (!gmw_device_verify (priv, device, image_stream,
+					priv->cancellable, &error)) {
+			gmw_device_set_error (device, error);
 			goto out;
 		}
 	}
 
 	/* no longer show progressbar */
-	device->complete = -1.f;
-	gmw_device_set_state (device,
-			      GMW_DEVICE_STATE_SUCCESS,
-			      /* TRANSLATORS: The image has been written
-			       * and verified to *one* device, not all */
-			      _("Written successfully"));
+	gmw_device_set_state (device, GMW_DEVICE_STATE_SUCCESS);
 out:
 	gmw_refresh_in_idle (priv);
 	g_idle_add (gmw_refresh_titlebar_idle_cb, priv);
@@ -944,12 +850,13 @@ gmw_start_copy (GmwPrivate *priv)
 						    _("Writing ISO to devices"));
 
 	/* start a thread for each copy operation */
-	gmw_refresh_ui (priv);
 	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *title = NULL;
 		device = g_ptr_array_index (priv->devices, i);
+		gmw_device_set_state (device, GMW_DEVICE_STATE_WAITING);
 		g_thread_pool_push (priv->thread_pool, device, &error);
 	}
+	gmw_refresh_ui (priv);
 }
 
 /**
@@ -1505,15 +1412,12 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 
 	/* add this */
 	object_info = udisks_client_get_object_info (priv->udisks_client, udisks_object);
-	device = g_new0 (GmwDevice, 1);
+	device = gmw_device_new ();
 	device->device_name = g_strdup (udisks_object_info_get_name (object_info));
 	device->device_path = g_strdup (device_path);
 	device->object_path = g_strdup (object_path);
 	device->udisks_block = g_object_ref (udisks_block);
-	device->state = GMW_DEVICE_STATE_STARTUP;
-	device->title = g_strdup (device->device_name);
 	device->sibling_id = gmw_udisks_get_sibling_id (priv, udisks_drive);
-	device->complete = -1.f;
 	g_mutex_init (&device->mutex);
 
 	/* unmount filesystems on the block device */

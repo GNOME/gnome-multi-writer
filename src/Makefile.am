@@ -24,6 +24,8 @@ gnome_multi_writer_CFLAGS =				\
 
 gnome_multi_writer_SOURCES =				\
 	gmw-cleanup.h					\
+	gmw-device.c					\
+	gmw-device.h					\
 	gmw-main.c					\
 	gmw-resources.c					\
 	gmw-resources.h
