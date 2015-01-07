@@ -1018,7 +1018,7 @@ gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 		 * we've disabled wiping the device we only write enough data
 		 * to transfer the image */
 		g_string_append (str, _("The ISO file is smaller than the "
-					"largest of the disks."));
+					"disk capacity."));
 		g_string_append (str, " ");
 
 		/* TRANSLATORS: this could leave your personal files on the drive */
