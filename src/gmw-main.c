@@ -88,17 +88,11 @@ typedef struct {
 static const gchar *
 gmw_device_state_to_icon (GmwDeviceState device_state)
 {
-	if (device_state == GMW_DEVICE_STATE_STARTUP)
-		return "drive-harddisk-usb";
-	if (device_state == GMW_DEVICE_STATE_WRITE)
-		return "drive-harddisk-usb";
-	if (device_state == GMW_DEVICE_STATE_VERIFY)
-		return "drive-harddisk-usb";
 	if (device_state == GMW_DEVICE_STATE_SUCCESS)
 		return "emblem-default";
 	if (device_state == GMW_DEVICE_STATE_FAILED)
 		return "drive-harddisk";
-	return NULL;
+	return "drive-harddisk-usb";
 }
 
 /**
