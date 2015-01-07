@@ -176,6 +176,10 @@ gmw_refresh_ui (GmwPrivate *priv)
 
 	gtk_widget_show_all (grid);
 
+	/* allow changing settings */
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_settings"));
+	gtk_widget_set_sensitive (w, g_thread_pool_get_num_threads (priv->thread_pool) == 0);
+
 	/* update buttons */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
 	gtk_widget_set_visible (w, g_thread_pool_get_num_threads (priv->thread_pool) > 0);
