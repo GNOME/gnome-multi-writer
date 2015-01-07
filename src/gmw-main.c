@@ -1625,6 +1625,17 @@ gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv
 }
 
 /**
+ * gmw_thread_pool_sort_func:
+ **/
+static gint
+gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
+{
+	GmwDevice *device_a = (GmwDevice *) a;
+	GmwDevice *device_b = (GmwDevice *) b;
+	return g_strcmp0 (device_a->sibling_id, device_b->sibling_id);
+}
+
+/**
  * main:
  **/
 int
@@ -1678,6 +1689,9 @@ main (int argc, char **argv)
 		g_print ("Failed to create thread pool: %s\n", error->message);
 		goto out;
 	}
+	g_thread_pool_set_sort_function (priv->thread_pool,
+					 gmw_thread_pool_sort_func,
+					 priv);
 	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
 	priv->usb_ctx = g_usb_context_new (NULL);
 
