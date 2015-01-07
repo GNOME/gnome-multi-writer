@@ -318,6 +318,10 @@ gmw_copy_done (GmwPrivate *priv)
 			gtk_application_uninhibit (priv->application, priv->inhibit_id);
 			priv->inhibit_id = 0;
 		}
+		if (priv->throughput_id > 0) {
+			g_source_remove (priv->throughput_id);
+			priv->throughput_id = 0;
+		}
 	}
 	g_mutex_unlock (&priv->thread_pool_mutex);
 }
@@ -774,10 +778,6 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 			       * and verified to *one* device, not all */
 			      _("Written successfully"));
 out:
-	if (priv->throughput_id > 0) {
-		g_source_remove (priv->throughput_id);
-		priv->throughput_id = 0;
-	}
 	gmw_refresh_in_idle (priv);
 	g_idle_add (gmw_refresh_titlebar_idle_cb, priv);
 	g_timeout_add_seconds (2, gmw_refresh_in_idle_cb, priv);
