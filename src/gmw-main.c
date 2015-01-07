@@ -933,6 +933,7 @@ gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 	if (!priv->done_polkit_auth) {
 		device = g_ptr_array_index (priv->devices, 0);
 		if (!gmw_auth_dummy_restore (priv, device, &error)) {
+			g_dbus_error_strip_remote_error (error);
 			gmw_error_dialog (priv,
 					  /* TRANSLATORS: error dialog title:
 					   * we probably didn't authenticate */
