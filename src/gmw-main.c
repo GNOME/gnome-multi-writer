@@ -345,11 +345,13 @@ gmw_device_write (GmwPrivate *priv,
 		  GError **error)
 {
 	const gint buffer_size = (1 * 1024 * 1024); /* default to 1 MiB blocks */
+	gboolean fill_zeros = FALSE;
 	gboolean ret = FALSE;
 	gint fd = -1;
 	guchar *buffer = NULL;
 	guint64 bytes_completed = 0;
 	guint64 bytes_throughput = 0;
+	guint64 bytes_total;
 	_cleanup_error_free_ GError *error_local = NULL;
 	_cleanup_free_ guchar *buffer_unaligned = NULL;
 	_cleanup_object_unref_ GOutputStream *device_stream = NULL;
@@ -378,7 +380,14 @@ gmw_device_write (GmwPrivate *priv,
 	buffer_unaligned = gmw_get_aligned_buffer (buffer_size, &buffer);
 	bytes_completed = 0;
 	timer = g_timer_new ();
-	while (bytes_completed < priv->image_file_size) {
+
+	/* get the total number of bytes we need to image */
+	bytes_total = priv->image_file_size;
+	if (g_settings_get_boolean (priv->settings, "blank-drive")) {
+		bytes_total = udisks_block_get_size (device->udisks_block);
+		fill_zeros = TRUE;
+	}
+	while (bytes_completed < bytes_total) {
 		gdouble elapsed;
 		gsize bytes_to_read;
 		gsize bytes_read;
@@ -386,8 +395,8 @@ gmw_device_write (GmwPrivate *priv,
 		_cleanup_free_ gchar *title = NULL;
 
 		bytes_to_read = buffer_size;
-		if (bytes_to_read + bytes_completed > priv->image_file_size)
-			bytes_to_read = priv->image_file_size - bytes_completed;
+		if (bytes_to_read + bytes_completed > bytes_total)
+			bytes_to_read = bytes_total - bytes_completed;
 
 		if (!g_input_stream_read_all (image_stream,
 					      buffer,
@@ -413,14 +422,21 @@ gmw_device_write (GmwPrivate *priv,
 			goto out;
 		}
 		if (bytes_read != bytes_to_read) {
-			g_set_error (error, 1, 0,
-				     "Requested %" G_GSIZE_FORMAT
-				     " bytes from %" G_GUINT64_FORMAT
-				     " but only read %" G_GSIZE_FORMAT " bytes",
-				     bytes_read,
-				     bytes_completed,
-				     bytes_to_read);
-			goto out;
+			if (fill_zeros) {
+				/* clear buffer to NULLs */
+				memset (buffer + bytes_read, 0,
+					bytes_to_read - bytes_read);
+				bytes_read = bytes_to_read;
+			} else {
+				g_set_error (error, 1, 0,
+					     "Requested %" G_GSIZE_FORMAT
+					     " bytes from %" G_GUINT64_FORMAT
+					     " but only read %" G_GSIZE_FORMAT " bytes",
+					     bytes_to_read,
+					     bytes_completed,
+					     bytes_read);
+				goto out;
+			}
 		}
 		bytes_written = g_output_stream_write (device_stream,
 						       buffer,
@@ -451,7 +467,7 @@ gmw_device_write (GmwPrivate *priv,
 			g_timer_reset (timer);
 			bytes_throughput = 0;
 		}
-		device->complete = (gdouble) bytes_completed / (2.f * (gdouble) priv->image_file_size);
+		device->complete = (gdouble) bytes_completed / (2.f * (gdouble) bytes_total);
 		if (device->throughput_w > 0.f) {
 			/* TRANSLATORS: we're writing the image to the device
 			 * and we now know the speed */

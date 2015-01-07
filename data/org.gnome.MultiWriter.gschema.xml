@@ -14,6 +14,13 @@
       <!-- TRANSLATORS: schema description -->
       <description>The maximum number of parallel threads to use when copying data.</description>
     </key>
+    <key name="blank-drive" type="b">
+      <default>true</default>
+      <!-- TRANSLATORS: schema summary -->
+      <summary>Completely blank drive when writing</summary>
+      <!-- TRANSLATORS: schema description -->
+      <description>Write the ISO to the drive and then blank the remainder of the drive.</description>
+    </key>
     <key name="enable-verify" type="b">
       <default>true</default>
       <!-- TRANSLATORS: schema summary -->
