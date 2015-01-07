@@ -1612,8 +1612,16 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 static void
 gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv)
 {
-	if (g_strcmp0 (key, "blank-drive") == 0)
+	if (g_strcmp0 (key, "blank-drive") == 0) {
 		g_settings_set_boolean (settings, "show-warning", TRUE);
+		return;
+	}
+	if (g_strcmp0 (key, "max-threads") == 0) {
+		g_thread_pool_set_max_threads (priv->thread_pool,
+					       g_settings_get_uint (settings, key),
+					       NULL);
+		return;
+	}
 }
 
 /**
