@@ -53,6 +53,8 @@ typedef struct {
 	guint			 throughput_id;
 	guint			 idle_id;
 	GMutex			 idle_id_mutex;
+	GtkWidget		*switch_verify;
+	GtkWidget		*switch_blank;
 } GmwPrivate;
 
 typedef enum {
@@ -147,10 +149,10 @@ gmw_activate_cb (GApplication *application, GmwPrivate *priv)
 }
 
 /**
- * gmw_cancel_cb:
+ * gmw_cancel_clicked_cb:
  **/
 static void
-gmw_cancel_cb (GtkWidget *widget, GmwPrivate *priv)
+gmw_cancel_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 {
 	g_cancellable_cancel (priv->cancellable);
 }
@@ -899,10 +901,10 @@ gmw_throughput_update_titlebar_cb (gpointer user_data)
 }
 
 /**
- * gmw_start_button_cb:
+ * gmw_start_clicked_cb:
  **/
 static void
-gmw_start_button_cb (GtkWidget *widget, GmwPrivate *priv)
+gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 {
 	GmwDevice *device;
 	GtkWindow *window;
@@ -1021,6 +1023,46 @@ static GActionEntry actions[] = {
 };
 
 /**
+ * gmw_settings_clicked_cb:
+ **/
+static void
+gmw_settings_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
+{
+	GtkWidget *pop;
+	GtkWidget *box;
+
+	/* reclaim */
+	if (gtk_widget_get_parent (priv->switch_verify) != NULL)
+		g_object_ref (priv->switch_verify);
+	gtk_widget_unparent (priv->switch_verify);
+	if (gtk_widget_get_parent (priv->switch_blank) != NULL)
+		g_object_ref (priv->switch_blank);
+	gtk_widget_unparent (priv->switch_blank);
+
+	/* show settings */
+	pop = gtk_popover_new (widget);
+	gtk_popover_set_position (GTK_POPOVER (pop), GTK_POS_BOTTOM);
+	gtk_container_set_border_width (GTK_CONTAINER (pop), 18);
+	box = gtk_grid_new ();
+	gtk_grid_set_row_spacing (GTK_GRID (box), 6);
+	gtk_grid_set_column_spacing (GTK_GRID (box), 12);
+	gtk_grid_attach (GTK_GRID (box),
+			 /* TRANSLATORS: a switch label: verify the image by
+			  * reading back the original image from the device */
+			 gtk_label_new (_("Verify")),
+			 0, 0, 1, 1);
+	gtk_grid_attach (GTK_GRID (box), priv->switch_verify, 1, 0, 1, 1);
+	gtk_grid_attach (GTK_GRID (box),
+			 /* TRANSLATORS: a switch label: we write zeros after
+			  * the image so it erases the entire device */
+			 gtk_label_new (_("Wipe")),
+			 0, 1, 1, 1);
+	gtk_grid_attach (GTK_GRID (box), priv->switch_blank, 1, 1, 1, 1);
+	gtk_container_add (GTK_CONTAINER (pop), box);
+	gtk_widget_show_all (pop);
+}
+
+/**
  * gmw_startup_cb:
  **/
 static void
@@ -1050,22 +1092,21 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 
 	main_window = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
 	gtk_application_add_window (priv->application, GTK_WINDOW (main_window));
-	gtk_widget_set_size_request (main_window, 600, 200);
+	gtk_widget_set_size_request (main_window, 750, 200);
 
 	/* Hide window first so that the dialogue resizes itself without redrawing */
 	gtk_widget_hide (main_window);
 
 	/* buttons */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_settings"));
-//	g_signal_connect (w, "clicked",
-//			  G_CALLBACK (gmw_graph_settings_cb), priv);
-	gtk_widget_hide (w);
+	g_signal_connect (w, "clicked",
+			  G_CALLBACK (gmw_settings_clicked_cb), priv);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_start"));
 	g_signal_connect (w, "clicked",
-			  G_CALLBACK (gmw_start_button_cb), priv);
+			  G_CALLBACK (gmw_start_clicked_cb), priv);
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
 	g_signal_connect (w, "clicked",
-			  G_CALLBACK (gmw_cancel_cb), priv);
+			  G_CALLBACK (gmw_cancel_clicked_cb), priv);
 
 	/* setup USB image */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_usb"));
@@ -1543,6 +1584,16 @@ main (int argc, char **argv)
 	/* set verbose? */
 	if (verbose)
 		g_setenv ("G_MESSAGES_DEBUG", "GnomeMultiWriter", FALSE);
+
+	/* keep these local as they get reparented to the popover */
+	priv->switch_verify = gtk_switch_new ();
+	priv->switch_blank = gtk_switch_new ();
+	g_settings_bind (priv->settings, "enable-verify",
+			 priv->switch_verify, "active",
+			 G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (priv->settings, "blank-drive",
+			 priv->switch_blank, "active",
+			 G_SETTINGS_BIND_DEFAULT);
 
 	/* wait */
 	status = g_application_run (G_APPLICATION (priv->application), argc, argv);
