@@ -110,8 +110,12 @@ gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 	_cleanup_free_ gchar *keya = NULL;
 	_cleanup_free_ gchar *keyb = NULL;
 
-	keya = g_strdup_printf ("%s-%s", deva->connection_id, deva->device_label);
-	keyb = g_strdup_printf ("%s-%s", devb->connection_id, devb->device_label);
+	keya = g_strdup_printf ("%s-%s",
+				gmw_device_get_hub_id (deva),
+				gmw_device_get_hub_label (deva));
+	keyb = g_strdup_printf ("%s-%s",
+				gmw_device_get_hub_id (devb),
+				gmw_device_get_hub_label (devb));
 	return g_strcmp0 (keya, keyb);
 }
 
@@ -140,19 +144,18 @@ gmw_refresh_ui (GmwPrivate *priv)
 		guint col = (i / max_devices_per_column) * 4;
 
 		device = g_ptr_array_index (priv->devices, i);
-		g_mutex_lock (&device->mutex);
 
 		/* add label */
 		w = gtk_label_new (NULL);
 		if (col > 0)
 			gtk_widget_set_margin_start (w, 30);
-		if (device->device_label != NULL) {
+		if (gmw_device_get_hub_label (device) != NULL) {
 			label_markup = g_strdup_printf ("<tt><small>%s [%s]</small></tt>",
-							device->connection_id,
-							device->device_label);
+							gmw_device_get_hub_id (device),
+							gmw_device_get_hub_label (device));
 		} else {
 			label_markup = g_strdup_printf ("<tt><small>%s</small></tt>",
-							device->connection_id);
+							gmw_device_get_hub_id (device));
 		}
 		gtk_label_set_markup (GTK_LABEL (w), label_markup);
 		g_object_set (w, "xalign", 1.f, NULL);
@@ -166,11 +169,12 @@ gmw_refresh_ui (GmwPrivate *priv)
 		gtk_grid_attach (GTK_GRID (grid), w, col + 1, row, 1, 1);
 
 		/* add optional progressbar */
-		if (device->complete > 0.f) {
+		if (gmw_device_get_complete (device) > 0.f) {
 			w = gtk_progress_bar_new ();
 			gtk_widget_set_valign (w, GTK_ALIGN_CENTER);
 			gtk_grid_attach (GTK_GRID (grid), w, col + 2, row, 1, 1);
-			gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w), device->complete);
+			gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w),
+						       gmw_device_get_complete (device));
 		}
 
 		/* add optional status text */
@@ -181,8 +185,6 @@ gmw_refresh_ui (GmwPrivate *priv)
 			gtk_label_set_width_chars (GTK_LABEL (w), 20);
 			gtk_grid_attach (GTK_GRID (grid), w, col + 3, row, 1, 1);
 		}
-
-		g_mutex_unlock (&device->mutex);
 	}
 
 	gtk_widget_show_all (grid);
@@ -303,7 +305,7 @@ gmw_device_write (GmwPrivate *priv,
 	_cleanup_variant_unref_ GVariant *fd_index = NULL;
 
 	/* get fd from udisks */
-	if (!udisks_block_call_open_for_restore_sync (device->udisks_block,
+	if (!udisks_block_call_open_for_restore_sync (gmw_device_get_udisks_block (device),
 						      g_variant_new ("a{sv}", NULL), /* options */
 						      NULL, /* fd_list */
 						      &fd_index,
@@ -327,7 +329,7 @@ gmw_device_write (GmwPrivate *priv,
 	/* get the total number of bytes we need to image */
 	bytes_total = priv->image_file_size;
 	if (g_settings_get_boolean (priv->settings, "blank-drive")) {
-		bytes_total = udisks_block_get_size (device->udisks_block);
+		bytes_total = gmw_device_get_size (device);
 		fill_zeros = TRUE;
 	}
 	gmw_device_set_state (device, GMW_DEVICE_STATE_WRITE);
@@ -406,12 +408,12 @@ gmw_device_write (GmwPrivate *priv,
 		/* update UI */
 		elapsed = g_timer_elapsed (timer, NULL);
 		if (elapsed > 1.f) {
-			device->throughput_w = (gdouble) bytes_throughput / elapsed;
+			gmw_device_set_speed_write (device, (gdouble) bytes_throughput / elapsed);
 			g_timer_reset (timer);
 			bytes_throughput = 0;
 		}
-		device->complete = device->progress_write * (gdouble) bytes_completed /
-					(gdouble) bytes_total;
+		gmw_device_set_complete_write (device, (gdouble) bytes_completed /
+						       (gdouble) bytes_total);
 		gmw_refresh_in_idle (priv);
 	}
 
@@ -455,7 +457,7 @@ gmw_device_verify (GmwPrivate *priv,
 		goto out;
 
 	/* get fd from udisks */
-	if (!udisks_block_call_open_for_backup_sync (device->udisks_block,
+	if (!udisks_block_call_open_for_backup_sync (gmw_device_get_udisks_block (device),
 						     g_variant_new ("a{sv}", NULL), /* options */
 						     NULL, /* fd_list */
 						     &fd_index,
@@ -570,16 +572,14 @@ gmw_device_verify (GmwPrivate *priv,
 		/* update UI */
 		elapsed = g_timer_elapsed (timer, NULL);
 		if (elapsed > 1.f) {
-			device->throughput_r = (gdouble) bytes_throughput / elapsed;
+			gmw_device_set_speed_read (device, (gdouble) bytes_throughput / elapsed);
 			g_timer_reset (timer);
 			bytes_throughput = 0;
 		}
 
 		/* update UI */
-		device->complete = device->progress_write +
-			(1.0 - device->progress_write) *
-				((gdouble) bytes_completed /
-					(gdouble) priv->image_file_size);
+		gmw_device_set_complete_read (device, (gdouble) bytes_completed /
+						      (gdouble) priv->image_file_size);
 		gmw_refresh_in_idle (priv);
 	}
 
@@ -600,32 +600,28 @@ gmw_refresh_titlebar (GmwPrivate *priv)
 {
 	GmwDevice *device;
 	GtkWidget *w;
-	gdouble throughput_r = 0.f;
-	gdouble throughput_w = 0.f;
+	gdouble speed_read = 0.f;
+	gdouble speed_write = 0.f;
 	guint i;
 	_cleanup_string_free_ GString *title = NULL;
 
 	/* find the throughput totals */
-	g_mutex_lock (&priv->devices_mutex);
 	for (i = 0; i < priv->devices->len; i++) {
 		device = g_ptr_array_index (priv->devices, i);
-		g_mutex_lock (&device->mutex);
-		throughput_r += device->throughput_r;
-		throughput_w += device->throughput_w;
-		g_mutex_unlock (&device->mutex);
+		speed_read += gmw_device_get_speed_read (device);
+		speed_write += gmw_device_get_speed_write (device);
 	}
-	g_mutex_unlock (&priv->devices_mutex);
 
 	/* set the title */
 	title = g_string_new (_("MultiWriter"));
-	if (throughput_w > 0.f) {
+	if (speed_write > 0.f) {
 		g_string_append_printf (title, " → %.0f MB/s",
-					throughput_w / (1000 * 1000));
+					speed_write / (1000 * 1000));
 	}
-	if (throughput_r > 0.f) {
+	if (speed_read > 0.f) {
 		_cleanup_free_ gchar *tmp = NULL;
 		tmp = g_strdup_printf ("%.0f MB/s → ",
-				       throughput_r / (1000 * 1000));
+				       speed_read / (1000 * 1000));
 		g_string_prepend (title, tmp);
 	}
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "header"));
@@ -655,9 +651,9 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	_cleanup_object_unref_ GInputStream *image_stream = NULL;
 
 	/* set the factor for the write process */
-	device->progress_write = 0.75;
+	gmw_device_set_write_alloc (device, 0.75f);
 	if (!g_settings_get_boolean (priv->settings, "enable-verify"))
-		device->progress_write = 1.0;
+		gmw_device_set_write_alloc (device, 1.f);
 
 	/* open input stream */
 	image_stream = (GInputStream *) g_file_read (priv->image_file, NULL, &error);
@@ -785,7 +781,7 @@ gmw_auth_dummy_restore (GmwPrivate *priv, GmwDevice *device, GError **error)
 	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
 	_cleanup_variant_unref_ GVariant *fd_index = NULL;
 
-	if (!udisks_block_call_open_for_restore_sync (device->udisks_block,
+	if (!udisks_block_call_open_for_restore_sync (gmw_device_get_udisks_block (device),
 						      g_variant_new ("a{sv}", NULL), /* options */
 						      NULL, /* fd_list */
 						      &fd_index,
@@ -845,7 +841,7 @@ gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device, gboolean sy
 	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
 	_cleanup_strv_free_ gchar **mtab = NULL;
 
-	object_path_child = g_strdup_printf ("%s1", device->object_path);
+	object_path_child = g_strdup_printf ("%s1", gmw_device_get_object_path (device));
 	udisks_object = udisks_client_get_object (priv->udisks_client,
 						  object_path_child);
 	if (udisks_object == NULL)
@@ -1222,12 +1218,12 @@ gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 	_cleanup_object_unref_ GUsbDevice *usb_device = NULL;
 
 	/* find the USB device using GUsb */
-	if (device->sysfs_path == NULL)
+	if (gmw_device_get_sysfs_path (device) == NULL)
 		return;
-	busnum = gmw_sysfs_get_busnum (device->sysfs_path);
-	devnum = gmw_sysfs_get_devnum (device->sysfs_path);
+	busnum = gmw_sysfs_get_busnum (gmw_device_get_sysfs_path (device));
+	devnum = gmw_sysfs_get_devnum (gmw_device_get_sysfs_path (device));
 	if (busnum == 0x00 || devnum == 0x00) {
-		g_warning ("Failed to get busnum for %s", device->sysfs_path);
+		g_warning ("Failed to get busnum for %s", gmw_device_get_sysfs_path (device));
 		return;
 	}
 	usb_device = g_usb_context_find_by_bus_address (priv->usb_ctx,
@@ -1248,7 +1244,7 @@ static void
 gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 {
 	GmwDevice *device;
-	const gchar *device_path;
+	const gchar *block_path;
 	const gchar *object_path;
 	guint64 device_size;
 	_cleanup_object_unref_ GDBusInterface *iface_block = NULL;
@@ -1278,9 +1274,9 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 		return;
 
 	/* ignore system devices */
-	device_path = udisks_block_get_device (udisks_block);
+	block_path = udisks_block_get_device (udisks_block);
 	if (udisks_block_get_hint_system (udisks_block)) {
-		g_debug ("%s is a system device", device_path);
+		g_debug ("%s is a system device", block_path);
 		return;
 	}
 
@@ -1288,30 +1284,29 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	device_size = udisks_block_get_size (udisks_block) / (1000 * 1000);
 	if (device_size < 1000) {
 		g_debug ("%s is too small [%u]",
-			 device_path, (guint) device_size);
+			 block_path, (guint) device_size);
 		return;
 	}
 	if (device_size > 1000 * 16) {
 		g_debug ("%s is too large [%u]",
-			 device_path, (guint) device_size);
+			 block_path, (guint) device_size);
 		return;
 	}
 
 	/* get the drive */
 	udisks_drive = udisks_client_get_drive_for_block (priv->udisks_client, udisks_block);
 	if (udisks_drive == NULL) {
-		g_debug ("%s has no drive", device_path);
+		g_debug ("%s has no drive", block_path);
 		return;
 	}
 
 	/* add this */
 	object_info = udisks_client_get_object_info (priv->udisks_client, udisks_object);
 	device = gmw_device_new ();
-	device->device_name = g_strdup (udisks_object_info_get_name (object_info));
-	device->device_path = g_strdup (device_path);
-	device->object_path = g_strdup (object_path);
-	device->udisks_block = g_object_ref (udisks_block);
-	g_mutex_init (&device->mutex);
+	gmw_device_set_name (device, udisks_object_info_get_name (object_info));
+	gmw_device_set_block_path (device, block_path);
+	gmw_device_set_object_path (device, object_path);
+	gmw_device_set_udisks_block (device, udisks_block);
 
 	/* set a connection ID */
 	gmw_device_set_udisks_drive (device, udisks_drive);
@@ -1324,7 +1319,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	g_ptr_array_add (priv->devices, device);
 	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
 	g_mutex_unlock (&priv->devices_mutex);
-	g_debug ("Added %s [%lu]", device_path, device_size);
+	g_debug ("Added %s [%lu]", block_path, device_size);
 }
 
 /**
@@ -1355,7 +1350,7 @@ gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 	tmp = g_dbus_object_get_object_path (dbus_object);
 	for (i = 0; i < priv->devices->len; i++) {
 		device = g_ptr_array_index (priv->devices, i);
-		if (g_strcmp0 (device->object_path, tmp) == 0) {
+		if (g_strcmp0 (gmw_device_get_object_path (device), tmp) == 0) {
 			g_ptr_array_remove (priv->devices, device);
 			g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
 			gmw_refresh_ui (priv);
@@ -1421,7 +1416,8 @@ gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
 {
 	GmwDevice *deva = (GmwDevice *) a;
 	GmwDevice *devb = (GmwDevice *) b;
-	return g_strcmp0 (deva->connection_id, devb->connection_id);
+	return g_strcmp0 (gmw_device_get_hub_id (deva),
+			  gmw_device_get_hub_id (devb));
 }
 
 /**
@@ -1481,7 +1477,7 @@ main (int argc, char **argv)
 	g_thread_pool_set_sort_function (priv->thread_pool,
 					 gmw_thread_pool_sort_func,
 					 priv);
-	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_device_free);
+	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
 	priv->usb_ctx = g_usb_context_new (NULL);
 
 	/* connect to UDisks */

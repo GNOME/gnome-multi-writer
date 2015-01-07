@@ -23,10 +23,24 @@
 #define __GMW_DEVICE_H__
 
 #include <gio/gio.h>
-#include <udisks/udisks.h>
+#include <glib-object.h>
 #include <gusb.h>
+#include <udisks/udisks.h>
 
-G_BEGIN_DECLS
+typedef struct _GmwDevice	GmwDevice;
+typedef struct _GmwDeviceClass	GmwDeviceClass;
+
+#define GMW_TYPE_DEVICE		(gmw_device_get_type ())
+#define GMW_DEVICE(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), GMW_TYPE_DEVICE, GmwDevice))
+#define GMW_IS_DEVICE(o)	(G_TYPE_CHECK_INSTANCE_TYPE ((o), GMW_TYPE_DEVICE))
+
+struct _GmwDevice {
+	GObject		 parent_instance;
+};
+
+struct _GmwDeviceClass {
+	GObjectClass	 parent_class;
+};
 
 typedef enum {
 	GMW_DEVICE_STATE_UNKNOWN,
@@ -39,41 +53,53 @@ typedef enum {
 	GMW_DEVICE_STATE_LAST
 } GmwDeviceState;
 
-// TODO: make this private?
-typedef struct {
-	GmwDeviceState		 state;
-	UDisksBlock		*udisks_block;
-	GError			*error;
-	gchar			*device_name;
-	gchar			*device_path;
-	gchar			*device_label;
-	gchar			*object_path;
-	gchar			*connection_id;	/* the text that identifies the port */
-	gchar			*sysfs_path;
-	gdouble			 complete;
-	gdouble			 throughput_w;
-	gdouble			 throughput_r;
-	gdouble			 progress_write;
-	GMutex			 mutex;
-} GmwDevice;
-
+GType		 gmw_device_get_type		(void);
 GmwDevice	*gmw_device_new			(void);
 const gchar	*gmw_device_get_icon		(GmwDevice	*device);
 gchar		*gmw_device_get_description	(GmwDevice	*device);
+GmwDeviceState	 gmw_device_get_state		(GmwDevice	*device);
+UDisksBlock	*gmw_device_get_udisks_block	(GmwDevice	*device);
+gchar		*gmw_device_get_name		(GmwDevice	*device);
+gchar		*gmw_device_get_block_path	(GmwDevice	*device);
+gchar		*gmw_device_get_hub_label	(GmwDevice	*device);
+gchar		*gmw_device_get_hub_id		(GmwDevice	*device);
+gchar		*gmw_device_get_object_path	(GmwDevice	*device);
+gchar		*gmw_device_get_sysfs_path	(GmwDevice	*device);
+gdouble		 gmw_device_get_complete	(GmwDevice	*device);
+gdouble		 gmw_device_get_speed_write	(GmwDevice	*device);
+gdouble		 gmw_device_get_speed_read	(GmwDevice	*device);
+guint64		 gmw_device_get_size		(GmwDevice	*device);
+
 void		 gmw_device_set_state		(GmwDevice	*device,
 						 GmwDeviceState	 device_state);
-void		 gmw_device_set_error		(GmwDevice	*device,
-						 const GError	*error);
-void		 gmw_device_set_connection_id	(GmwDevice	*device,
-						 const gchar	*connection_id);
-void		 gmw_device_set_device_label	(GmwDevice	*device,
-						 const gchar	*device_label);
+void		 gmw_device_set_udisks_block	(GmwDevice	*device,
+						 UDisksBlock	*udisks_block);
 void		 gmw_device_set_udisks_drive	(GmwDevice	*device,
 						 UDisksDrive	*udisks_drive);
 void		 gmw_device_set_usb_device	(GmwDevice	*device,
 						 GUsbDevice	*usb_device);
-void		 gmw_device_free		(GmwDevice	*device);
+void		 gmw_device_set_name		(GmwDevice	*device,
+						 const gchar	*name);
+void		 gmw_device_set_block_path	(GmwDevice	*device,
+						 const gchar	*block_path);
+void		 gmw_device_set_hub_id		(GmwDevice	*device,
+						 const gchar	*hub_id);
+void		 gmw_device_set_object_path	(GmwDevice	*device,
+						 const gchar	*object_path);
+void		 gmw_device_set_complete_read	(GmwDevice	*device,
+						 gdouble	 complete);
+void		 gmw_device_set_complete_write	(GmwDevice	*device,
+						 gdouble	 complete);
+void		 gmw_device_set_speed_write	(GmwDevice	*device,
+						 gdouble	 speed_write);
+void		 gmw_device_set_speed_read	(GmwDevice	*device,
+						 gdouble	 speed_read);
+void		 gmw_device_set_write_alloc	(GmwDevice	*device,
+						 gdouble	 write_alloc);
+void		 gmw_device_set_error		(GmwDevice	*device,
+						 const GError	*error);
 
 G_END_DECLS
 
-#endif
+#endif /* __GMW_DEVICE_H__ */
+

@@ -19,10 +19,166 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "config.h"
+
+#include <glib.h>
 #include <glib/gi18n.h>
 
 #include "gmw-cleanup.h"
 #include "gmw-device.h"
+
+typedef struct {
+	GError			*error;		/* the error, if any */
+	GMutex			 mutex;		/* mutex for the device */
+	GmwDeviceState		 state;		/* the #GmwDeviceState, e.g. %GMW_DEVICE_STATE_WRITE */
+	UDisksBlock		*udisks_block;	/* the #UDisksBlock device */
+	gchar			*block_path;	/* path to block device, e.g. /dev/sdb */
+	gchar			*hub_id;	/* hub connection */
+	gchar			*hub_label;	/* hub label */
+	gchar			*name;		/* name, e.g. "Hughski ColorHug" */
+	gchar			*object_path;	/* UDisks object path */
+	gchar			*sysfs_path;	/* path in /sys */
+	gdouble			 complete;	/* the amount completed, 0..1 */
+	gdouble			 speed_read;	/* throughput in bytes/sec */
+	gdouble			 speed_write;	/* throughput in bytes/sec */
+	gdouble			 write_alloc;	/* the proportion to allocate to writing */
+} GmwDevicePrivate;
+
+G_DEFINE_TYPE_WITH_PRIVATE (GmwDevice, gmw_device, G_TYPE_OBJECT)
+
+/**
+ * gmw_device_get_state:
+ **/
+GmwDeviceState
+gmw_device_get_state (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), GMW_DEVICE_STATE_UNKNOWN);
+	return priv->state;
+}
+
+/**
+ * gmw_device_get_udisks_block:
+ **/
+UDisksBlock *
+gmw_device_get_udisks_block (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->udisks_block;
+}
+
+/**
+ * gmw_device_get_name:
+ **/
+gchar *
+gmw_device_get_name (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->name;
+}
+
+/**
+ * gmw_device_get_block_path:
+ **/
+gchar *
+gmw_device_get_block_path (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->block_path;
+}
+
+/**
+ * gmw_device_get_hub_label:
+ **/
+gchar *
+gmw_device_get_hub_label (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->hub_label;
+}
+
+/**
+ * gmw_device_get_hub_id:
+ **/
+gchar *
+gmw_device_get_hub_id (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->hub_id;
+}
+
+/**
+ * gmw_device_get_object_path:
+ **/
+gchar *
+gmw_device_get_object_path (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->object_path;
+}
+
+/**
+ * gmw_device_get_sysfs_path:
+ **/
+gchar *
+gmw_device_get_sysfs_path (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	return priv->sysfs_path;
+}
+
+/**
+ * gmw_device_get_complete:
+ **/
+gdouble
+gmw_device_get_complete (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), -1.f);
+	return priv->complete;
+}
+
+/**
+ * gmw_device_get_speed_write:
+ **/
+gdouble
+gmw_device_get_speed_write (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), -1.f);
+	return priv->speed_write;
+}
+
+/**
+ * gmw_device_get_speed_read:
+ **/
+gdouble
+gmw_device_get_speed_read (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), -1.f);
+	return priv->speed_read;
+}
+
+/**
+ * gmw_device_get_size:
+ **/
+guint64
+gmw_device_get_size (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), 0);
+	if (priv->udisks_block == NULL)
+		return 0;
+	return udisks_block_get_size (priv->udisks_block);
+}
 
 /**
  * gmw_device_get_icon:
@@ -30,9 +186,13 @@
 const gchar *
 gmw_device_get_icon (GmwDevice *device)
 {
-	if (device->state == GMW_DEVICE_STATE_SUCCESS)
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+
+	if (priv->state == GMW_DEVICE_STATE_SUCCESS)
 		return "emblem-default";
-	if (device->state == GMW_DEVICE_STATE_FAILED)
+	if (priv->state == GMW_DEVICE_STATE_FAILED)
 		return "drive-harddisk";
 	return "drive-harddisk-usb";
 }
@@ -43,40 +203,44 @@ gmw_device_get_icon (GmwDevice *device)
 gchar *
 gmw_device_get_description (GmwDevice *device)
 {
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+
 	/* waiting to be written */
-	if (device->state == GMW_DEVICE_STATE_IDLE)
-		return g_strdup (device->device_name);
+	if (priv->state == GMW_DEVICE_STATE_IDLE)
+		return g_strdup (priv->name);
 
 	/* failed to read or write */
-	if (device->state == GMW_DEVICE_STATE_FAILED) {
-		if (device->error == NULL) {
+	if (priv->state == GMW_DEVICE_STATE_FAILED) {
+		if (priv->error == NULL) {
 			/* TRANSLATORS: something internally has gone terribly
 			 * wrong if the user can see this */
 			return g_strdup ("Failed");
 		}
-		return g_strdup (device->error->message);
+		return g_strdup (priv->error->message);
 	}
 
 	/* waiting to be scheduled */
-	if (device->state == GMW_DEVICE_STATE_WAITING) {
+	if (priv->state == GMW_DEVICE_STATE_WAITING) {
 		/* TRANSLATORS: a device is waiting to be written in a queue */
 		return g_strdup ("Waiting");
 	}
 
 	/* bingo */
-	if (device->state == GMW_DEVICE_STATE_SUCCESS) {
+	if (priv->state == GMW_DEVICE_STATE_SUCCESS) {
 		/* TRANSLATORS: The image has been written and verified to
 		 * *one* device, not all */
 		return g_strdup (_("Written successfully"));
 	}
 
 	/* write */
-	if (device->state == GMW_DEVICE_STATE_WRITE) {
-		if (device->throughput_w > 0.f) {
+	if (priv->state == GMW_DEVICE_STATE_WRITE) {
+		if (priv->speed_write > 0.f) {
 			/* TRANSLATORS: we're writing the image to the device
 			 * and we now know the speed */
 			return g_strdup_printf (_("Writing at %.1f MB/s…"),
-						device->throughput_w / (1000 * 1000));
+						priv->speed_write / (1000 * 1000));
 		} else {
 			/* TRANSLATORS: we're writing the image to the USB device */
 			return g_strdup (_("Writing…"));
@@ -84,12 +248,12 @@ gmw_device_get_description (GmwDevice *device)
 	}
 
 	/* read */
-	if (device->state == GMW_DEVICE_STATE_VERIFY) {
-		if (device->throughput_r > 0.f) {
+	if (priv->state == GMW_DEVICE_STATE_VERIFY) {
+		if (priv->speed_read > 0.f) {
 			/* TRANSLATORS: We're verifying the USB device contains
 			 * the correct image data and we now know the speed */
 			return g_strdup_printf (_("Verifying at %.1f MB/s…"),
-						device->throughput_r / (1000 * 1000));
+						priv->speed_read / (1000 * 1000));
 		} else {
 			/* TRANSLATORS: We're verifying the USB device contains
 			 * the correct image data */
@@ -106,19 +270,21 @@ gmw_device_get_description (GmwDevice *device)
 void
 gmw_device_set_state (GmwDevice *device, GmwDeviceState device_state)
 {
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
 	switch (device_state) {
 	case GMW_DEVICE_STATE_SUCCESS:
-		device->complete = -1.f;
+		priv->complete = -1.f;
 		break;
 	case GMW_DEVICE_STATE_IDLE:
 	case GMW_DEVICE_STATE_FAILED:
-		device->throughput_r = 0.f;
-		device->throughput_w = 0.f;
+		priv->speed_read = 0.f;
+		priv->speed_write = 0.f;
 		break;
 	default:
 		break;
 	}
-	device->state = device_state;
+	priv->state = device_state;
 }
 
 /**
@@ -127,36 +293,154 @@ gmw_device_set_state (GmwDevice *device, GmwDeviceState device_state)
 void
 gmw_device_set_error (GmwDevice *device, const GError *error)
 {
-	g_mutex_lock (&device->mutex);
-	if (device->error != NULL)
-		g_error_free (device->error);
-	device->error = g_error_copy (error);
-	g_mutex_unlock (&device->mutex);
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	if (priv->error != NULL)
+		g_error_free (priv->error);
+	priv->error = g_error_copy (error);
+	g_mutex_unlock (&priv->mutex);
 	gmw_device_set_state (device, GMW_DEVICE_STATE_FAILED);
 }
 
 /**
- * gmw_device_set_connection_id:
+ * gmw_device_set_udisks_block:
  **/
 void
-gmw_device_set_connection_id (GmwDevice *device, const gchar *connection_id)
+gmw_device_set_udisks_block (GmwDevice *device, UDisksBlock *udisks_block)
 {
-	g_mutex_lock (&device->mutex);
-	g_free (device->connection_id);
-	device->connection_id = g_strdup (connection_id);
-	g_mutex_unlock (&device->mutex);
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	if (priv->udisks_block != NULL)
+		g_object_unref (priv->udisks_block);
+	priv->udisks_block = g_object_ref (udisks_block);
+	g_mutex_unlock (&priv->mutex);
 }
 
 /**
- * gmw_device_set_device_label:
+ * gmw_device_set_name:
  **/
 void
-gmw_device_set_device_label (GmwDevice *device, const gchar *device_label)
+gmw_device_set_name (GmwDevice *device, const gchar *name)
 {
-	g_mutex_lock (&device->mutex);
-	g_free (device->device_label);
-	device->device_label = g_strdup (device_label);
-	g_mutex_unlock (&device->mutex);
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->name);
+	priv->name = g_strdup (name);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
+ * gmw_device_set_block_path:
+ **/
+void
+gmw_device_set_block_path (GmwDevice *device, const gchar *block_path)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->block_path);
+	priv->block_path = g_strdup (block_path);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
+ * gmw_device_set_hub_label:
+ **/
+static void
+gmw_device_set_hub_label (GmwDevice *device, const gchar *hub_label)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->hub_label);
+	priv->hub_label = g_strdup (hub_label);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
+ * gmw_device_set_hub_id:
+ **/
+void
+gmw_device_set_hub_id (GmwDevice *device, const gchar *hub_id)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->hub_id);
+	priv->hub_id = g_strdup (hub_id);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
+ * gmw_device_set_object_path:
+ **/
+void
+gmw_device_set_object_path (GmwDevice *device, const gchar *object_path)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->object_path);
+	priv->object_path = g_strdup (object_path);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
+ * gmw_device_set_complete_read:
+ **/
+void
+gmw_device_set_complete_read (GmwDevice *device, gdouble complete)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	priv->complete = priv->write_alloc + (1.0 - priv->write_alloc) * complete;
+}
+
+/**
+ * gmw_device_set_complete_write:
+ **/
+void
+gmw_device_set_complete_write (GmwDevice *device, gdouble complete)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	priv->complete = priv->write_alloc * complete;
+}
+
+/**
+ * gmw_device_set_speed_write:
+ **/
+void
+gmw_device_set_speed_write (GmwDevice *device, gdouble speed_write)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	priv->speed_write = speed_write;
+}
+
+/**
+ * gmw_device_set_speed_read:
+ **/
+void
+gmw_device_set_speed_read (GmwDevice *device, gdouble speed_read)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	priv->speed_read = speed_read;
+}
+
+/**
+ * gmw_device_set_write_alloc:
+ **/
+void
+gmw_device_set_write_alloc (GmwDevice *device, gdouble write_alloc)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	priv->write_alloc = write_alloc;
 }
 
 /**
@@ -165,9 +449,12 @@ gmw_device_set_device_label (GmwDevice *device, const gchar *device_label)
 void
 gmw_device_set_udisks_drive (GmwDevice *device, UDisksDrive *udisks_drive)
 {
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	const gchar *tmp;
 	_cleanup_free_ gchar *sysfs_path = NULL;
-	_cleanup_free_ gchar *connection_id = NULL;
+	_cleanup_free_ gchar *hub_id = NULL;
+
+	g_return_if_fail (GMW_IS_DEVICE (device));
 
 	/* get the sibling ID, which is normally the USB path */
 	tmp = udisks_drive_get_sibling_id (udisks_drive);
@@ -177,16 +464,15 @@ gmw_device_set_udisks_drive (GmwDevice *device, UDisksDrive *udisks_drive)
 	/* sometimes udisks goes insane */
 	sysfs_path = g_path_get_dirname (tmp);
 	if (g_file_test (sysfs_path, G_FILE_TEST_EXISTS)) {
-		device->sysfs_path = g_strdup (sysfs_path);
+		priv->sysfs_path = g_strdup (sysfs_path);
 	} else {
 		g_warning ("UDisks returned invalid path: %s", sysfs_path);
 	}
 
 	/* set the connection ID based on the parent device name */
-	connection_id = g_path_get_basename (sysfs_path);
-	gmw_device_set_connection_id (device, connection_id);
+	hub_id = g_path_get_basename (sysfs_path);
+	gmw_device_set_hub_id (device, hub_id);
 }
-
 
 #if G_USB_CHECK_VERSION(0,2,4)
 typedef struct {
@@ -198,7 +484,7 @@ typedef struct {
 	guint16		 child_pid;		/* -1, or 0x0000 */
 	guint8		 port_number;		/* electrical, not physical */
 	guint8		 chain_len;		/* internal chain number */
-	const gchar	*device_label;		/* decal on the box */
+	const gchar	*hub_label;		/* decal on the box */
 } GmwDeviceQuirk;
 #endif
 
@@ -211,7 +497,7 @@ gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
 #if G_USB_CHECK_VERSION(0,2,4)
 	guint i;
 	guint j;
-	_cleanup_free_ gchar *connection_id = NULL;
+	_cleanup_free_ gchar *hub_id = NULL;
 	_cleanup_object_unref_ GUsbDevice *usb_hub = NULL;
 	_cleanup_object_unref_ GUsbDevice *usb_hub_parent = NULL;
 	const GmwDeviceQuirk quirks[] = {
@@ -254,7 +540,7 @@ gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
 		 g_usb_device_get_vid (usb_device),
 		 g_usb_device_get_pid (usb_device));
 
-	for (i = 0; quirks[i].device_label != NULL; i++) {
+	for (i = 0; quirks[i].hub_label != NULL; i++) {
 		/* check grandparent */
 		if (usb_hub_parent != NULL && quirks[i].grandparent_vid != 0x0000) {
 			if (quirks[i].grandparent_vid != g_usb_device_get_vid (usb_hub_parent))
@@ -298,19 +584,19 @@ gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
 		}
 
 		/* set the decal name */
-		gmw_device_set_device_label (device, quirks[i].device_label);
+		gmw_device_set_hub_label (device, quirks[i].hub_label);
 
 		/* get the top-level port address */
 		if (usb_hub_parent != NULL && quirks[i].chain_len == 1) {
-			connection_id = g_strdup_printf ("%02x:%02x",
+			hub_id = g_strdup_printf ("%02x:%02x",
 						g_usb_device_get_bus (usb_hub_parent),
 						g_usb_device_get_address (usb_hub_parent));
 		} else {
-			connection_id = g_strdup_printf ("%02x:%02x",
+			hub_id = g_strdup_printf ("%02x:%02x",
 						g_usb_device_get_bus (usb_hub),
 						g_usb_device_get_address (usb_hub));
 		}
-		gmw_device_set_connection_id (device, connection_id);
+		gmw_device_set_hub_id (device, hub_id);
 		break;
 	}
 #endif
@@ -324,13 +610,60 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 {
 	const gchar *tmp;
 
+	g_return_if_fail (GMW_IS_DEVICE (device));
+
 	/* use the bare platform ID by default */
 	tmp = g_usb_device_get_platform_id (usb_device);
 	if (tmp != NULL)
-		gmw_device_set_connection_id (device, tmp + 7);
+		gmw_device_set_hub_id (device, tmp + 7);
 
 	/* can we get the ID from a quirk */
 	gmw_device_set_usb_device_quirk (device, usb_device);
+}
+
+static void
+gmw_device_finalize (GObject *object)
+{
+	GmwDevice *device;
+	GmwDevicePrivate *priv;
+
+	g_return_if_fail (GMW_IS_DEVICE (object));
+
+	device = GMW_DEVICE (object);
+	priv = gmw_device_get_instance_private (device);
+
+	g_mutex_clear (&priv->mutex);
+	if (priv->error != NULL)
+		g_error_free (priv->error);
+	g_free (priv->block_path);
+	g_free (priv->hub_id);
+	g_free (priv->hub_label);
+	g_free (priv->name);
+	g_free (priv->object_path);
+	g_free (priv->sysfs_path);
+	g_object_unref (priv->udisks_block);
+
+	G_OBJECT_CLASS (gmw_device_parent_class)->finalize (object);
+}
+
+static void
+gmw_device_class_init (GmwDeviceClass *klass)
+{
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	object_class->finalize = gmw_device_finalize;
+}
+
+static void
+gmw_device_init (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	priv->state = GMW_DEVICE_STATE_IDLE;
+	priv->complete = -1.f;
+	priv->speed_read = -1.f;
+	priv->speed_write = -1.f;
+	priv->write_alloc = 1.f;
+	priv->hub_id = g_strdup ("???");
+	g_mutex_init (&priv->mutex);
 }
 
 /**
@@ -340,28 +673,6 @@ GmwDevice *
 gmw_device_new (void)
 {
 	GmwDevice *device;
-	device = g_new0 (GmwDevice, 1);
-	device->state = GMW_DEVICE_STATE_IDLE;
-	device->complete = -1.f;
-	device->connection_id = g_strdup ("???");
-	return device;
-}
-
-/**
- * gmw_device_free:
- **/
-void
-gmw_device_free (GmwDevice *device)
-{
-	g_mutex_clear (&device->mutex);
-	if (device->error != NULL)
-		g_error_free (device->error);
-	g_free (device->device_name);
-	g_free (device->device_path);
-	g_free (device->object_path);
-	g_free (device->connection_id);
-	g_free (device->device_label);
-	g_free (device->sysfs_path);
-	g_object_unref (device->udisks_block);
-	g_free (device);
+	device = g_object_new (GMW_TYPE_DEVICE, NULL);
+	return GMW_DEVICE (device);
 }
