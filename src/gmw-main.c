@@ -1308,8 +1308,8 @@ gmw_udisks_get_quirk_id (GmwPrivate *priv, GUsbDevice *usb_device)
 #if G_USB_CHECK_VERSION(0,2,4)
 	guint i;
 	guint j;
-	_cleanup_object_unref_ GUsbDevice *usb_parent = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_grandparent = NULL;
+	_cleanup_object_unref_ GUsbDevice *usb_hub = NULL;
+	_cleanup_object_unref_ GUsbDevice *usb_hub_parent = NULL;
 	const GmwQuirk quirks[] = {
 		/*
 		 * Orico PIO Series Hub
@@ -1334,40 +1334,47 @@ gmw_udisks_get_quirk_id (GmwPrivate *priv, GUsbDevice *usb_device)
 		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x00, 0x00, NULL }
 	};
 
-	usb_parent = g_usb_device_get_parent (usb_device);
-	usb_grandparent = g_usb_device_get_parent (usb_parent);
-	g_debug ("Quirk info: 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%02x",
-		 g_usb_device_get_vid (usb_parent),
-		 g_usb_device_get_pid (usb_parent),
-		 usb_grandparent ? g_usb_device_get_vid (usb_grandparent) : 0x0,
-		 usb_grandparent ? g_usb_device_get_pid (usb_grandparent) : 0x0,
-		 g_usb_device_get_port_number (usb_device));
+	/* is this a USB hub already */
+	if (g_usb_device_get_device_class (usb_device) == 0x09) {
+		usb_hub = g_object_ref (usb_device);
+	} else {
+		usb_hub = g_usb_device_get_parent (usb_device);
+	}
+	usb_hub_parent = g_usb_device_get_parent (usb_hub);
+	g_debug ("Quirk info: 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%02x for 0x%04x:0x%04x",
+		 g_usb_device_get_vid (usb_hub),
+		 g_usb_device_get_pid (usb_hub),
+		 usb_hub_parent ? g_usb_device_get_vid (usb_hub_parent) : 0x0,
+		 usb_hub_parent ? g_usb_device_get_pid (usb_hub_parent) : 0x0,
+		 g_usb_device_get_port_number (usb_device),
+		 g_usb_device_get_vid (usb_device),
+		 g_usb_device_get_pid (usb_device));
 
 	for (i = 0; quirks[i].platform_id != NULL; i++) {
 		/* check grandparent */
-		if (usb_grandparent != NULL && quirks[i].grandparent_vid != 0x0000) {
-			if (quirks[i].grandparent_vid != g_usb_device_get_vid (usb_grandparent))
+		if (usb_hub_parent != NULL && quirks[i].grandparent_vid != 0x0000) {
+			if (quirks[i].grandparent_vid != g_usb_device_get_vid (usb_hub_parent))
 				continue;
-			if (quirks[i].grandparent_pid != g_usb_device_get_pid (usb_grandparent))
+			if (quirks[i].grandparent_pid != g_usb_device_get_pid (usb_hub_parent))
 				continue;
 		}
 
 		/* check parent */
-		if (usb_parent != NULL && quirks[i].parent_vid != 0x0000) {
-			if (quirks[i].parent_vid != g_usb_device_get_vid (usb_parent))
+		if (usb_hub != NULL && quirks[i].parent_vid != 0x0000) {
+			if (quirks[i].parent_vid != g_usb_device_get_vid (usb_hub))
 				continue;
-			if (quirks[i].parent_pid != g_usb_device_get_pid (usb_parent))
+			if (quirks[i].parent_pid != g_usb_device_get_pid (usb_hub))
 				continue;
 		}
 
 		/* check children */
-		if (usb_parent != NULL && quirks[i].child_vid != 0x0000) {
+		if (usb_hub != NULL && quirks[i].child_vid != 0x0000) {
 			GUsbDevice *tmp;
 			gboolean child_exists = FALSE;
 			_cleanup_ptrarray_unref_ GPtrArray *children = NULL;
 
 			/* the specified child just has to exist once */
-			children = g_usb_device_get_children (usb_parent);
+			children = g_usb_device_get_children (usb_hub);
 			for (j = 0; j < children->len; j++) {
 				tmp = g_ptr_array_index (children, j);
 				if (g_usb_device_get_vid (tmp) == quirks[i].child_vid &&
@@ -1387,15 +1394,15 @@ gmw_udisks_get_quirk_id (GmwPrivate *priv, GUsbDevice *usb_device)
 		}
 
 		/* get the top-level port address prepended to the decal name */
-		if (usb_grandparent != NULL && quirks[i].chain_len == 1) {
+		if (usb_hub_parent != NULL && quirks[i].chain_len == 1) {
 			return g_strdup_printf ("%02x:%02x [%s]",
-						g_usb_device_get_bus (usb_grandparent),
-						g_usb_device_get_address (usb_grandparent),
+						g_usb_device_get_bus (usb_hub_parent),
+						g_usb_device_get_address (usb_hub_parent),
 						quirks[i].platform_id);
 		}
 		return g_strdup_printf ("%02x:%02x [%s]",
-					g_usb_device_get_bus (usb_parent),
-					g_usb_device_get_address (usb_parent),
+					g_usb_device_get_bus (usb_hub),
+					g_usb_device_get_address (usb_hub),
 					quirks[i].platform_id);
 	}
 #endif
