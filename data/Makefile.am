@@ -1,5 +1,6 @@
 SUBDIRS = 						\
-	appdata
+	appdata						\
+	icons
 
 @INTLTOOL_DESKTOP_RULE@
 desktopdir = $(datadir)/applications

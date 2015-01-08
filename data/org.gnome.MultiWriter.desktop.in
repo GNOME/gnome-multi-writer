@@ -1,7 +1,7 @@
 [Desktop Entry]
 _Name=MultiWriter
 _Comment=Write an ISO file to multiple USB devices at once
-Icon=drive-harddisk-usb
+Icon=gnome-multi-writer
 Exec=gnome-multi-writer
 Terminal=false
 Type=Application

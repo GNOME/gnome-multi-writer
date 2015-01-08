@@ -58,6 +58,7 @@ fi
 %{_datadir}/appdata/org.gnome.MultiWriter.appdata.xml
 %{_datadir}/applications/org.gnome.MultiWriter.desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.MultiWriter.gschema.xml
+%{_datadir}/icons/hicolor/*/apps/*
 %{_mandir}/man1/gnome-multi-writer.1.gz
 
 %changelog
