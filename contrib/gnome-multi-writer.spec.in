@@ -53,7 +53,7 @@ fi
 /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
-%doc README AUTHORS NEWS COPYING
+%doc README.md AUTHORS NEWS COPYING
 %{_bindir}/%{name}
 %{_datadir}/appdata/org.gnome.MultiWriter.appdata.xml
 %{_datadir}/applications/org.gnome.MultiWriter.desktop
