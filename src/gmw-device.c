@@ -35,8 +35,11 @@ typedef struct {
 	gchar			*block_path;	/* path to block device, e.g. /dev/sdb */
 	gchar			*hub_id;	/* hub connection */
 	gchar			*hub_label;	/* hub label */
+	guint8			 hub_root;	/* root hub number */
 	gchar			*name;		/* name, e.g. "Hughski ColorHug" */
 	gchar			*object_path;	/* UDisks object path */
+	gchar			*order_display;	/* key for display sorting */
+	gchar			*order_process;	/* key for processing sorting */
 	gchar			*sysfs_path;	/* path in /sys */
 	gdouble			 complete;	/* the amount completed, 0..1 */
 	gdouble			 speed_read;	/* throughput in bytes/sec */
@@ -113,6 +116,17 @@ gmw_device_get_hub_id (GmwDevice *device)
 }
 
 /**
+ * gmw_device_get_hub_root:
+ **/
+guint8
+gmw_device_get_hub_root (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), 0);
+	return priv->hub_root;
+}
+
+/**
  * gmw_device_get_object_path:
  **/
 gchar *
@@ -121,6 +135,35 @@ gmw_device_get_object_path (GmwDevice *device)
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
 	return priv->object_path;
+}
+
+/**
+ * gmw_device_get_order_display:
+ **/
+gchar *
+gmw_device_get_order_display (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	if (priv->order_display == NULL) {
+		_cleanup_free_ gchar *key = NULL;
+		key = g_strdup_printf ("%s-%s", priv->hub_id, priv->hub_label);
+		gmw_device_set_order_display (device, key);
+	}
+	return priv->order_display;
+}
+
+/**
+ * gmw_device_get_order_process:
+ **/
+gchar *
+gmw_device_get_order_process (GmwDevice *device)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
+	if (priv->order_process == NULL)
+		return gmw_device_get_order_display (device);
+	return priv->order_process;
 }
 
 /**
@@ -389,6 +432,34 @@ gmw_device_set_object_path (GmwDevice *device, const gchar *object_path)
 }
 
 /**
+ * gmw_device_set_order_display:
+ **/
+void
+gmw_device_set_order_display (GmwDevice *device, const gchar *order_display)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->order_display);
+	priv->order_display = g_strdup (order_display);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
+ * gmw_device_set_order_process:
+ **/
+void
+gmw_device_set_order_process (GmwDevice *device, const gchar *order_process)
+{
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	g_return_if_fail (GMW_IS_DEVICE (device));
+	g_mutex_lock (&priv->mutex);
+	g_free (priv->order_process);
+	priv->order_process = g_strdup (order_process);
+	g_mutex_unlock (&priv->mutex);
+}
+
+/**
  * gmw_device_set_complete_read:
  **/
 void
@@ -608,6 +679,7 @@ gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
 void
 gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 {
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	const gchar *tmp;
 
 	g_return_if_fail (GMW_IS_DEVICE (device));
@@ -616,6 +688,9 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 	tmp = g_usb_device_get_platform_id (usb_device);
 	if (tmp != NULL)
 		gmw_device_set_hub_id (device, tmp + 7);
+
+	/* get the USB root hub number */
+	priv->hub_root = g_usb_device_get_bus (usb_device);
 
 	/* can we get the ID from a quirk */
 	gmw_device_set_usb_device_quirk (device, usb_device);
@@ -640,6 +715,8 @@ gmw_device_finalize (GObject *object)
 	g_free (priv->hub_label);
 	g_free (priv->name);
 	g_free (priv->object_path);
+	g_free (priv->order_display);
+	g_free (priv->order_process);
 	g_free (priv->sysfs_path);
 	g_object_unref (priv->udisks_block);
 

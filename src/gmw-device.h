@@ -63,7 +63,10 @@ gchar		*gmw_device_get_name		(GmwDevice	*device);
 gchar		*gmw_device_get_block_path	(GmwDevice	*device);
 gchar		*gmw_device_get_hub_label	(GmwDevice	*device);
 gchar		*gmw_device_get_hub_id		(GmwDevice	*device);
+guint8		 gmw_device_get_hub_root	(GmwDevice	*device);
 gchar		*gmw_device_get_object_path	(GmwDevice	*device);
+gchar		*gmw_device_get_order_display	(GmwDevice	*device);
+gchar		*gmw_device_get_order_process	(GmwDevice	*device);
 gchar		*gmw_device_get_sysfs_path	(GmwDevice	*device);
 gdouble		 gmw_device_get_complete	(GmwDevice	*device);
 gdouble		 gmw_device_get_speed_write	(GmwDevice	*device);
@@ -86,6 +89,10 @@ void		 gmw_device_set_hub_id		(GmwDevice	*device,
 						 const gchar	*hub_id);
 void		 gmw_device_set_object_path	(GmwDevice	*device,
 						 const gchar	*object_path);
+void		 gmw_device_set_order_display	(GmwDevice	*device,
+						 const gchar	*order_display);
+void		 gmw_device_set_order_process	(GmwDevice	*device,
+						 const gchar	*order_process);
 void		 gmw_device_set_complete_read	(GmwDevice	*device,
 						 gdouble	 complete);
 void		 gmw_device_set_complete_write	(GmwDevice	*device,

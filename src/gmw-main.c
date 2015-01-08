@@ -36,6 +36,8 @@
 #include "gmw-cleanup.h"
 #include "gmw-device.h"
 
+#define GMW_MAX_ROOT_HUBS	8
+
 typedef struct {
 	GFile			*image_file;
 	guint64			 image_file_size;
@@ -107,16 +109,48 @@ gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 {
 	GmwDevice *deva = *((GmwDevice **) a);
 	GmwDevice *devb = *((GmwDevice **) b);
-	_cleanup_free_ gchar *keya = NULL;
-	_cleanup_free_ gchar *keyb = NULL;
+	return g_strcmp0 (gmw_device_get_order_display (deva),
+			  gmw_device_get_order_display (devb));
+}
 
-	keya = g_strdup_printf ("%s-%s",
-				gmw_device_get_hub_id (deva),
-				gmw_device_get_hub_label (deva));
-	keyb = g_strdup_printf ("%s-%s",
-				gmw_device_get_hub_id (devb),
-				gmw_device_get_hub_label (devb));
-	return g_strcmp0 (keya, keyb);
+/**
+ * gmw_device_list_sort:
+ **/
+static void
+gmw_device_list_sort (GmwPrivate *priv)
+{
+	GmwDevice *device;
+	GPtrArray *hub_root[GMW_MAX_ROOT_HUBS];
+	guint hub;
+	guint i;
+	guint idx = 0;
+
+	/* first, sort the list for display */
+	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
+
+	/* put each device into an array of its root hub */
+	for (hub = 0; hub < GMW_MAX_ROOT_HUBS; hub++)
+		hub_root[hub] = g_ptr_array_new ();
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
+		hub = gmw_device_get_hub_root (device);
+		if (hub >= GMW_MAX_ROOT_HUBS)
+			continue;
+		g_ptr_array_add (hub_root[hub], device);
+	}
+
+	/* queue the devices according to the root hub they are connected
+	 * to ensure we saturate as many busses as possible */
+	for (i = 0; i < priv->devices->len; i++) {
+		for (hub = 0; hub < GMW_MAX_ROOT_HUBS; hub++) {
+			_cleanup_free_ gchar *key = NULL;
+			if (hub_root[hub]->len <= i)
+				continue;
+			device = g_ptr_array_index (hub_root[hub], i);
+			key = g_strdup_printf ("%04i", idx++);
+			gmw_device_set_order_process (device, key);
+		}
+	}
 }
 
 /**
@@ -1240,7 +1274,7 @@ gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 /**
  * gmw_udisks_object_add:
  **/
-static void
+static gboolean
 gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 {
 	GmwDevice *device;
@@ -1258,26 +1292,26 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	/* is this the kind of device that interests us? */
 	iface_block = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Block");
 	if (iface_block == NULL)
-		return;
+		return FALSE;
 	iface_part = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Partition");
 	if (iface_part != NULL)
-		return;
+		return FALSE;
 	iface_fs = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Filesystem");
 	if (iface_fs != NULL)
-		return;
+		return FALSE;
 
 	/* get the block device */
 	object_path = g_dbus_object_get_object_path (dbus_object);
 	udisks_object = udisks_client_get_object (priv->udisks_client, object_path);
 	udisks_block = udisks_object_get_block (udisks_object);
 	if (udisks_block == NULL)
-		return;
+		return FALSE;
 
 	/* ignore system devices */
 	block_path = udisks_block_get_device (udisks_block);
 	if (udisks_block_get_hint_system (udisks_block)) {
 		g_debug ("%s is a system device", block_path);
-		return;
+		return FALSE;
 	}
 
 	/* ignore small or large devices */
@@ -1285,19 +1319,19 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	if (device_size < 1000) {
 		g_debug ("%s is too small [%u]",
 			 block_path, (guint) device_size);
-		return;
+		return FALSE;
 	}
 	if (device_size > 1000 * 16) {
 		g_debug ("%s is too large [%u]",
 			 block_path, (guint) device_size);
-		return;
+		return FALSE;
 	}
 
 	/* get the drive */
 	udisks_drive = udisks_client_get_drive_for_block (priv->udisks_client, udisks_block);
 	if (udisks_drive == NULL) {
 		g_debug ("%s has no drive", block_path);
-		return;
+		return FALSE;
 	}
 
 	/* add this */
@@ -1317,9 +1351,51 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 
 	g_mutex_lock (&priv->devices_mutex);
 	g_ptr_array_add (priv->devices, device);
-	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
 	g_mutex_unlock (&priv->devices_mutex);
 	g_debug ("Added %s [%lu]", block_path, device_size);
+	return TRUE;
+}
+
+/**
+ * gmw_update_max_threads:
+ **/
+static void
+gmw_update_max_threads (GmwPrivate *priv)
+{
+	GmwDevice *device;
+	gboolean used[GMW_MAX_ROOT_HUBS];
+	guint8 root;
+	guint i;
+	guint nr_root = 0;
+	guint threads_per_root;
+
+	/* get setting */
+	threads_per_root = g_settings_get_uint (priv->settings, "max-threads");
+
+	/* init */
+	for (i = 0; i < GMW_MAX_ROOT_HUBS; i++)
+		used[i] = FALSE;
+
+	/* count root hubs in use */
+	for (i = 0; i < priv->devices->len; i++) {
+		device = g_ptr_array_index (priv->devices, i);
+		root = gmw_device_get_hub_root (device);
+		if (root == 0 || root >= GMW_MAX_ROOT_HUBS)
+			continue;
+		used[root] = TRUE;
+	}
+	for (i = 0; i < GMW_MAX_ROOT_HUBS; i++) {
+		if (used[i])
+			nr_root++;
+	}
+
+	/* even with no devices, we assume there is at least one root hub */
+	if (nr_root == 0)
+		nr_root = 1;
+	g_debug ("%i root %s in use", nr_root, nr_root > 1 ? "hubs" : "hub");
+	g_thread_pool_set_max_threads (priv->thread_pool,
+				       threads_per_root * nr_root,
+				       NULL);
 }
 
 /**
@@ -1330,8 +1406,11 @@ gmw_udisks_object_added_cb (GDBusObjectManager *object_manager,
 			    GDBusObject *dbus_object,
 			    GmwPrivate *priv)
 {
-	gmw_udisks_object_add (priv, dbus_object);
-	gmw_refresh_ui (priv);
+	if (gmw_udisks_object_add (priv, dbus_object)) {
+		gmw_device_list_sort (priv);
+		gmw_update_max_threads (priv);
+		gmw_refresh_ui (priv);
+	}
 }
 
 /**
@@ -1352,7 +1431,8 @@ gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 		device = g_ptr_array_index (priv->devices, i);
 		if (g_strcmp0 (gmw_device_get_object_path (device), tmp) == 0) {
 			g_ptr_array_remove (priv->devices, device);
-			g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
+			gmw_device_list_sort (priv);
+			gmw_update_max_threads (priv);
 			gmw_refresh_ui (priv);
 			break;
 		}
@@ -1386,6 +1466,8 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 	objects = g_dbus_object_manager_get_objects (object_manager);
 	for (l = objects; l != NULL; l = l->next)
 		gmw_udisks_object_add (priv, G_DBUS_OBJECT (l->data));
+	gmw_device_list_sort (priv);
+	gmw_update_max_threads (priv);
 	gmw_refresh_ui (priv);
 	g_list_free_full (objects, (GDestroyNotify) g_object_unref);
 }
@@ -1401,9 +1483,7 @@ gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv
 		return;
 	}
 	if (g_strcmp0 (key, "max-threads") == 0) {
-		g_thread_pool_set_max_threads (priv->thread_pool,
-					       g_settings_get_uint (settings, key),
-					       NULL);
+		gmw_update_max_threads (priv);
 		return;
 	}
 }
@@ -1416,8 +1496,8 @@ gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
 {
 	GmwDevice *deva = (GmwDevice *) a;
 	GmwDevice *devb = (GmwDevice *) b;
-	return g_strcmp0 (gmw_device_get_hub_id (deva),
-			  gmw_device_get_hub_id (devb));
+	return g_strcmp0 (gmw_device_get_order_process (deva),
+			  gmw_device_get_order_process (devb));
 }
 
 /**
@@ -1467,8 +1547,7 @@ main (int argc, char **argv)
 	g_signal_connect (priv->settings, "changed",
 			  G_CALLBACK (gmw_settings_changed_cb), priv);
 	priv->thread_pool = g_thread_pool_new (gmw_copy_thread_cb, priv,
-					       g_settings_get_uint (priv->settings, "max-threads"),
-					       FALSE, &error);
+					       1, FALSE, &error);
 	if (priv->thread_pool == NULL) {
 		status = EXIT_FAILURE;
 		g_print ("Failed to create thread pool: %s\n", error->message);
