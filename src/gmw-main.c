@@ -1249,7 +1249,12 @@ gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 {
 	guint8 busnum;
 	guint8 devnum;
+	_cleanup_error_free_ GError *error = NULL;
 	_cleanup_object_unref_ GUsbDevice *usb_device = NULL;
+
+	/* failed to load GUsb */
+	if (priv->usb_ctx == NULL)
+		return;
 
 	/* find the USB device using GUsb */
 	if (gmw_device_get_sysfs_path (device) == NULL)
@@ -1263,9 +1268,9 @@ gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 	usb_device = g_usb_context_find_by_bus_address (priv->usb_ctx,
 							busnum,
 							devnum,
-							NULL);
+							&error);
 	if (usb_device == NULL) {
-		g_warning ("Failed to find %02x:%02x", busnum, devnum);
+		g_warning ("%s", error->message);
 		return;
 	}
 	gmw_device_set_usb_device (device, usb_device);
@@ -1557,7 +1562,12 @@ main (int argc, char **argv)
 					 gmw_thread_pool_sort_func,
 					 priv);
 	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
-	priv->usb_ctx = g_usb_context_new (NULL);
+	priv->usb_ctx = g_usb_context_new (&error);
+	if (priv->usb_ctx == NULL) {
+		status = EXIT_FAILURE;
+		g_print ("Failed to load libusb: %s\n", error->message);
+		goto out;
+	}
 
 	/* connect to UDisks */
 	udisks_client_new (NULL, gmw_udisks_client_connect_cb, priv);
