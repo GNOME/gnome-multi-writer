@@ -230,6 +230,7 @@ const gchar *
 gmw_device_get_icon (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	const gchar *tmp;
 
 	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
 
@@ -237,6 +238,14 @@ gmw_device_get_icon (GmwDevice *device)
 		return "emblem-default";
 	if (priv->state == GMW_DEVICE_STATE_FAILED)
 		return "drive-harddisk";
+
+	/* try to get from UDisks */
+	if (priv->udisks_block != NULL) {
+		tmp = udisks_block_get_hint_icon_name (priv->udisks_block);
+		if (tmp != NULL && tmp[0] != '\0')
+			return tmp;
+	}
+
 	return "drive-harddisk-usb";
 }
 
