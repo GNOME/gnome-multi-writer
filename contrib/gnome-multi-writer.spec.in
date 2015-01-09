@@ -16,8 +16,10 @@ BuildRequires: gtk3-devel
 BuildRequires: intltool
 BuildRequires: itstool
 BuildRequires: libcanberra-devel >= 0.10
-BuildRequires: libgusb-devel >= 0.1.4
+BuildRequires: libgusb-devel >= 0.2.2
 BuildRequires: libudisks2-devel
+
+Requires:      gnome-icon-theme-extras
 
 %description
 GNOME MultiWriter can be used to write an ISO file to multiple USB devices
