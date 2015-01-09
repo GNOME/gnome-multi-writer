@@ -5,7 +5,7 @@ Name:      gnome-multi-writer
 Version:   #VERSION#
 Release:   0.#BUILD#%{?alphatag}%{?dist}
 License:   GPLv2+
-URL:       https://bugzilla.gnome.org/browse.cgi?product=gnome-multi-writer
+URL:       https://wiki.gnome.org/Apps/MultiWriter
 Source0:   http://people.freedesktop.org/~hughsient/releases/%{name}-%{version}.tar.xz
 
 BuildRequires: desktop-file-utils
@@ -16,7 +16,7 @@ BuildRequires: gtk3-devel
 BuildRequires: intltool
 BuildRequires: itstool
 BuildRequires: libcanberra-devel >= 0.10
-BuildRequires: libgusb-devel >= 0.2.2
+BuildRequires: libgusb-devel >= 0.2.4
 BuildRequires: libudisks2-devel
 
 Requires:      gnome-icon-theme-extras
