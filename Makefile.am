@@ -11,7 +11,6 @@ EXTRA_DIST =						\
 	COPYING						\
 	MAINTAINERS					\
 	AUTHORS						\
-	INSTALL						\
 	README.md					\
 	NEWS						\
 	autogen.sh					\
@@ -19,7 +18,6 @@ EXTRA_DIST =						\
 
 MAINTAINERCLEANFILES =					\
 	$(srcdir)/ABOUT-NLS				\
-	$(srcdir)/INSTALL				\
 	$(srcdir)/aclocal.m4				\
 	$(srcdir)/autoscan.log				\
 	$(srcdir)/compile				\
