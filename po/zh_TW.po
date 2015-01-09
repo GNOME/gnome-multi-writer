@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Olivier Banus <olivier@banuscorp.eu>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 10:52+0000\n"
-"PO-Revision-Date: 2015-01-08 10:52+0000\n"
-"Last-Translator: Richard Hughes <richard@hughsie.com>\n"
-"Language-Team: Catalan (http://www.transifex.com/projects/p/gnome-multi-writer/language/ca/)\n"
+"PO-Revision-Date: 2015-01-08 12:40+0000\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/gnome-multi-writer/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ca\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
@@ -26,142 +25,142 @@ msgstr "MultiWriter"
 
 #. TRANSLATORS: button to start the copy
 msgid "Start Copying"
-msgstr "Comença a copiar"
+msgstr "開始複製"
 
 #. TRANSLATORS: app menu item for the file chooser
 msgid "Import ISO file…"
-msgstr "Importar fitxer ISO ..."
+msgstr "匯入 ISO 檔…"
 
 #. TRANSLATORS: app menu item for the About UI
 msgid "_About"
-msgstr "_Quant a"
+msgstr "關於(_A)"
 
 #. TRANSLATORS: app menu item for Quit
 msgid "_Quit"
-msgstr "_Tanca"
+msgstr "退出(_Q)"
 
 #. TRANSLATORS: one-line description for the app
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr "Escriu un arxiu ISO a diversos dispositius USB a la vegada"
+msgstr "將 ISO 檔一次寫入多項 USB 裝置中"
 
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Supported drive sizes are between 1Gb and 32Gb."
-msgstr ""
+msgstr "GNOME MultiWriter 可以用來將 ISO 檔一次寫入多項 USB 裝置中。支援的儲存裝置容量大小介於 1Gb 到 32Gb 之間。"
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
 msgid ""
 "MultiWriter may be useful for QA testing, to create a GNOME Live image for a"
 " code sprint or to create hundreds of LiveUSB drives for a trade show."
-msgstr ""
+msgstr "MultiWriter 對於 QA 測試來說也很有用，也能為 GNOME 的程式碼衝刺活動分享 Live 映像檔，還能為展覽製作上百支 LiveUSB 儲存裝置。"
 
 #. TRANSLATORS: saturate as in the throughput can get no more
 msgid ""
 "Writing a more than 10 devices simultaneously can easy saturate the USB bus "
 "for most storage devices. There are two ways to write more devices in "
 "parallel:"
-msgstr ""
+msgstr "同時寫入超過 10 個以上的裝置，對大多數的儲存裝置來說很容易就達到處理上限。有兩個方式可以平行寫入更多裝置："
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
-msgstr ""
+msgstr "使用 USB 3.0 集線器 (Hub)，即便儲存裝置為 USB 2.0 也是如此"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
 msgid "Install another USB 2.0 PCIe root hub"
-msgstr ""
+msgstr "另外安裝 USB 2.0 PCIe 根基集線器 (Root Hub)"
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
 #. name
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
-msgstr "MultiWriter va ser escrit originalment com a part del projecte ColorHug però es va separar com una aplicació independent al 2015."
+msgstr "MultiWriter 一開始是 ColorHug 專案的一部分，但後來在 2015 年時切分出來作為獨立的應用程式。"
 
 #. TRANSLATORS: the 1st screenshot caption
 msgid "Initial screen for the application"
-msgstr "Pantalla inicial de l'aplicació"
+msgstr "應用程式的初始畫面"
 
 #. TRANSLATORS: the 2nd screenshot caption
 msgid "Writing and verifying images"
-msgstr "Escriptura i verificació de les imatges"
+msgstr "寫入並核驗映像檔"
 
 #. TRANSLATORS: the 3rd screenshot caption
 msgid "All devices have been written"
-msgstr "Tots els dispositius han estat escrits"
+msgstr "所有裝置皆已寫入"
 
 #. TRANSLATORS: schema summary
 msgid "The filename to write to the USB disks"
-msgstr "Nom del fitxer per escriure en els dispositius USB"
+msgstr "要寫入至 USB 磁碟的檔案名稱"
 
 #. TRANSLATORS: schema description
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr "Nom del fitxer de la imatge ISO per escriure en els dispositius USB connectats."
+msgstr "要寫入至連接 USB 磁碟的 ISO 映像檔檔名。"
 
 #. TRANSLATORS: schema summary
 msgid "The maximum number of threads to use"
-msgstr "Nombre màxim de subprocessos per utilitzar"
+msgstr "要使用的最大執行緒數目"
 
 #. TRANSLATORS: schema description
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr "Nombre màxim subprocessos per utilitzar en copiar dades."
+msgstr "複製資料時要使用的最大平行執行緒數目。"
 
 #. TRANSLATORS: schema summary
 msgid "Completely blank drive when writing"
-msgstr ""
+msgstr "寫入時完全淨空儲存裝置"
 
 #. TRANSLATORS: schema description
 msgid "Write the ISO to the drive and then blank the remainder of the drive."
-msgstr ""
+msgstr "將 ISO 寫入儲存裝置，接著淨空儲存裝置的剩餘空間。"
 
 #. TRANSLATORS: schema summary
 msgid "Verify the ISO image was written correctly"
-msgstr ""
+msgstr "核驗 ISO 檔的寫入是否正確無誤"
 
 #. TRANSLATORS: schema description
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
-msgstr ""
+msgstr "在寫入各個裝置之後，讀取裝置並核驗寫入之 ISO 映像檔是否無誤。"
 
 #. TRANSLATORS: schema summary
 msgid "Show a warning before writing to a drive"
-msgstr ""
+msgstr "在寫入儲存裝置之前提出警告"
 
 #. TRANSLATORS: schema description
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
-msgstr ""
+msgstr "顯示警告用對話盒確認該裝置的內容即將抹除。"
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 msgid "Image;Writer;ISO;USB;"
-msgstr "Imatge;Writer;ISO;USB;"
+msgstr "Image;Writer;ISO;USB;寫入器;映像檔;隨身碟;"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
 msgid "Written successfully"
-msgstr ""
+msgstr "成功寫入"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
 #, c-format
 msgid "Writing at %.1f MB/s…"
-msgstr ""
+msgstr "正以 %.1f MB/s 速度寫入中…"
 
 #. TRANSLATORS: we're writing the image to the USB device
 msgid "Writing…"
-msgstr ""
+msgstr "寫入中…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
 #, c-format
 msgid "Verifying at %.1f MB/s…"
-msgstr ""
+msgstr "正以 %.1f MB/s 速度核驗中…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
 msgid "Verifying…"
-msgstr ""
+msgstr "核驗中…"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
@@ -171,87 +170,87 @@ msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
 msgid "Image written successfully"
-msgstr "Imatge escrita amb èxit"
+msgstr "映像檔成功寫入"
 
 #. TRANSLATORS: copy aborted
 msgid "Cancelled"
-msgstr "Cancel·lat"
+msgstr "已取消"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
 msgid "Failed to open"
-msgstr "Error en obrir"
+msgstr "開啟失敗"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
 msgid "Choose the file to write"
-msgstr ""
+msgstr "選擇要寫入的檔案"
 
 #. TRANSLATORS: button title
 msgid "Cancel"
-msgstr "Cancel·la"
+msgstr "取消"
 
 #. TRANSLATORS: button title
 msgid "Import"
-msgstr "Importa"
+msgstr "匯入"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
 msgid "ISO files"
-msgstr "Arxius ISO"
+msgstr "ISO 檔"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
 msgid "Failed to copy"
-msgstr "Error en copiar"
+msgstr "複製失敗"
 
 #. TRANSLATORS: the inhibit reason
 msgid "Writing ISO to devices"
-msgstr "Escrivint ISO als dispositius"
+msgstr "將 ISO 寫入裝置中"
 
 #. TRANSLATORS: window title for the warning dialog
 msgid "Write to all disks?"
-msgstr ""
+msgstr "是否寫入所有磁碟？"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
 msgid "All data on the drives will be deleted."
-msgstr ""
+msgstr "所有儲存裝置上的資料都會被刪除！"
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
 msgid "The ISO file is smaller than the disk capacity."
-msgstr ""
+msgstr "ISO 檔小於磁碟容量。"
 
 #. TRANSLATORS: this could leave your personal files on the drive
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
-msgstr ""
+msgstr "目前儲存裝置的某些內容即使在複製程序完成之後，仍可能透過法庭鑑識工具被找尋出來。"
 
 #. TRANSLATORS: button text for the warning dialog
 msgid "I Understand"
-msgstr ""
+msgstr "我已瞭解"
 
 #. TRANSLATORS: the title of the about window
 msgid "About GNOME MultiWriter"
-msgstr "Quant a GNOME MultiWriter"
+msgstr "關於 GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
 msgid "translator-credits"
-msgstr "Crèdits de traducció"
+msgstr "Cheng-Chia Tseng <pswo10680@gmail.com>, 2015"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
 msgid "Verify"
-msgstr ""
+msgstr "核驗"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
 msgid "Wipe"
-msgstr ""
+msgstr "抹除"
 
 #. TRANSLATORS: command line option
 msgid "Show extra debugging information"
-msgstr "Mostra informació de depuració"
+msgstr "顯示額外的除錯資訊"
 
 #. TRANSLATORS: the user has sausages for fingers
 msgid "Failed to parse command line options"
-msgstr "Error analitzant opcions de la línia d'ordres"
+msgstr "解析指令列選項失敗"

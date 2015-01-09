@@ -1,3 +1,25 @@
+Version 3.15.2
+~~~~~~~~~~~~~~
+Released: 2015-01-09
+
+Notes:
+ - Reads and writes are spread over root hubs to increase throughput.
+ - If you've got a hub with more than 7 ports and the port numbers don't match
+   the decals on the device please contact me for more instructions.
+
+New Features:
+ - Completely wipe devices by default (Richard Hughes)
+ - Make the verification and wipe optional (Richard Hughes)
+ - Show a warning dialog before copying for the first time (Richard Hughes)
+ - Show some global read/write stats in the title bar (Richard Hughes)
+ - Use GUsb to renumber composite hubs (Richard Hughes)
+
+Bugfixes:
+ - Do not attempt to unmount filesystems that are not mounted (Richard Hughes)
+ - Queue the device writes according to the connected root hub (Richard Hughes)
+ - Show ten devices per column to better use the space (Richard Hughes)
+ - Unmount filesystems before starting to copy (Richard Hughes)
+
 Version 3.15.1
 ~~~~~~~~~~~~~~
 Released: 2015-01-05

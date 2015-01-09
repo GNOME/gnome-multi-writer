@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-04 13:41+0000\n"
-"PO-Revision-Date: 2015-01-04 18:34+0000\n"
+"POT-Creation-Date: 2015-01-08 10:52+0000\n"
+"PO-Revision-Date: 2015-01-08 15:41+0000\n"
 "Last-Translator: Mahdi Gerami <mahdi.gerami77@gmail.com>\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/gnome-multi-writer/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,7 @@ msgstr ""
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
+#. set the title
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
@@ -41,15 +42,35 @@ msgstr "ـ خروج"
 
 #. TRANSLATORS: one-line description for the app
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr "یک فایل ISO را روی چندین دستگاه USB همزمان حک (رایت) کنید"
+msgstr "یک فایل ISO را روی چندین دستگاه USB به طور همزمان حک (رایت) کنید"
 
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
-"at once. Once an .img or .iso file has been chosen it can be written to an "
-"unlimited number of USB devices simultaneously. Supported drive sizes are "
-"between 1Gb and 32Gb."
-msgstr "GNOME MultiWriter میتواند برای حک کردن یک فایل ISO روی چندین دستگاه USB به طور همزمان استفاده شود. وقتی که یک فایل .img یا .iso انتخاب شد میتوان آن را همزمان روی تعداد نامحدودی دستگاه USB حک کرد. اندازه دستگاه های بین 1Gb و 32Gb پشتیبانی می شوند."
+"at once. Supported drive sizes are between 1Gb and 32Gb."
+msgstr "GNOME MultiWriter می تواند برای حک کردن یک فایل ISO به چندین دستگاه USB به طور همزمان استفاده شود.\nدستگاه های با اندازه 1Gb تا 32Gb پشتیبانی می شوند."
+
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
+#. GNOME refers to the desktop environment
+msgid ""
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a"
+" code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr "MultiWriter می تواند برای آزمون بررسی کیفیت، ایجاد یک GNOME Live image برای code sprint یا ایجاد صد ها دستگاه LiveUSB برای یک نمایش تجاری استفاده شود."
+
+#. TRANSLATORS: saturate as in the throughput can get no more
+msgid ""
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
+msgstr "حک کردن بیشتر از ۱۰ دستگاه در یک زمان میتواند به راحتی گذر USB را برای بیشتر دستگاه های حافظه اشباح کند. دو راه برای حک کردن دستگاه های بیشتر به طور همزمان و موازی وجود دارد:"
+
+#. TRANSLATORS: storage devices refers to the things we're writing to
+msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
+msgstr "از درگاه USB 3.0 استفاده کنید، حتی اگر دسگاه حافظه USB 2.0 است"
+
+#. TRANSLATORS: PCIe is the data bus, don't translate please
+msgid "Install another USB 2.0 PCIe root hub"
+msgstr "یک USB 2.0 root hub دیگر نصب کنید"
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
 #. name
@@ -57,22 +78,6 @@ msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr "MultiWriter در ابتدا به عنوان قسمتی از پرو‍ژه ColorHug نوشته شد اما در سال ۲۰۱۵ به عنوان یک برنامه مستقل از آن جدا شد."
-
-#. TRANSLATORS: 'People' refers to different users of the software
-msgid "People have used MultiWriter in a few different ways:"
-msgstr "مردم به شیوه های مختلفی از MultiWriter استفاده می کنند:"
-
-#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff
-msgid "To copy a specific ISO for QA testing for a small number of users"
-msgstr "برای کپی کردن یک فایل ISO خاص برای آزمایش کردن کیفیت برای شمار کمی از کاربران"
-
-#. TRANSLATORS: GNOME refers to the desktop environment
-msgid "To share a LiveUSB image of GNOME for a code sprint"
-msgstr "برای به اشتراک گذاشتن LiveUSB image گنوم برای code sprint"
-
-#. TRANSLATORS: USB flash drives here refer to the storage pendrive things
-msgid "To create hundreds of USB flash drives for the ColorHug project"
-msgstr "برای ساخت صد ها دستگاه فلش USB برای پرو‌ژه ColorHug"
 
 #. TRANSLATORS: the 1st screenshot caption
 msgid "Initial screen for the application"
@@ -102,9 +107,61 @@ msgstr "حداکثر تعداد رشته تا thread ها برای استفاد�
 msgid "The maximum number of parallel threads to use when copying data."
 msgstr "حداکثر تعداد رشته تا thread های موازی برای استفاده موقع کپی کردن اطلاعات"
 
+#. TRANSLATORS: schema summary
+msgid "Completely blank drive when writing"
+msgstr "درایو کاملا خالی موقع حک کردن"
+
+#. TRANSLATORS: schema description
+msgid "Write the ISO to the drive and then blank the remainder of the drive."
+msgstr "ISO را به درایو حک کن سپس باقی مانده درایو را خالی کن."
+
+#. TRANSLATORS: schema summary
+msgid "Verify the ISO image was written correctly"
+msgstr "اطمینان حاصل کنید که  ISO image ها به درستی حک شده اند"
+
+#. TRANSLATORS: schema description
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
+msgstr " بعد از اتمام عملیات حک ISO image را از هر یک از دستگاه ها باز بینی کنید."
+
+#. TRANSLATORS: schema summary
+msgid "Show a warning before writing to a drive"
+msgstr "یک هشدار قبل از حک کردن به درایو نشان بده"
+
+#. TRANSLATORS: schema description
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
+msgstr "یک صفحه هشدار برای تایید حذف محتوی دستگاه نشان بده."
+
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 msgid "Image;Writer;ISO;USB;"
 msgstr "Image;Writer;ISO;USB;"
+
+#. TRANSLATORS: The image has been written and verified to
+#. * *one* device, not all
+msgid "Written successfully"
+msgstr "با موفقیت حک شد"
+
+#. TRANSLATORS: we're writing the image to the device
+#. * and we now know the speed
+#, c-format
+msgid "Writing at %.1f MB/s…"
+msgstr "حک کردن در %.1f MB/s"
+
+#. TRANSLATORS: we're writing the image to the USB device
+msgid "Writing…"
+msgstr "در حال حک کردن..."
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data and we now know the speed
+#, c-format
+msgid "Verifying at %.1f MB/s…"
+msgstr "بررسی در %.1f MB/s"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data
+msgid "Verifying…"
+msgstr "در حال بررسی..."
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
@@ -113,8 +170,6 @@ msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#. TRANSLATORS: The image has been written to
-#. * one device, not all of them yet
 msgid "Image written successfully"
 msgstr "Image با موفقییت حک شد"
 
@@ -122,22 +177,13 @@ msgstr "Image با موفقییت حک شد"
 msgid "Cancelled"
 msgstr "لغو شد"
 
-#. TRANSLATORS: we're writing the image to the USB device
-msgid "Writing image…"
-msgstr "در حال حک کردن image ..."
-
-#. TRANSLATORS: We're verifying the USB
-#. * device contains the correct image data
-msgid "Verifying image…"
-msgstr "در حال تایید image ..."
-
 #. TRANSLATORS: we couldn't open the ISO file the user chose
 msgid "Failed to open"
 msgstr "موفق به باز کردن نشد"
 
-#. TRANSLATORS: window title for the file-chooser
-msgid "Choose image to write"
-msgstr "image را برای حک کردن انتخاب کنید"
+#. TRANSLATORS: window title for the file-chooser, file is an ISO
+msgid "Choose the file to write"
+msgstr "فایل را برای حک انتخاب کنید"
 
 #. TRANSLATORS: button title
 msgid "Cancel"
@@ -160,13 +206,47 @@ msgstr "موفق به کپی نشد"
 msgid "Writing ISO to devices"
 msgstr "در حال حک کردن ISO به دستگاه ها"
 
+#. TRANSLATORS: window title for the warning dialog
+msgid "Write to all disks?"
+msgstr "حک کردن به همه ی دیسک ها؟"
+
+#. TRANSLATORS: check that we can nuke everything from all disks
+msgid "All data on the drives will be deleted."
+msgstr "همه ی اطلاعات این دستگاه ها حذف خواهند شد."
+
+#. TRANSLATORS: if the image file is smaller than the disks and
+#. * we've disabled wiping the device we only write enough data
+#. * to transfer the image
+msgid "The ISO file is smaller than the disk capacity."
+msgstr "فایل ISO از ظرفیت دیسک کوچکتر است."
+
+#. TRANSLATORS: this could leave your personal files on the drive
+msgid ""
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
+msgstr "بخشی از محتوای فعلی درایو ها می توانند با استفاده از foresinc tools حتی بعد از کپی شدن یافت شوند."
+
+#. TRANSLATORS: button text for the warning dialog
+msgid "I Understand"
+msgstr "متوجه میشوم"
+
 #. TRANSLATORS: the title of the about window
 msgid "About GNOME MultiWriter"
 msgstr "در مورد GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
 msgid "translator-credits"
-msgstr "مترجم"
+msgstr "مهدی گرامی <mahdi.gerami77@gmail.com>"
+
+#. TRANSLATORS: a switch label: verify the image by
+#. * reading back the original image from the device
+msgid "Verify"
+msgstr "بررسی"
+
+#. TRANSLATORS: a switch label: we write zeros after
+#. * the image so it erases the entire device
+msgid "Wipe"
+msgstr "پاک کردن"
 
 #. TRANSLATORS: command line option
 msgid "Show extra debugging information"

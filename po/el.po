@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# thanos <tomtryf@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-04 13:41+0000\n"
-"PO-Revision-Date: 2015-01-04 13:41+0000\n"
+"POT-Creation-Date: 2015-01-08 10:52+0000\n"
+"PO-Revision-Date: 2015-01-08 10:52+0000\n"
 "Last-Translator: Richard Hughes <richard@hughsie.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/gnome-multi-writer/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +20,13 @@ msgstr ""
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
+#. set the title
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: button to start the copy
 msgid "Start Copying"
-msgstr ""
+msgstr "Έναρξη αντιγραφής"
 
 #. TRANSLATORS: app menu item for the file chooser
 msgid "Import ISO file…"
@@ -45,10 +47,30 @@ msgstr "Γράψτε ένα αρχείο ISO σε πολλαπλές συσκε�
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
-"at once. Once an .img or .iso file has been chosen it can be written to an "
-"unlimited number of USB devices simultaneously. Supported drive sizes are "
-"between 1Gb and 32Gb."
-msgstr "Το GNOME MultiWriter μπορεί να χρησιμοποιηθεί για την εγγραφή ενός αρχείου ISO σε πολλαπλές συσκευές USB ταυτόχρονα. Όταν επιλεγεί ένα αρχείο .img ή .iso μπορεί να εγγραφεί ταυτόχρονα σε έναν απεριόριστο αριθμό συσκευών USB. Υποστηριζόμενα μεγέθη συσκευών είναι μεταξύ 1Gb και 32Gb."
+"at once. Supported drive sizes are between 1Gb and 32Gb."
+msgstr ""
+
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
+#. GNOME refers to the desktop environment
+msgid ""
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a"
+" code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+
+#. TRANSLATORS: saturate as in the throughput can get no more
+msgid ""
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
+msgstr ""
+
+#. TRANSLATORS: storage devices refers to the things we're writing to
+msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
+msgstr ""
+
+#. TRANSLATORS: PCIe is the data bus, don't translate please
+msgid "Install another USB 2.0 PCIe root hub"
+msgstr ""
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
 #. name
@@ -56,22 +78,6 @@ msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr "Το MultiWriter αναπτύχθηκε αρχικά ως μέρος του έργου ColorHug αλλά διαχωρίστηκε ως αυτόνομη εφαρμογή το 2015."
-
-#. TRANSLATORS: 'People' refers to different users of the software
-msgid "People have used MultiWriter in a few different ways:"
-msgstr "Το MultiWriter χρησιμοποιείται με διάφορους τρόπους:"
-
-#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff
-msgid "To copy a specific ISO for QA testing for a small number of users"
-msgstr "Για την αντιγραφή ενός συγκεκριμένου ISO για μια ομάδα χρηστών"
-
-#. TRANSLATORS: GNOME refers to the desktop environment
-msgid "To share a LiveUSB image of GNOME for a code sprint"
-msgstr ""
-
-#. TRANSLATORS: USB flash drives here refer to the storage pendrive things
-msgid "To create hundreds of USB flash drives for the ColorHug project"
-msgstr ""
 
 #. TRANSLATORS: the 1st screenshot caption
 msgid "Initial screen for the application"
@@ -101,9 +107,61 @@ msgstr "Ο μέγιστος αριθμός νημάτων που θα χρησι
 msgid "The maximum number of parallel threads to use when copying data."
 msgstr "Ο μέγιστος αριθμός των παράλληλων νημάτων που θα χρησιμοποιηθούν για την αντιγραφή των δεδομένων."
 
+#. TRANSLATORS: schema summary
+msgid "Completely blank drive when writing"
+msgstr ""
+
+#. TRANSLATORS: schema description
+msgid "Write the ISO to the drive and then blank the remainder of the drive."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+msgid "Verify the ISO image was written correctly"
+msgstr ""
+
+#. TRANSLATORS: schema description
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+msgid "Show a warning before writing to a drive"
+msgstr ""
+
+#. TRANSLATORS: schema description
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
+msgstr ""
+
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 msgid "Image;Writer;ISO;USB;"
 msgstr "Image;Writer;ISO;USB;Εικόνα;Εγγραφή;"
+
+#. TRANSLATORS: The image has been written and verified to
+#. * *one* device, not all
+msgid "Written successfully"
+msgstr ""
+
+#. TRANSLATORS: we're writing the image to the device
+#. * and we now know the speed
+#, c-format
+msgid "Writing at %.1f MB/s…"
+msgstr ""
+
+#. TRANSLATORS: we're writing the image to the USB device
+msgid "Writing…"
+msgstr ""
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data and we now know the speed
+#, c-format
+msgid "Verifying at %.1f MB/s…"
+msgstr ""
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data
+msgid "Verifying…"
+msgstr ""
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
@@ -112,8 +170,6 @@ msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#. TRANSLATORS: The image has been written to
-#. * one device, not all of them yet
 msgid "Image written successfully"
 msgstr "Η εικόνα εγγράφηκε με επιτυχία"
 
@@ -121,22 +177,13 @@ msgstr "Η εικόνα εγγράφηκε με επιτυχία"
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
-#. TRANSLATORS: we're writing the image to the USB device
-msgid "Writing image…"
-msgstr "Εγγραφή εικόνας…"
-
-#. TRANSLATORS: We're verifying the USB
-#. * device contains the correct image data
-msgid "Verifying image…"
-msgstr "Επαλήθευση εικόνας…"
-
 #. TRANSLATORS: we couldn't open the ISO file the user chose
 msgid "Failed to open"
 msgstr "Αποτυχία ανοίγματος"
 
-#. TRANSLATORS: window title for the file-chooser
-msgid "Choose image to write"
-msgstr "Επιλογή εικόνας για εγγραφή"
+#. TRANSLATORS: window title for the file-chooser, file is an ISO
+msgid "Choose the file to write"
+msgstr ""
 
 #. TRANSLATORS: button title
 msgid "Cancel"
@@ -148,7 +195,7 @@ msgstr "Εισαγωγή"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
 msgid "ISO files"
-msgstr ""
+msgstr "Αρχεία ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
@@ -157,6 +204,30 @@ msgstr "Αποτυχία αντιγραφής"
 
 #. TRANSLATORS: the inhibit reason
 msgid "Writing ISO to devices"
+msgstr "Εγγραφή ISO στις συσκευές"
+
+#. TRANSLATORS: window title for the warning dialog
+msgid "Write to all disks?"
+msgstr ""
+
+#. TRANSLATORS: check that we can nuke everything from all disks
+msgid "All data on the drives will be deleted."
+msgstr ""
+
+#. TRANSLATORS: if the image file is smaller than the disks and
+#. * we've disabled wiping the device we only write enough data
+#. * to transfer the image
+msgid "The ISO file is smaller than the disk capacity."
+msgstr ""
+
+#. TRANSLATORS: this could leave your personal files on the drive
+msgid ""
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
+msgstr ""
+
+#. TRANSLATORS: button text for the warning dialog
+msgid "I Understand"
 msgstr ""
 
 #. TRANSLATORS: the title of the about window
@@ -166,6 +237,16 @@ msgstr "Περί GNOME MultiWriter"
 #. TRANSLATORS: you can put your name here :)
 msgid "translator-credits"
 msgstr "Θάνος Τρυφωνίδης <tomtryf@gmail.com>"
+
+#. TRANSLATORS: a switch label: verify the image by
+#. * reading back the original image from the device
+msgid "Verify"
+msgstr ""
+
+#. TRANSLATORS: a switch label: we write zeros after
+#. * the image so it erases the entire device
+msgid "Wipe"
+msgstr ""
 
 #. TRANSLATORS: command line option
 msgid "Show extra debugging information"
