@@ -1093,7 +1093,7 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 		parent = windows->data;
 
 	icon_theme = gtk_icon_theme_get_default ();
-	logo = gtk_icon_theme_load_icon (icon_theme, "drive-harddisk-usb", 256, 0, NULL);
+	logo = gtk_icon_theme_load_icon (icon_theme, "gnome-multi-writer", 256, 0, NULL);
 	gtk_show_about_dialog (parent,
 			       /* TRANSLATORS: the title of the about window */
 			       "title", _("About GNOME MultiWriter"),
