@@ -863,46 +863,66 @@ gmw_udisks_unmount_cb (GObject *source_object,
 }
 
 /**
- * gmw_udisks_unmount_filesystems:
+ * gmw_udisks_get_filesystem_for_device:
  **/
-static void
-gmw_udisks_unmount_filesystems (GmwPrivate *priv, GmwDevice *device, gboolean sync)
+static UDisksFilesystem *
+gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 {
+	UDisksFilesystem *udisks_fs = NULL;
 	_cleanup_error_free_ GError *error = NULL;
 	_cleanup_free_ gchar *object_path_child = NULL;
 	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
 	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
-	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
 	_cleanup_strv_free_ gchar **mtab = NULL;
 
 	object_path_child = g_strdup_printf ("%s1", gmw_device_get_object_path (device));
 	udisks_object = udisks_client_get_object (priv->udisks_client,
 						  object_path_child);
 	if (udisks_object == NULL)
-		return;
+		return NULL;
 	udisks_fs = udisks_object_get_filesystem (udisks_object);
 	if (udisks_fs == NULL)
-		return;
+		return NULL;
 	mtab = udisks_filesystem_dup_mount_points (udisks_fs);
 	if (mtab == NULL || mtab[0] == NULL) {
 		g_debug ("%s not mounted", object_path_child);
+		return NULL;
+	}
+	g_debug ("found filesystem %s from %s", mtab[0], object_path_child);
+	return udisks_fs;
+}
+
+/**
+ * gmw_udisks_unmount_filesystems_async:
+ **/
+static void
+gmw_udisks_unmount_filesystems_async (GmwPrivate *priv, GmwDevice *device)
+{
+	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
+	udisks_fs = gmw_udisks_get_filesystem_for_device (priv, device);
+	if (udisks_fs == NULL)
 		return;
-	}
-	g_debug ("Unmount %s from %s", mtab[0], object_path_child);
-	if (!sync) {
-		udisks_filesystem_call_unmount (udisks_fs,
-						g_variant_new ("a{sv}", NULL),
-						priv->cancellable,
-						gmw_udisks_unmount_cb,
-						device);
-		return;
-	}
-	if (!udisks_filesystem_call_unmount_sync (udisks_fs,
-						  g_variant_new ("a{sv}", NULL),
-						  priv->cancellable,
-						  &error)) {
-		g_warning ("Failed to unmount fs: %s", error->message);
-	}
+	udisks_filesystem_call_unmount (udisks_fs,
+					g_variant_new ("a{sv}", NULL),
+					priv->cancellable,
+					gmw_udisks_unmount_cb,
+					device);
+}
+
+/**
+ * gmw_udisks_unmount_filesystems_sync:
+ **/
+static gboolean
+gmw_udisks_unmount_filesystems_sync (GmwPrivate *priv, GmwDevice *device, GError **error)
+{
+	_cleanup_object_unref_ UDisksFilesystem *udisks_fs = NULL;
+	udisks_fs = gmw_udisks_get_filesystem_for_device (priv, device);
+	if (udisks_fs == NULL)
+		return TRUE;
+	return udisks_filesystem_call_unmount_sync (udisks_fs,
+						    g_variant_new ("a{sv}", NULL),
+						    priv->cancellable,
+						    error);
 }
 
 /**
@@ -927,7 +947,10 @@ gmw_start_copy (GmwPrivate *priv)
 	/* unmount all filesystems */
 	for (i = 0; i < priv->devices->len; i++) {
 		device = g_ptr_array_index (priv->devices, i);
-		gmw_udisks_unmount_filesystems (priv, device, TRUE);
+		if (!gmw_udisks_unmount_filesystems_sync (priv, device, &error)) {
+			gmw_error_dialog (priv, _("Failed to copy"), error->message);
+			return;
+		}
 	}
 
 	/* do a dummy call to get the PolicyKit auth */
@@ -1351,8 +1374,8 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	gmw_device_set_udisks_drive (device, udisks_drive);
 	gmw_udisks_find_usb_device (priv, device);
 
-	/* unmount filesystems on the block device */
-	gmw_udisks_unmount_filesystems (priv, device, FALSE);
+	/* lazily unmount filesystems on the block device */
+	gmw_udisks_unmount_filesystems_async (priv, device);
 
 	g_mutex_lock (&priv->devices_mutex);
 	g_ptr_array_add (priv->devices, device);
