@@ -545,7 +545,6 @@ gmw_device_set_udisks_drive (GmwDevice *device, UDisksDrive *udisks_drive)
 	gmw_device_set_hub_id (device, hub_id);
 }
 
-#if G_USB_CHECK_VERSION(0,2,4)
 typedef struct {
 	guint16		 parent_vid;		/* +1 */
 	guint16		 parent_pid;		/* +1 */
@@ -557,15 +556,21 @@ typedef struct {
 	guint8		 chain_len;		/* internal chain number */
 	const gchar	*hub_label;		/* decal on the box */
 } GmwDeviceQuirk;
+
+/* compat dummy functions for old versions of libgusb */
+#if !G_USB_CHECK_VERSION(0,2,4)
+static GUsbDevice *g_usb_device_get_parent (GUsbDevice *d) {return NULL;}
+static guint8 g_usb_device_get_port_number (GUsbDevice *d) {return 0x00;}
+static GPtrArray *g_usb_device_get_children (GUsbDevice *d) {return g_ptr_array_new ();}
 #endif
 
 /**
- * gmw_device_set_usb_device_quirk:
+ * gmw_device_set_usb_device:
  **/
-static void
-gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
+void
+gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 {
-#if G_USB_CHECK_VERSION(0,2,4)
+	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	guint i;
 	guint j;
 	_cleanup_free_ gchar *hub_id = NULL;
@@ -595,12 +600,21 @@ gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
 		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x00, 0x00, NULL }
 	};
 
+	g_return_if_fail (GMW_IS_DEVICE (device));
+
+	/* get the USB root hub number */
+	priv->hub_root = g_usb_device_get_bus (usb_device);
+
 	/* is this a USB hub already */
 	if (g_usb_device_get_device_class (usb_device) == 0x09) {
 		usb_hub = g_object_ref (usb_device);
 	} else {
 		usb_hub = g_usb_device_get_parent (usb_device);
+		if (usb_hub == NULL)
+			return;
 	}
+
+	/* find the two parents */
 	usb_hub_parent = g_usb_device_get_parent (usb_hub);
 	g_debug ("Quirk info: 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%02x for 0x%04x:0x%04x",
 		 g_usb_device_get_vid (usb_hub),
@@ -668,32 +682,14 @@ gmw_device_set_usb_device_quirk (GmwDevice *device, GUsbDevice *usb_device)
 						g_usb_device_get_address (usb_hub));
 		}
 		gmw_device_set_hub_id (device, hub_id);
-		break;
+		return;
 	}
-#endif
-}
 
-/**
- * gmw_device_set_usb_device:
- **/
-void
-gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
-{
-	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	const gchar *tmp;
-
-	g_return_if_fail (GMW_IS_DEVICE (device));
-
-	/* use the bare platform ID by default */
-	tmp = g_usb_device_get_platform_id (usb_device);
-	if (tmp != NULL)
-		gmw_device_set_hub_id (device, tmp + 7);
-
-	/* get the USB root hub number */
-	priv->hub_root = g_usb_device_get_bus (usb_device);
-
-	/* can we get the ID from a quirk */
-	gmw_device_set_usb_device_quirk (device, usb_device);
+	/* use the hub ID if there have been no quirks matched */
+	hub_id = g_strdup_printf ("%02x:%02x",
+				  g_usb_device_get_bus (usb_hub),
+				  g_usb_device_get_address (usb_hub));
+	gmw_device_set_hub_id (device, hub_id);
 }
 
 static void
