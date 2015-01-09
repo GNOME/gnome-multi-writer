@@ -42,22 +42,22 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-startup.png</image>
+      <image>https://git.gnome.org/browse/gnome-multi-writer/plain/data/appdata/gmw-startup.png</image>
       <!-- TRANSLATORS: the 1st screenshot caption -->
       <_caption>Initial screen for the application</_caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-progress.png</image>
+      <image>https://git.gnome.org/browse/gnome-multi-writer/plain/data/appdata/gmw-progress.png</image>
       <!-- TRANSLATORS: the 2nd screenshot caption -->
       <_caption>Writing and verifying images</_caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-finished.png</image>
+      <image>https://git.gnome.org/browse/gnome-multi-writer/plain/data/appdata/gmw-finished.png</image>
       <!-- TRANSLATORS: the 3rd screenshot caption -->
       <_caption>All devices have been written</_caption>
     </screenshot>
   </screenshots>
-  <url type="homepage">https://github.com/hughsie/gnome-multi-writer</url>
-  <url type="bugtracker">https://github.com/gnome/gnome-multi-writer/issues</url>
+  <url type="homepage">https://wiki.gnome.org/Apps/MultiWriter</url>
+  <url type="bugtracker">https://bugzilla.gnome.org/browse.cgi?product=gnome-multi-writer</url>
   <update_contact>richard_at_hughsie.com</update_contact>
 </component>

@@ -7,7 +7,7 @@ once. Supported drive sizes are between 1Gb and 32Gb.
 This application may be useful for QA testing, to create a GNOME Live image for
 a code sprint or to create hundreds of LiveUSB drives for a trade show.
 
-![](https://raw.githubusercontent.com/hughsie/gnome-multi-writer/master/data/appdata/gmw-startup.png)
+![](https://git.gnome.org/browse/gnome-multi-writer/plain/data/appdata/gmw-startup.png)
 
 Writing a more than 10 devices simultaneously can easy saturate the USB bus for
 most storage devices. There are two ways to write more devices in parallel:

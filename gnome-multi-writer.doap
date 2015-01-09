@@ -20,7 +20,7 @@
     <foaf:Person>
       <foaf:name>Richard Hughes</foaf:name>
       <foaf:mbox rdf:resource="mailto:richard@hughsie.com" />
-      <foaf:homepage rdf:resource="http://www.hughsie.com/" />
+      <foaf:homepage rdf:resource="https://wiki.gnome.org/Apps/MultiWriter/" />
       <gnome:userid>rhughes</gnome:userid>
     </foaf:Person>
   </maintainer>
