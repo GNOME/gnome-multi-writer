@@ -1609,7 +1609,8 @@ out:
 			g_object_unref (priv->image_file);
 		if (priv->cancellable != NULL)
 			g_object_unref (priv->cancellable);
-		g_object_unref (priv->application);
+		if (priv->application != NULL)
+			g_object_unref (priv->application);
 		g_thread_pool_free (priv->thread_pool, TRUE, TRUE);
 		g_mutex_clear (&priv->thread_pool_mutex);
 		g_mutex_clear (&priv->devices_mutex);
