@@ -2,30 +2,17 @@ GNOME MultiWriter Release Notes
 
 1. Write NEWS entries in the same format as usual.
 
-git shortlog GNOME_MULTI_WRITER_3_15_2.. | grep -i -v trivial | uniq | grep -v Merge > NEWS.new
-
---------------------------------------------------------------------------------
 Version 3.15.3
 ~~~~~~~~~~~~~~
 Released: 2015-xx-xx
 
-Notes:
+* Translations:
+* New Features:
+* Bugfix:
 
-New Features:
+git shortlog GNOME_MULTI_WRITER_3_15_2.. | grep -i -v trivial | uniq | grep -v Merge > NEWS.new
 
-Bugfixes:
---------------------------------------------------------------------------------
-
-2. Update translations
-
-cd po
-make gnome-multi-writer.pot
-INTLTOOL_EXTRACT="/usr/bin/intltool-extract" XGETTEXT="/usr/bin/xgettext --no-location" srcdir=. /usr/bin/intltool-update --gettext-package gnome-multi-writer --pot
-tx push --source
-tx pull --all --minimum-perc=20
-git add *.po
-
-3. Commit changes in git:
+2. Commit changes in git:
 
 git commit -a -m "Release version 3.15.3"
 git tag -s GNOME_MULTI_WRITER_3_15_3 -m "==== Version 3.15.3 ===="
@@ -33,27 +20,17 @@ git tag -s GNOME_MULTI_WRITER_3_15_3 -m "==== Version 3.15.3 ===="
 git push --tags
 git push
 
-4. Create tarball
+3. Create tarball
 
 make distcheck
 
-5. Upload tarballs:
+4. Upload tarballs and install module
 
-scp *.tar.xz hughsient@people.freedesktop.org:public_html/releases/
+scp *.tar.xz rhughes@master.gnome.org:
+ssh rhughes@master.gnome.org
+ftpadmin install gnome-multi-writer-*.tar.xz
 
-6. Do post release version bump in configure.ac
-
-7. Commit trivial changes:
+5. Do post release version bump in configure.ac
 
 git commit -a -m "trivial: Post release version bump"
 git push
-
-8. Send an email to gnome-annouce
-
-=================================================
-gnome-multi-writer 3.15.3 released!
-
-Tarballs available here: http://people.freedesktop.org/~hughsient/releases/
-
-=================================================
-
