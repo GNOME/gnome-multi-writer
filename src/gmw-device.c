@@ -256,12 +256,18 @@ gchar *
 gmw_device_get_description (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	guint64 size;
 
 	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
 
 	/* waiting to be written */
-	if (priv->state == GMW_DEVICE_STATE_IDLE)
-		return g_strdup (priv->name);
+	if (priv->state == GMW_DEVICE_STATE_IDLE) {
+		size = gmw_device_get_size (device) / (1000 * 1000 * 1000);
+		if (size == 0)
+			return g_strdup (priv->name);
+		return g_strdup_printf ("%s (%" G_GUINT64_FORMAT "GB)",
+					priv->name, size);
+	}
 
 	/* failed to read or write */
 	if (priv->state == GMW_DEVICE_STATE_FAILED) {
