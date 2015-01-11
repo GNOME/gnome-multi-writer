@@ -377,7 +377,26 @@ void
 gmw_device_set_name (GmwDevice *device, const gchar *name)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
+	guint i;
+	struct {
+		const gchar *old;
+		const gchar *new;
+	} replace[] = {
+		/* TRANSLATORS: This is a generic no-name USB flash disk */
+		{ "General UDisk", _("USB Flash Drive") },
+		{ NULL, NULL }
+	};
+
 	g_return_if_fail (GMW_IS_DEVICE (device));
+
+	/* replace any generic names */
+	for (i = 0; replace[i].old != NULL; i++) {
+		if (g_strcmp0 (replace[i].old, name) == 0) {
+			name = replace[i].new;
+			break;
+		}
+	}
+
 	g_mutex_lock (&priv->mutex);
 	g_free (priv->name);
 	priv->name = g_strdup (name);
