@@ -59,7 +59,7 @@ msgstr "Gravar um arquivo ISO em múltiplos dispositivos USB simultaneamente"
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:6
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices at "
-"once. Supported drive sizes are between 1Gb and 32Gb."
+"once. Supported drive sizes are between 1GB and 32GB."
 msgstr ""
 "GNOME MultiWriter pode ser usado para gravar um arquivo ISO para múltiplos "
 "dispositivos USB simultaneamente. Há suporte a tamanhos de unidades entre 1GB e "

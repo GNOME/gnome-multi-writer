@@ -48,7 +48,7 @@ msgstr "Eine ISO-Datei gleichzeitig auf mehrere USB-Geräte schreiben"
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
-"at once. Supported drive sizes are between 1Gb and 32Gb."
+"at once. Supported drive sizes are between 1GB and 32GB."
 msgstr "GNOME MultiWriter kann dazu genutzt werden, um eine ISO-Datei auf mehrere USB-Geräte auf einmal zu schreiben. Es werden Geräte mit einer Größe von 1GB bis 32GB unterstützt."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,

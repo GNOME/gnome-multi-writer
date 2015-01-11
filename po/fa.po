@@ -47,8 +47,8 @@ msgstr "یک فایل ISO را روی چندین دستگاه USB به طور ه
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
-"at once. Supported drive sizes are between 1Gb and 32Gb."
-msgstr "GNOME MultiWriter می تواند برای حک کردن یک فایل ISO به چندین دستگاه USB به طور همزمان استفاده شود.\nدستگاه های با اندازه 1Gb تا 32Gb پشتیبانی می شوند."
+"at once. Supported drive sizes are between 1GB and 32GB."
+msgstr "GNOME MultiWriter می تواند برای حک کردن یک فایل ISO به چندین دستگاه USB به طور همزمان استفاده شود.\nدستگاه های با اندازه 1GB تا 32GB پشتیبانی می شوند."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment

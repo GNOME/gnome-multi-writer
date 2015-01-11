@@ -46,8 +46,8 @@ msgstr "將 ISO 檔一次寫入多項 USB 裝置中"
 #. TRANSLATORS: AppData description marketing paragraph
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
-"at once. Supported drive sizes are between 1Gb and 32Gb."
-msgstr "GNOME MultiWriter 可以用來將 ISO 檔一次寫入多項 USB 裝置中。支援的儲存裝置容量大小介於 1Gb 到 32Gb 之間。"
+"at once. Supported drive sizes are between 1GB and 32GB."
+msgstr "GNOME MultiWriter 可以用來將 ISO 檔一次寫入多項 USB 裝置中。支援的儲存裝置容量大小介於 1GB 到 32GB 之間。"
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
