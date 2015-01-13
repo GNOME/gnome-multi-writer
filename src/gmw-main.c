@@ -1319,22 +1319,30 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
 
 	/* is this the kind of device that interests us? */
+	object_path = g_dbus_object_get_object_path (dbus_object);
 	iface_block = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Block");
-	if (iface_block == NULL)
+	if (iface_block == NULL) {
+		g_debug ("%s has no org.freedesktop.UDisks2.Block", object_path);
 		return FALSE;
+	}
 	iface_part = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Partition");
-	if (iface_part != NULL)
+	if (iface_part != NULL) {
+		g_debug ("%s has no org.freedesktop.UDisks2.Partition", object_path);
 		return FALSE;
+	}
 	iface_fs = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Filesystem");
-	if (iface_fs != NULL)
+	if (iface_fs != NULL) {
+		g_debug ("%s has no org.freedesktop.UDisks2.Filesystem", object_path);
 		return FALSE;
+	}
 
 	/* get the block device */
-	object_path = g_dbus_object_get_object_path (dbus_object);
 	udisks_object = udisks_client_get_object (priv->udisks_client, object_path);
 	udisks_block = udisks_object_get_block (udisks_object);
-	if (udisks_block == NULL)
+	if (udisks_block == NULL) {
+		g_debug ("%s has no block device", object_path);
 		return FALSE;
+	}
 
 	/* ignore system devices */
 	block_path = udisks_block_get_device (udisks_block);
