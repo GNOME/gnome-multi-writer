@@ -869,28 +869,37 @@ gmw_udisks_unmount_cb (GObject *source_object,
 static UDisksFilesystem *
 gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 {
-	UDisksFilesystem *udisks_fs = NULL;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_free_ gchar *object_path_child = NULL;
-	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
-	_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
-	_cleanup_strv_free_ gchar **mtab = NULL;
+	guint i;
 
-	object_path_child = g_strdup_printf ("%s1", gmw_device_get_object_path (device));
-	udisks_object = udisks_client_get_object (priv->udisks_client,
-						  object_path_child);
-	if (udisks_object == NULL)
-		return NULL;
-	udisks_fs = udisks_object_get_filesystem (udisks_object);
-	if (udisks_fs == NULL)
-		return NULL;
-	mtab = udisks_filesystem_dup_mount_points (udisks_fs);
-	if (mtab == NULL || mtab[0] == NULL) {
-		g_debug ("%s not mounted", object_path_child);
-		return NULL;
+	/* this is crude, but fast -- LiveUSB devices will only typically have
+	 * one partition, but very occasionaly two or more */
+	for (i = 1; i <= 4; i++) {
+		UDisksFilesystem *udisks_fs = NULL;
+		_cleanup_error_free_ GError *error = NULL;
+		_cleanup_free_ gchar *object_path = NULL;
+		_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
+		_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
+		_cleanup_strv_free_ gchar **mtab = NULL;
+
+		object_path = g_strdup_printf ("%s%i",
+					       gmw_device_get_object_path (device),
+					       i);
+		udisks_object = udisks_client_get_object (priv->udisks_client,
+							  object_path);
+		if (udisks_object == NULL)
+			continue;
+		udisks_fs = udisks_object_get_filesystem (udisks_object);
+		if (udisks_fs == NULL)
+			continue;
+		mtab = udisks_filesystem_dup_mount_points (udisks_fs);
+		if (mtab == NULL || mtab[0] == NULL) {
+			g_debug ("%s not mounted", object_path);
+			continue;
+		}
+		g_debug ("found filesystem %s from %s", mtab[0], object_path);
+		return udisks_fs;
 	}
-	g_debug ("found filesystem %s from %s", mtab[0], object_path_child);
-	return udisks_fs;
+	return NULL;
 }
 
 /**
