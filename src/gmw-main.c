@@ -36,7 +36,10 @@
 #include "gmw-cleanup.h"
 #include "gmw-device.h"
 
-#define GMW_MAX_ROOT_HUBS	8
+typedef struct {
+	guint			 idx;
+	GPtrArray		*devices;
+} GmwRootHub;
 
 typedef struct {
 	GFile			*image_file;
@@ -114,41 +117,107 @@ gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 }
 
 /**
+ * gmw_root_hub_free:
+ **/
+static void
+gmw_root_hub_free (GmwRootHub *rh)
+{
+	g_ptr_array_unref (rh->devices);
+	g_free (rh);
+}
+
+/**
+ * gmw_root_hub_new:
+ **/
+static GmwRootHub *
+gmw_root_hub_new (guint idx)
+{
+	GmwRootHub *rh;
+	rh = g_new0 (GmwRootHub, 1);
+	rh->idx = idx;
+	rh->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
+	return rh;
+}
+
+/**
+ * gmw_root_hub_find_by_idx:
+ **/
+static GmwRootHub *
+gmw_root_hub_find_by_idx (GPtrArray *root_hubs, guint idx)
+{
+	GmwRootHub *rh;
+	guint i;
+
+	for (i = 0; i < root_hubs->len; i++) {
+		rh = g_ptr_array_index (root_hubs, i);
+		if (rh->idx == idx)
+			return rh;
+	}
+	return NULL;
+}
+
+/**
+ * gmw_root_hub_enumerate:
+ * @devices: (element-type GmwDevice): connected devices
+ *
+ * Gets a list of all the root hubs in use.
+ *
+ * Returns: (transfer full) (element-type GmwRootHub): root hubs
+ **/
+static GPtrArray *
+gmw_root_hub_enumerate (GPtrArray *devices)
+{
+	GmwDevice *device;
+	GmwRootHub *rh;
+	GPtrArray *array;
+	guint i;
+	guint idx;
+
+	/* put each device into an array of its root hub */
+	array = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_root_hub_free);
+	for (i = 0; i < devices->len; i++) {
+		device = g_ptr_array_index (devices, i);
+		idx = gmw_device_get_hub_root (device);
+		rh = gmw_root_hub_find_by_idx (array, idx);
+		if (rh == NULL) {
+			rh = gmw_root_hub_new (idx);
+			g_ptr_array_add (array, rh);
+		}
+		g_ptr_array_add (rh->devices, g_object_ref (device));
+	}
+	return array;
+}
+
+/**
  * gmw_device_list_sort:
  **/
 static void
 gmw_device_list_sort (GmwPrivate *priv)
 {
 	GmwDevice *device;
-	GPtrArray *hub_root[GMW_MAX_ROOT_HUBS];
-	guint hub;
+	GmwRootHub *rh;
+	guint j;
 	guint i;
 	guint idx = 0;
+	_cleanup_ptrarray_unref_ GPtrArray *root_hubs = NULL;
 
 	/* first, sort the list for display */
 	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
 
-	/* put each device into an array of its root hub */
-	for (hub = 0; hub < GMW_MAX_ROOT_HUBS; hub++)
-		hub_root[hub] = g_ptr_array_new ();
-	for (i = 0; i < priv->devices->len; i++) {
-		device = g_ptr_array_index (priv->devices, i);
-		hub = gmw_device_get_hub_root (device);
-		if (hub >= GMW_MAX_ROOT_HUBS)
-			continue;
-		g_ptr_array_add (hub_root[hub], device);
-	}
-
 	/* queue the devices according to the root hub they are connected
 	 * to ensure we saturate as many busses as possible */
+	root_hubs = gmw_root_hub_enumerate (priv->devices);
 	for (i = 0; i < priv->devices->len; i++) {
-		for (hub = 0; hub < GMW_MAX_ROOT_HUBS; hub++) {
+		for (j = 0; j < root_hubs->len; j++) {
 			_cleanup_free_ gchar *key = NULL;
-			if (hub_root[hub]->len <= i)
+			rh = g_ptr_array_index (root_hubs, j);
+			if (rh->devices->len <= i)
 				continue;
-			device = g_ptr_array_index (hub_root[hub], i);
+			device = g_ptr_array_index (rh->devices, i);
 			key = g_strdup_printf ("%04i", idx++);
 			gmw_device_set_order_process (device, key);
+			g_debug ("set sort key %s for [%02x:] %s", key,
+				 rh->idx, gmw_device_get_block_path (device));
 		}
 	}
 }
@@ -1408,36 +1477,17 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 static void
 gmw_update_max_threads (GmwPrivate *priv)
 {
-	GmwDevice *device;
-	gboolean used[GMW_MAX_ROOT_HUBS];
-	guint8 root;
-	guint i;
-	guint nr_root = 0;
+	guint nr_root = 1; /* assume there is at least one root hub */
 	guint threads_per_root;
+	_cleanup_ptrarray_unref_ GPtrArray *root_hubs = NULL;
 
 	/* get setting */
 	threads_per_root = g_settings_get_uint (priv->settings, "max-threads");
 
-	/* init */
-	for (i = 0; i < GMW_MAX_ROOT_HUBS; i++)
-		used[i] = FALSE;
-
 	/* count root hubs in use */
-	for (i = 0; i < priv->devices->len; i++) {
-		device = g_ptr_array_index (priv->devices, i);
-		root = gmw_device_get_hub_root (device);
-		if (root == 0 || root >= GMW_MAX_ROOT_HUBS)
-			continue;
-		used[root] = TRUE;
-	}
-	for (i = 0; i < GMW_MAX_ROOT_HUBS; i++) {
-		if (used[i])
-			nr_root++;
-	}
-
-	/* even with no devices, we assume there is at least one root hub */
-	if (nr_root == 0)
-		nr_root = 1;
+	root_hubs = gmw_root_hub_enumerate (priv->devices);
+	if (root_hubs->len > 0)
+		nr_root = root_hubs->len;
 	g_debug ("%i root %s in use", nr_root, nr_root > 1 ? "hubs" : "hub");
 	g_thread_pool_set_max_threads (priv->thread_pool,
 				       threads_per_root * nr_root,
