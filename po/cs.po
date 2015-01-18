@@ -1,259 +1,342 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
-# Jiri Eischmann <jiri@eischmann.cz>, 2015
+# Jiri Eischmann <jiri@eischmann.cz>, 2014
 # fri, 2015
-# fri, 2015
+# Marek Černocký <marek@manet.cz>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 10:52+0000\n"
-"PO-Revision-Date: 2015-01-08 17:11+0000\n"
-"Last-Translator: fri\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/gnome-multi-writer/language/cs/)\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"multi-writer&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-01-11 13:36+0000\n"
+"PO-Revision-Date: 2015-01-18 19:04+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
 #. set the title
+#: ../data/gmw-main.ui.h:2
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
+#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:651
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: button to start the copy
+#: ../data/gmw-main.ui.h:4
 msgid "Start Copying"
 msgstr "Začít kopírování"
 
 #. TRANSLATORS: app menu item for the file chooser
+#: ../data/gmw-menus.ui.h:2
 msgid "Import ISO file…"
-msgstr "Nahrát soubor ISO…"
+msgstr "Načíst soubor ISO…"
 
 #. TRANSLATORS: app menu item for the About UI
+#: ../data/gmw-menus.ui.h:4
 msgid "_About"
-msgstr "_O programu"
+msgstr "O _aplikaci"
 
 #. TRANSLATORS: app menu item for Quit
+#: ../data/gmw-menus.ui.h:6
 msgid "_Quit"
-msgstr "_Ukončit"
+msgstr "U_končit"
 
 #. TRANSLATORS: one-line description for the app
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
+#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1105
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr "Zapsat soubor ISO na více zařízení USB najednou"
+msgstr "Zapisujte soubor ISO na více zařízení USB najednou"
 
 #. TRANSLATORS: AppData description marketing paragraph
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:6
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Supported drive sizes are between 1GB and 32GB."
-msgstr "GNOME MultiWriter můžete použít pro zápis souboru ISO na více zařízení USB najednou. Podporované velikosti disků jsou mezi 1 GB a 32 GB."
+msgstr ""
+"GNOME MultiWriter můžete použít pro zápis souboru ISO na více zařízení USB "
+"najednou. Podporované velikosti disků jsou mezi 1 GB a 32 GB."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:9
 msgid ""
-"MultiWriter may be useful for QA testing, to create a GNOME Live image for a"
-" code sprint or to create hundreds of LiveUSB drives for a trade show."
-msgstr "MultiWriter může být užitečný při zkoušení kvůli zajištění kvality, na vytvoření obrazu živého CD prostředí GNOME, když je potřeba popohnat programátory při závěrečném vylepšování kódu, nebo na vytvoření stovek živých disků USB, které se využijí při představování."
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+"MultiWriter může být užitečný při testování kvůli zajištění kvality, na "
+"vytvoření obrazu živého CD prostředí GNOME, když je potřeba popohnat "
+"programátory při závěrečném vylepšování kódu, nebo na vytvoření stovek "
+"živých disků USB, které se využijí při představování."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
 msgid ""
 "Writing a more than 10 devices simultaneously can easy saturate the USB bus "
 "for most storage devices. There are two ways to write more devices in "
 "parallel:"
-msgstr "Současný zápis na více než 10 zařízení může snadno zasytit přípojnici USB pro většinu ukládacích zařízení. Pro souběžný zápis na více zařízení jsou dva způsoby:"
+msgstr ""
+"Současný zápis na více než 10 zařízení může snadno zasytit sběrnici USB pro "
+"většinu úložných zařízení. Pro souběžný zápis na více zařízení jsou dva "
+"způsoby:"
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:13
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
-msgstr "Použít uzly USB 3.0, i když ukládací zařízení jsou USB 2.0"
+msgstr "Použít rozbočovače USB 3.0, i když ukládací zařízení jsou USB 2.0"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:15
 msgid "Install another USB 2.0 PCIe root hub"
-msgstr "Nainstalovat další hlavní uzel USB 2.0 na sběrnici PCle"
+msgstr "Nainstalovat další kořenový rozbočovač USB 2.0 na sběrnici PCle"
 
-#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
-#. name
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:17
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
-msgstr "MultiWriter byl původně napsán jako součást projektu ColorHug, ale odloučil se jako nezávislý program v roce 2015."
+msgstr ""
+"MultiWriter byl původně napsán jako součást projektu ColorHug, ale odloučil "
+"se jako nezávislý program v roce 2015."
 
 #. TRANSLATORS: the 1st screenshot caption
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:19
 msgid "Initial screen for the application"
-msgstr "Výchozí obrazovka aplikace"
+msgstr "Počáteční obrazovka aplikace"
 
 #. TRANSLATORS: the 2nd screenshot caption
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:21
 msgid "Writing and verifying images"
-msgstr "Zapisování a ověřování obrazů"
+msgstr "Zápis a ověřování obrazů"
 
 #. TRANSLATORS: the 3rd screenshot caption
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:23
 msgid "All devices have been written"
 msgstr "Zapsáno na všechna zařízení"
 
 #. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:2
 msgid "The filename to write to the USB disks"
 msgstr "Název souboru k zapsání na disky USB"
 
 #. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:4
 msgid "The filename of the ISO image to write to the connected USB disks."
 msgstr "Název souboru s obrazem ISO k zapsání na připojené disky USB."
 
 #. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:6
 msgid "The maximum number of threads to use"
-msgstr "Maximální počet vláken k použití"
+msgstr "Maximální počet vláken, která se mohou použít"
 
 #. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:8
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr "Maximální počet souběžně běžících vláken, která se mohou použít při kopírování dat."
+msgstr ""
+"Maximální počet souběžně běžících vláken, která se mohou použít při "
+"kopírování dat."
 
 #. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:10
 msgid "Completely blank drive when writing"
 msgstr "Pro zápis mít úplně prázdný disk"
 
 #. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:12
 msgid "Write the ISO to the drive and then blank the remainder of the drive."
-msgstr "Zapsat ISO na disk a potom uzavřít zbytek disku."
+msgstr "Zapsat ISO na disk a zbývající část disku vymazat."
 
 #. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:14
 msgid "Verify the ISO image was written correctly"
-msgstr "Ověřit, že zápis ISO byl zapsán správně"
+msgstr "Ověřit, že obraz ISO byl zapsán správně"
 
 #. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:16
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
-msgstr "Přečíst a ověřit zápis ISO na každém zařízení po dokončení zápisu."
+msgstr "Po dokončení zápisu přečíst a ověřit obraz ISO na každém ze zařízení."
 
 #. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:18
 msgid "Show a warning before writing to a drive"
-msgstr "Před zápisem na disk ukázat varování"
+msgstr "Před zápisem na disk zobrazit varování"
 
 #. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
-msgstr "Ukázat varovný dialog potvrzující, že se má obsah zařízení vymazat."
+msgstr ""
+"Zobrazit varovné dialogové okno pro potvrzení, že se má obsah zařízení "
+"vymazat."
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: ../data/org.gnome.MultiWriter.desktop.in.h:4
 msgid "Image;Writer;ISO;USB;"
-msgstr "Obraz;Zapisování;ISO;USB;"
+msgstr "obraz;zápis;zapisování;ISO;USB;"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
+#: ../src/gmw-device.c:286
 msgid "Written successfully"
 msgstr "Úspěšně zapsáno"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
+#: ../src/gmw-device.c:294
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Zapisuje se při %.1f MB/s…"
 
 #. TRANSLATORS: we're writing the image to the USB device
+#: ../src/gmw-device.c:298
 msgid "Writing…"
-msgstr "Zapisuje se..."
+msgstr "Zapisuje se…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
+#: ../src/gmw-device.c:307
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Ověřuje se při %.1f MB/s…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
+#: ../src/gmw-device.c:312
 msgid "Verifying…"
-msgstr "Ověřuje se..."
+msgstr "Ověřuje se…"
+
+#. TRANSLATORS: This is a generic no-name USB flash disk
+#: ../src/gmw-device.c:386
+msgid "USB Flash Drive"
+msgstr "Flashdisk USB"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: ../src/gmw-main.c:283 ../src/gmw-main.c:1102 ../src/gmw-main.c:1559
 msgid "GNOME MultiWriter"
-msgstr "GNOME MultiWriter"
+msgstr "MultiWriter GNOME"
 
 #. TRANSLATORS: the success sound description
+#: ../src/gmw-main.c:285
 msgid "Image written successfully"
 msgstr "Obraz byl úspěšně zapsán"
 
 #. TRANSLATORS: copy aborted
+#: ../src/gmw-main.c:394 ../src/gmw-main.c:434 ../src/gmw-main.c:540
+#: ../src/gmw-main.c:575
 msgid "Cancelled"
 msgstr "Zrušeno"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
+#: ../src/gmw-main.c:764
 msgid "Failed to open"
 msgstr "Nepodařilo se otevřít"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
+#: ../src/gmw-main.c:784
 msgid "Choose the file to write"
 msgstr "Vyberte soubor k zapsání"
 
 #. TRANSLATORS: button title
+#: ../src/gmw-main.c:788
 msgid "Cancel"
 msgstr "Zrušit"
 
 #. TRANSLATORS: button title
+#: ../src/gmw-main.c:790
 msgid "Import"
-msgstr "Nahrát"
+msgstr "Načíst"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
+#: ../src/gmw-main.c:794
 msgid "ISO files"
 msgstr "Soubory ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
+#: ../src/gmw-main.c:952 ../src/gmw-main.c:965
 msgid "Failed to copy"
-msgstr "Nepodařilo se zkopírovat"
+msgstr "Selhalo kopírování"
 
 #. TRANSLATORS: the inhibit reason
+#: ../src/gmw-main.c:983
 msgid "Writing ISO to devices"
 msgstr "Zapisuje se ISO na zařízení"
 
 #. TRANSLATORS: window title for the warning dialog
+#: ../src/gmw-main.c:1036
 msgid "Write to all disks?"
 msgstr "Zapsat na všechny disky?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
+#: ../src/gmw-main.c:1041
 msgid "All data on the drives will be deleted."
 msgstr "Všechna data na discích budou smazána."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
+#: ../src/gmw-main.c:1046
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "Soubor ISO je menší než kapacita disku."
 
 #. TRANSLATORS: this could leave your personal files on the drive
+#: ../src/gmw-main.c:1051
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
-msgstr "Něco ze současného obsahu disků by se pořád ještě dalo najít pomocí ohledávacích nástrojů i po dokončení kopírování."
+msgstr ""
+"Něco ze současného obsahu disků by se pořád ještě dalo najít pomocí "
+"ohledávacích nástrojů i po dokončení kopírování."
 
 #. TRANSLATORS: button text for the warning dialog
+#: ../src/gmw-main.c:1058
 msgid "I Understand"
 msgstr "Jasně, rozumím"
 
 #. TRANSLATORS: the title of the about window
+#: ../src/gmw-main.c:1100
 msgid "About GNOME MultiWriter"
-msgstr "O programu GNOME MultiWriter"
+msgstr "O aplikaci MultiWriter GNOME"
 
 #. TRANSLATORS: you can put your name here :)
+#: ../src/gmw-main.c:1110
 msgid "translator-credits"
-msgstr "Pavel Fric <pavelfric@seznam.cz>, Jiri Eischmann <jiri@eischmann.cz> 2014"
+msgstr ""
+"Pavel Fric <pavelfric@seznam.cz>\n"
+"Jiri Eischmann <jiri@eischmann.cz> 2014\n"
+"Marek Černocký <marek@manet.cz>"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
+#: ../src/gmw-main.c:1160
 msgid "Verify"
 msgstr "Ověřit"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
+#: ../src/gmw-main.c:1166
 msgid "Wipe"
 msgstr "Vymazat"
 
 #. TRANSLATORS: command line option
+#: ../src/gmw-main.c:1546
 msgid "Show extra debugging information"
-msgstr "Ukázat další informace o ladění"
+msgstr "Zobrazovat dodatečné ladicí informace"
 
 #. TRANSLATORS: the user has sausages for fingers
+#: ../src/gmw-main.c:1565
 msgid "Failed to parse command line options"
-msgstr "Nepodařilo se zpracovat volby pro příkazový řádek"
+msgstr "Selhalo zpracování přepínačů příkazového řádku"
