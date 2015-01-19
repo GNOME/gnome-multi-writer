@@ -1161,18 +1161,14 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 {
 	GmwPrivate *priv = (GmwPrivate *) user_data;
 	GList *windows;
-	GtkIconTheme *icon_theme;
 	GtkWindow *parent = NULL;
 	const gchar *authors[] = { "Richard Hughes", NULL };
 	const gchar *copyright = "Copyright \xc2\xa9 2014-2015 Richard Hughes";
-	_cleanup_object_unref_ GdkPixbuf *logo = NULL;
 
 	windows = gtk_application_get_windows (GTK_APPLICATION (priv->application));
 	if (windows)
 		parent = windows->data;
 
-	icon_theme = gtk_icon_theme_get_default ();
-	logo = gtk_icon_theme_load_icon (icon_theme, "gnome-multi-writer", 256, 0, NULL);
 	gtk_show_about_dialog (parent,
 			       /* TRANSLATORS: the title of the about window */
 			       "title", _("About GNOME MultiWriter"),
@@ -1183,7 +1179,7 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 			       "comments", _("Write an ISO file to multiple USB devices at once"),
 			       "copyright", copyright,
 			       "license-type", GTK_LICENSE_GPL_2_0,
-			       "logo", logo,
+			       "logo-icon-name", "gnome-multi-writer",
 			       /* TRANSLATORS: you can put your name here :) */
 			       "translator-credits", _("translator-credits"),
 			       "version", VERSION,
