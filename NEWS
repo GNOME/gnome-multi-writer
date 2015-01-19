@@ -1,3 +1,30 @@
+Version 3.15.4
+~~~~~~~~~~~~~~
+Released: 2015-01-19
+
+* Translations:
+ - Added Serbian translation (Мирослав Николић)
+ - Added Ukranian translation (Daniel Korostil)
+ - Updated Brazilian Portuguese translation (Enrico Nicoletto)
+ - Updated Brazilian Portuguese translation (Rafael Ferreira)
+ - Updated Czech translation (Marek Černocký)
+ - Updated Hungarian translation (Balázs Úr)
+ - Updated Polish translation (Piotr Drąg)
+ - Updated Slovak translation (Dušan Kazik)
+
+* New Features:
+ - Show the size next to the device name when the device is idle (Richard Hughes)
+
+* Bugfix:
+ - Add a translatable version of a generic flash drive (Richard Hughes)
+ - Add quirks for the 36 port MegaHub (Richard Hughes)
+ - Don't proceed to the copy phase if unmounting failed (Richard Hughes)
+ - Fix crash when libusb context creation fails (Richard Hughes)
+ - Never use the USB platform ID for the hub label (Richard Hughes)
+ - Support root hubs with bus numbers >= 8 (Richard Hughes)
+ - Try to get the icon name hint from UDisks (Richard Hughes)
+ - Unmount all partitions when a device is inserted (Richard Hughes)
+
 Version 3.15.2
 ~~~~~~~~~~~~~~
 Released: 2015-01-09
