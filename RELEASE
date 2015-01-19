@@ -2,7 +2,7 @@ GNOME MultiWriter Release Notes
 
 1. Write NEWS entries in the same format as usual.
 
-Version 3.15.4
+Version 3.15.5
 ~~~~~~~~~~~~~~
 Released: 2015-xx-xx
 
@@ -10,12 +10,12 @@ Released: 2015-xx-xx
 * New Features:
 * Bugfix:
 
-git shortlog GNOME_MULTI_WRITER_3_15_2.. | grep -i -v trivial | uniq | grep -v Merge > NEWS.new
+git shortlog GNOME_MULTI_WRITER_3_15_4.. | grep -i -v trivial | uniq | grep -v Merge > NEWS.new
 
 2. Commit changes in git:
 
-git commit -a -m "Release version 3.15.4"
-git tag -s GNOME_MULTI_WRITER_3_15_4 -m "==== Version 3.15.4 ===="
+git commit -a -m "Release version 3.15.5"
+git tag -s GNOME_MULTI_WRITER_3_15_5 -m "==== Version 3.15.5 ===="
 <wait>
 git push --tags
 git push
