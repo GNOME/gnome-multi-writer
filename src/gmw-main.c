@@ -1296,13 +1296,9 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 
 	/* setup USB image */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_usb"));
-	pixbuf = gdk_pixbuf_new_from_resource_at_scale ("/org/gnome/MultiWriter/usb.svg",
-							-1, 48, TRUE, &error);
-	if (pixbuf == NULL) {
-		g_warning ("failed to load usb.svg: %s", error->message);
-		return;
-	}
-	gtk_image_set_from_pixbuf (GTK_IMAGE (w), pixbuf);
+	gtk_image_set_from_resource (GTK_IMAGE (w),
+				     "/org/gnome/MultiWriter/usb-symbolic.svg");
+	gtk_image_set_pixel_size (GTK_IMAGE (w), 48);
 
 	/* get previously loaded image */
 	filename = g_settings_get_string (priv->settings, "filename");
