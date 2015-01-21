@@ -92,6 +92,7 @@ PKG_CHECK_MODULES(GUSB, gusb >= 0.2.2)
 PKG_CHECK_MODULES(UDISKS, udisks2)
 PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.11.2)
 PKG_CHECK_MODULES(CANBERRA, libcanberra-gtk3 >= 0.10)
+AC_PATH_PROG(APPSTREAM_UTIL, [appstream-util], [unfound])
 
 dnl ---------------------------------------------------------------------------
 dnl - Is docbook2man available?

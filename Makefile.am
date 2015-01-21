@@ -33,12 +33,14 @@ MAINTAINERCLEANFILES =					\
 	$(srcdir)/mkinstalldirs				\
 	$(srcdir)/omf.make				\
 	$(srcdir)/ChangeLog				\
+	$(srcdir)/NEWS					\
 	$(srcdir)/gnome-multi-writer-*.tar.*		\
 	`find "$(srcdir)" -type f -name Makefile.in -print`
 
 distclean-local:
 	if test $(srdcir) = .; then :; else \
 		rm -f ChangeLog; \
+		rm -f NEWS; \
 	fi
 
 ChangeLog:
@@ -55,6 +57,15 @@ ChangeLog:
 	  echo A git checkout and git-log is required to generate this file >> $@); \
 	fi
 
-.PHONY: ChangeLog
+NEWS: data/appdata/org.gnome.MultiWriter.appdata.xml
+	$(AM_V_GEN) \
+	if test -e $(APPSTREAM_UTIL); then \
+		echo $^; \
+		$(APPSTREAM_UTIL) appdata-to-news $^ > $@; \
+	else \
+		touch $@; \
+	fi
+
+.PHONY: ChangeLog NEWS
 
 -include $(top_srcdir)/git.mk
