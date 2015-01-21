@@ -57,6 +57,7 @@ GType		 gmw_device_get_type		(void);
 GmwDevice	*gmw_device_new			(void);
 const gchar	*gmw_device_get_icon		(GmwDevice	*device);
 gchar		*gmw_device_get_description	(GmwDevice	*device);
+gchar		*gmw_device_get_quirk_string	(GmwDevice	*device);
 GmwDeviceState	 gmw_device_get_state		(GmwDevice	*device);
 UDisksBlock	*gmw_device_get_udisks_block	(GmwDevice	*device);
 const gchar	*gmw_device_get_name		(GmwDevice	*device);
