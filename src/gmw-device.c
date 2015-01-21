@@ -426,7 +426,7 @@ gmw_device_set_block_path (GmwDevice *device, const gchar *block_path)
 /**
  * gmw_device_set_hub_label:
  **/
-static void
+void
 gmw_device_set_hub_label (GmwDevice *device, const gchar *hub_label)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -435,6 +435,9 @@ gmw_device_set_hub_label (GmwDevice *device, const gchar *hub_label)
 	g_free (priv->hub_label);
 	priv->hub_label = g_strdup (hub_label);
 	g_mutex_unlock (&priv->mutex);
+
+	/* invalidate */
+	gmw_device_set_order_display (device, NULL);
 }
 
 /**

@@ -87,6 +87,8 @@ void		 gmw_device_set_block_path	(GmwDevice	*device,
 						 const gchar	*block_path);
 void		 gmw_device_set_hub_id		(GmwDevice	*device,
 						 const gchar	*hub_id);
+void		 gmw_device_set_hub_label	(GmwDevice	*device,
+						 const gchar	*hub_label);
 void		 gmw_device_set_object_path	(GmwDevice	*device,
 						 const gchar	*object_path);
 void		 gmw_device_set_order_display	(GmwDevice	*device,
