@@ -74,7 +74,7 @@ gmw_device_get_udisks_block (GmwDevice *device)
 /**
  * gmw_device_get_name:
  **/
-gchar *
+const gchar *
 gmw_device_get_name (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -85,7 +85,7 @@ gmw_device_get_name (GmwDevice *device)
 /**
  * gmw_device_get_block_path:
  **/
-gchar *
+const gchar *
 gmw_device_get_block_path (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -96,7 +96,7 @@ gmw_device_get_block_path (GmwDevice *device)
 /**
  * gmw_device_get_hub_label:
  **/
-gchar *
+const gchar *
 gmw_device_get_hub_label (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -107,7 +107,7 @@ gmw_device_get_hub_label (GmwDevice *device)
 /**
  * gmw_device_get_hub_id:
  **/
-gchar *
+const gchar *
 gmw_device_get_hub_id (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -129,7 +129,7 @@ gmw_device_get_hub_root (GmwDevice *device)
 /**
  * gmw_device_get_object_path:
  **/
-gchar *
+const gchar *
 gmw_device_get_object_path (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -140,7 +140,7 @@ gmw_device_get_object_path (GmwDevice *device)
 /**
  * gmw_device_get_order_display:
  **/
-gchar *
+const gchar *
 gmw_device_get_order_display (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -156,7 +156,7 @@ gmw_device_get_order_display (GmwDevice *device)
 /**
  * gmw_device_get_order_process:
  **/
-gchar *
+const gchar *
 gmw_device_get_order_process (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
@@ -169,7 +169,7 @@ gmw_device_get_order_process (GmwDevice *device)
 /**
  * gmw_device_get_sysfs_path:
  **/
-gchar *
+const gchar *
 gmw_device_get_sysfs_path (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
