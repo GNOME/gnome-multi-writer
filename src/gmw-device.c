@@ -32,10 +32,10 @@ typedef struct {
 	GMutex			 mutex;		/* mutex for the device */
 	GmwDeviceState		 state;		/* the #GmwDeviceState, e.g. %GMW_DEVICE_STATE_WRITE */
 	UDisksBlock		*udisks_block;	/* the #UDisksBlock device */
+	GUsbDevice		*usb_device;	/* the #GUsbDevice */
 	gchar			*block_path;	/* path to block device, e.g. /dev/sdb */
 	gchar			*hub_id;	/* hub connection */
 	gchar			*hub_label;	/* hub label */
-	guint8			 hub_root;	/* root hub number */
 	gchar			*name;		/* name, e.g. "Hughski ColorHug" */
 	gchar			*object_path;	/* UDisks object path */
 	gchar			*order_display;	/* key for display sorting */
@@ -123,7 +123,9 @@ gmw_device_get_hub_root (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	g_return_val_if_fail (GMW_IS_DEVICE (device), 0);
-	return priv->hub_root;
+	if (priv->usb_device == NULL)
+		return 0x00;
+	return g_usb_device_get_bus (priv->usb_device);
 }
 
 /**
@@ -698,7 +700,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 	g_return_if_fail (GMW_IS_DEVICE (device));
 
 	/* get the USB root hub number */
-	priv->hub_root = g_usb_device_get_bus (usb_device);
+	priv->usb_device = g_object_ref (usb_device);
 
 	/* is this a USB hub already */
 	if (g_usb_device_get_device_class (usb_device) == 0x09) {
@@ -809,6 +811,8 @@ gmw_device_finalize (GObject *object)
 	g_mutex_clear (&priv->mutex);
 	if (priv->error != NULL)
 		g_error_free (priv->error);
+	if (priv->usb_device != NULL)
+		g_object_unref (priv->usb_device);
 	g_free (priv->block_path);
 	g_free (priv->hub_id);
 	g_free (priv->hub_label);
