@@ -44,6 +44,7 @@ typedef struct {
 typedef struct {
 	GFile			*image_file;
 	guint64			 image_file_size;
+	gboolean		 rename_labels;
 	GPtrArray		*devices;
 	GMutex			 devices_mutex;
 	GSettings		*settings;
@@ -222,6 +223,120 @@ gmw_device_list_sort (GmwPrivate *priv)
 	}
 }
 
+typedef struct {
+	GmwPrivate	*priv;
+	GmwDevice 	*device;
+	GtkEntry	*entry;
+	GtkDialog	*dialog;
+} GmwRenumberHelper;
+
+static void gmw_refresh_ui (GmwPrivate *priv);
+
+/**
+ * gmw_main_show_quirks:
+ **/
+static void
+gmw_main_show_quirks (GmwPrivate *priv)
+{
+	GmwDevice *device;
+	guint i;
+
+	g_print ("\t/*     hub      hub-port  parent-hub     child-device"
+		 "   chps  dprt  chn  labl */\n");
+	for (i = 0; i < priv->devices->len; i++) {
+		_cleanup_free_ gchar *tmp = NULL;
+		device = g_ptr_array_index (priv->devices, i);
+		tmp = gmw_device_get_quirk_string (device);
+		g_print ("\t%s\n", tmp);
+	}
+}
+
+/**
+ * gmw_main_rename_response_cb:
+ **/
+static void
+gmw_main_rename_response_cb (GtkDialog *dialog,
+			     GtkResponseType response_id,
+			     GmwRenumberHelper *helper)
+{
+	if (response_id == GTK_RESPONSE_OK) {
+		const gchar *tmp;
+		tmp = gtk_entry_get_text (helper->entry);
+		if (tmp != NULL && tmp[0] != '\0') {
+			g_debug ("renaming %s to %s",
+				 gmw_device_get_hub_id (helper->device), tmp);
+			gmw_device_set_hub_label (helper->device, tmp);
+			gmw_device_list_sort (helper->priv);
+			gmw_main_show_quirks (helper->priv);
+		}
+	}
+	gmw_refresh_ui (helper->priv);
+	g_object_unref (helper->device);
+	g_free (helper);
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+/**
+ * gmw_main_rename_labels_cb:
+ **/
+static void
+gmw_main_rename_activate_cb (GtkEntry *entry, GmwRenumberHelper *helper)
+{
+	gtk_dialog_response (helper->dialog, GTK_RESPONSE_OK);
+}
+
+/**
+ * gmw_main_rename_labels_cb:
+ **/
+static gboolean
+gmw_main_rename_labels_cb (GtkLabel *label, const gchar *uri, GmwPrivate *priv)
+{
+	GmwDevice *device;
+	GmwRenumberHelper *helper;
+	GtkWidget *w;
+	const gchar *tmp;
+	guint idx;
+
+	/* convert the URI into a device */
+	idx = atoi (uri);
+	device = g_ptr_array_index (priv->devices, idx);
+	if (device == NULL)
+		return FALSE;
+
+	/* create warning dialog */
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
+	w = gtk_message_dialog_new (GTK_WINDOW (w),
+				    GTK_DIALOG_DESTROY_WITH_PARENT |
+				    GTK_DIALOG_MODAL |
+				    GTK_DIALOG_USE_HEADER_BAR,
+				    GTK_MESSAGE_INFO,
+				    GTK_BUTTONS_OK_CANCEL,
+				    /* TRANSLATORS: window title renaming labels */
+				    "%s", _("New hub label"));
+
+	/* helper object */
+	helper = g_new0 (GmwRenumberHelper, 1);
+	helper->priv = priv;
+	helper->device = g_object_ref (device);
+	helper->dialog = GTK_DIALOG (w);
+	g_signal_connect (helper->dialog, "response",
+			  G_CALLBACK (gmw_main_rename_response_cb), helper);
+	helper->entry = GTK_ENTRY (gtk_entry_new ());
+	g_signal_connect (helper->entry, "activate",
+			  G_CALLBACK (gmw_main_rename_activate_cb), helper);
+
+	/* add existing hub label */
+	gtk_widget_set_visible (GTK_WIDGET (helper->entry), TRUE);
+	w = gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (helper->dialog));
+	gtk_box_pack_end (GTK_BOX (w), GTK_WIDGET (helper->entry), FALSE, FALSE, 0);
+	tmp = gmw_device_get_hub_label (device);
+	if (tmp != NULL)
+		gtk_entry_set_text (helper->entry, tmp);
+
+	gtk_window_present (GTK_WINDOW (helper->dialog));
+	return TRUE;
+}
+
 /**
  * gmw_refresh_ui:
  **/
@@ -242,6 +357,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
 		_cleanup_free_ gchar *label_markup = NULL;
+		_cleanup_free_ gchar *label = NULL;
 		_cleanup_free_ gchar *title = NULL;
 		guint row = i % max_devices_per_column;
 		guint col = (i / max_devices_per_column) * 4;
@@ -250,16 +366,29 @@ gmw_refresh_ui (GmwPrivate *priv)
 
 		/* add label */
 		w = gtk_label_new (NULL);
+		g_signal_connect (w, "activate-link",
+				  G_CALLBACK (gmw_main_rename_labels_cb), priv);
 		if (col > 0)
 			gtk_widget_set_margin_start (w, 30);
 		if (gmw_device_get_hub_label (device) != NULL) {
-			label_markup = g_strdup_printf ("<tt><small>%s [%s]</small></tt>",
-							gmw_device_get_hub_id (device),
-							gmw_device_get_hub_label (device));
+			if (priv->rename_labels) {
+				label = g_strdup_printf ("%s [%s<a href=\"%i\">?</a>]",
+							 gmw_device_get_hub_id (device),
+							 gmw_device_get_hub_label (device), i);
+			} else {
+				label = g_strdup_printf ("%s [%s]",
+							 gmw_device_get_hub_id (device),
+							 gmw_device_get_hub_label (device));
+			}
 		} else {
-			label_markup = g_strdup_printf ("<tt><small>%s</small></tt>",
-							gmw_device_get_hub_id (device));
+			if (priv->rename_labels) {
+				label = g_strdup_printf ("%s [<a href=\"%i\">?</a>]",
+							 gmw_device_get_hub_id (device), i);
+			} else {
+				label = g_strdup (gmw_device_get_hub_id (device));
+			}
 		}
+		label_markup = g_strdup_printf ("<tt><small>%s</small></tt>", label);
 		gtk_label_set_markup (GTK_LABEL (w), label_markup);
 		g_object_set (w, "xalign", 1.f, NULL);
 		gtk_grid_attach (GTK_GRID (grid), w, col + 0, row, 1, 1);
@@ -1597,9 +1726,13 @@ main (int argc, char **argv)
 	GmwPrivate *priv = NULL;
 	GOptionContext *context;
 	gboolean verbose = FALSE;
+	gboolean rename_labels = FALSE;
 	int status = EXIT_SUCCESS;
 	_cleanup_error_free_ GError *error = NULL;
 	const GOptionEntry options[] = {
+		{ "rename-labels", '\0', 0, G_OPTION_ARG_NONE, &rename_labels,
+			/* TRANSLATORS: command line option */
+			_("Allow renaming the labels on hubs"), NULL },
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
 			/* TRANSLATORS: command line option */
 			_("Show extra debugging information"), NULL },
@@ -1627,6 +1760,7 @@ main (int argc, char **argv)
 	}
 
 	priv = g_new0 (GmwPrivate, 1);
+	priv->rename_labels = rename_labels;
 	g_mutex_init (&priv->thread_pool_mutex);
 	g_mutex_init (&priv->devices_mutex);
 	g_mutex_init (&priv->idle_id_mutex);
