@@ -43,6 +43,7 @@ typedef struct {
 
 typedef struct {
 	GFile			*image_file;
+	GFileMonitor		*image_monitor;
 	guint64			 image_file_size;
 	gboolean		 rename_labels;
 	GPtrArray		*devices;
@@ -939,6 +940,19 @@ gmw_update_title (GmwPrivate *priv)
 }
 
 /**
+ * gmw_set_image_file_changed_cb:
+ **/
+static void
+gmw_set_image_file_changed_cb (GFileMonitor *monitor,
+			       GFile *file,
+			       GFile *other_file,
+			       GFileMonitorEvent event_type,
+			       GmwPrivate *priv)
+{
+	g_debug ("ISO file changed");
+}
+
+/**
  * gmw_set_image_filename:
  **/
 static void
@@ -949,7 +963,19 @@ gmw_set_image_filename (GmwPrivate *priv, const gchar *filename)
 
 	if (priv->image_file != NULL)
 		g_object_unref (priv->image_file);
+	if (priv->image_monitor != NULL)
+		g_object_unref (priv->image_monitor);
 	priv->image_file = g_file_new_for_path (filename);
+	priv->image_monitor = g_file_monitor (priv->image_file,
+					      G_FILE_MONITOR_NONE,
+					      NULL, &error);
+	if (priv->image_monitor == NULL) {
+		/* TRANSLATORS: we couldn't open the ISO file the user chose */
+		gmw_error_dialog (priv, _("Failed to open"), error->message);
+		return;
+	}
+	g_signal_connect (priv->image_monitor, "changed",
+			  G_CALLBACK (gmw_set_image_file_changed_cb), priv);
 
 	/* get the size of the ISO file */
 	info = g_file_query_info (priv->image_file,
@@ -1824,6 +1850,8 @@ out:
 			g_object_unref (priv->usb_ctx);
 		if (priv->image_file != NULL)
 			g_object_unref (priv->image_file);
+		if (priv->image_monitor != NULL)
+			g_object_unref (priv->image_monitor);
 		if (priv->cancellable != NULL)
 			g_object_unref (priv->cancellable);
 		if (priv->application != NULL)
