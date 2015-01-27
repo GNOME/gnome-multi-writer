@@ -794,8 +794,8 @@ gmw_device_verify (GmwPrivate *priv,
 		/* compare */
 		if (memcmp (buffer_src, buffer_dest, bytes_to_read) != 0) {
 			g_set_error (error, 1, 0,
-				     "Failed to verify at %" G_GUINT64_FORMAT,
-				     bytes_completed);
+				     "Failed to verify at %" G_GUINT64_FORMAT "Mb",
+				     bytes_completed / (1024 * 1024));
 			goto out;
 		}
 
