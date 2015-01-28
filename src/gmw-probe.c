@@ -37,24 +37,24 @@
 
 #include "gmw-cleanup.h"
 
-#define ONE_MB		(1024 * 1024)
-#define ONE_BLOCK	(32 * 1024)
+#define ONE_MB			(1024 * 1024)
+#define ONE_BLOCK		(32 * 1024)
 
 typedef struct {
-	guint8		*data_old;
-	guint8		*data_random;
-	gssize		 bytes_read;
-	gssize		 bytes_wrote;
-	guint64		 address;
-	gboolean	 valid;
+	guint8			*data_old;
+	guint8			*data_random;
+	gssize			 bytes_read;
+	gssize			 bytes_wrote;
+	guint64			 address;
+	gboolean		 valid;
 } GmwProbeBlock;
 
 typedef struct {
-	guint64		 disk_size;
-	int		 fd;
-	gchar		*block_dev;
-	GPtrArray	*data_save;
-	GUdevDevice	*udev_device;
+	guint64			 disk_size;
+	int			 fd;
+	gchar			*block_dev;
+	GPtrArray		*data_save;
+	GUdevDevice		*udev_device;
 } GmwProbeDevice;
 
 #define GMW_ERROR		1
@@ -98,13 +98,13 @@ gmw_probe_device_reset (GmwProbeDevice *dev, GError **error)
 
 	/* just reset device */
 	devnode = g_udev_device_get_device_file (dev->udev_device);
-	g_debug ("resetting %s", devnode);
+	g_debug ("Resetting %s", devnode);
 	fd = g_open (devnode, O_WRONLY | O_NONBLOCK);
 	if (fd < 0) {
 		g_set_error (error,
 			     GMW_ERROR,
 			     GMW_ERROR_FAILED,
-			     "failed to open %s", devnode);
+			     "Failed to open %s", devnode);
 		return FALSE;
 	}
 	if (ioctl (fd, USBDEVFS_RESET) != 0) {
@@ -130,7 +130,7 @@ gmw_probe_device_open (GmwProbeDevice *dev, GError **error)
 		g_set_error (error,
 			     GMW_ERROR,
 			     GMW_ERROR_FAILED,
-			     "failed to open %s", dev->block_dev);
+			     "Failed to open %s", dev->block_dev);
 		return FALSE;
 	}
 
@@ -269,7 +269,7 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 			g_set_error (error,
 				     GMW_ERROR,
 				     GMW_ERROR_FAILED,
-				     "failed to read data");
+				     "Failed to read data");
 			return FALSE;
 		}
 		item->valid = memcmp (item->data_random,
@@ -345,17 +345,17 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 		g_set_error_literal (error,
 				     GMW_ERROR,
 				     GMW_ERROR_FAILED,
-				     "disk capacity zero");
+				     "Disk capacity reported as zero");
 		return FALSE;
 	}
 	if (dev->disk_size > 0x800000000llu) {
 		g_set_error_literal (error,
 				     GMW_ERROR,
 				     GMW_ERROR_FAILED,
-				     "disk capacity invalid");
+				     "Disk capacity reported as invalid");
 		return FALSE;
 	}
-	g_debug ("disk reports to be %luMB in size", dev->disk_size / ONE_MB);
+	g_debug ("Disk reports to be %luMB in size", dev->disk_size / ONE_MB);
 
 	/* save data that's there already */
 	if (!gmw_probe_device_data_save (dev, cancellable, error))
@@ -440,7 +440,7 @@ gmw_probe_use_device (GUdevClient *udev_client,
 		g_set_error (error,
 			     GMW_ERROR,
 			     GMW_ERROR_FAILED,
-			     "failed to find %s", block_dev);
+			     "Failed to find %s", block_dev);
 		gmw_probe_device_free (dev);
 		return FALSE;
 	}
@@ -448,10 +448,10 @@ gmw_probe_use_device (GUdevClient *udev_client,
 								    "usb",
 								    "usb_device");
 	if (dev->udev_device == NULL) {
-		g_set_error (error,
-			     GMW_ERROR,
-			     GMW_ERROR_FAILED,
-			     "failed to find %s usb_device", block_dev);
+		g_set_error_literal (error,
+				     GMW_ERROR,
+				     GMW_ERROR_FAILED,
+				     "Not a USB device");
 		gmw_probe_device_free (dev);
 		return FALSE;
 	}
@@ -488,9 +488,8 @@ main (int argc, char **argv)
 		{ NULL}
 	};
 
+	/* make this predictable */
 	g_random_set_seed (0xdead);
-	cancellable = g_cancellable_new ();
-	udev_client = g_udev_client_new (subsystems);
 
 	/* TRANSLATORS: A program to copy the LiveUSB image onto USB hardware */
 	context = g_option_context_new (NULL);
@@ -511,6 +510,8 @@ main (int argc, char **argv)
 	}
 
 	/* probe device */
+	cancellable = g_cancellable_new ();
+	udev_client = g_udev_client_new (subsystems);
 	if (!gmw_probe_use_device (udev_client, argv[1], cancellable, &error)) {
 		status = EXIT_FAILURE;
 		if (g_error_matches (error, GMW_ERROR, GMW_ERROR_IS_FAKE)) {
