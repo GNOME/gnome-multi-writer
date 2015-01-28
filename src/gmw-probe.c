@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <glib/gi18n.h>
+#include <glib/gprintf.h>
 #include <glib/gstdio.h>
 #include <gudev/gudev.h>
 #include <linux/fs.h>
@@ -474,6 +475,39 @@ gmw_probe_use_device (GUdevClient *udev_client,
 }
 
 /**
+ * gmw_probe_is_block_device_valid:
+ **/
+static gboolean
+gmw_probe_is_block_device_valid (const gchar *block_device)
+{
+	guint i;
+
+	/* dev prefix */
+	if (!g_str_has_prefix (block_device, "/dev/"))
+		return FALSE;
+
+	/* has no partition number */
+	for (i = 5; block_device[i] != '\0'; i++) {
+		if (g_ascii_isdigit (block_device[i]))
+			return FALSE;
+	}
+	return TRUE;
+}
+
+
+/**
+ * gmw_probe_is_block_device_mounted:
+ **/
+static gboolean
+gmw_probe_is_block_device_mounted (const gchar *block_device)
+{
+	_cleanup_free_ gchar *data = NULL;
+	if (!g_file_get_contents ("/etc/mtab", &data, NULL, NULL))
+		return FALSE;
+	return g_strrstr (data, block_device) != NULL;
+}
+
+/**
  * main:
  **/
 int
@@ -509,9 +543,17 @@ main (int argc, char **argv)
 	if (verbose)
 		g_setenv ("G_MESSAGES_DEBUG", "all", TRUE);
 
-	if (argc == 1) {
+	/* valid arguments */
+	if (argc != 2 || !gmw_probe_is_block_device_valid (argv[1])) {
 		status = EXIT_FAILURE;
 		g_print ("Block device required as argument\n");
+		goto out;
+	}
+
+	/* already mounted */
+	if (gmw_probe_is_block_device_mounted (argv[1])) {
+		status = EXIT_FAILURE;
+		g_print ("Partition mounted from block device\n");
 		goto out;
 	}
 
