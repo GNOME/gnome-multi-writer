@@ -6,3 +6,4 @@ data/org.gnome.MultiWriter.gschema.xml
 data/org.gnome.MultiWriter.desktop.in
 src/gmw-device.c
 src/gmw-main.c
+src/gmw-probe.c

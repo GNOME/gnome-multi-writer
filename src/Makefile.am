@@ -2,6 +2,7 @@ AM_CPPFLAGS =						\
 	$(CANBERRA_CFLAGS)				\
 	$(GLIB_CFLAGS)					\
 	$(GTK_CFLAGS)					\
+	$(GUDEV_CFLAGS)					\
 	$(GUSB_CFLAGS)					\
 	$(SOUP_CFLAGS)					\
 	$(UDISKS_CFLAGS)				\
@@ -10,6 +11,7 @@ AM_CPPFLAGS =						\
 	-DLOCALEDIR=\""$(localedir)"\"
 
 bin_PROGRAMS =						\
+	gnome-multi-writer-probe			\
 	gnome-multi-writer
 
 gnome_multi_writer_LDADD =				\
@@ -29,6 +31,17 @@ gnome_multi_writer_SOURCES =				\
 	gmw-main.c					\
 	gmw-resources.c					\
 	gmw-resources.h
+
+gnome_multi_writer_probe_LDADD =			\
+	$(GLIB_LIBS)					\
+	$(GUDEV_LIBS)
+
+gnome_multi_writer_probe_CFLAGS =			\
+	$(WARNINGFLAGS_C)
+
+gnome_multi_writer_probe_SOURCES =			\
+	gmw-cleanup.h					\
+	gmw-probe.c
 
 gmw-resources.c: gnome-multi-writer.gresource.xml ../data/gmw-main.ui ../data/gmw-menus.ui
 	$(AM_V_GEN)					\
