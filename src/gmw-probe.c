@@ -46,6 +46,7 @@ typedef struct {
 	gssize			 bytes_read;
 	gssize			 bytes_wrote;
 	guint64			 address;
+	guint64			 offset;
 	gboolean		 valid;
 } GmwProbeBlock;
 
@@ -194,7 +195,8 @@ gmw_probe_device_data_save (GmwProbeDevice *dev,
 	for (i = 1; i < 40; i++) {
 		item = g_new0 (GmwProbeBlock, 1);
 		item->valid = TRUE;
-		item->address = i * ONE_MB * 32;
+		item->offset = g_random_int_range (1, 0xff);
+		item->address = (i * ONE_MB * 32);
 		item->data_old = g_new0 (guint8, ONE_BLOCK);
 		if (item->address >= dev->disk_size) {
 			gmw_probe_block_free (item);
@@ -202,7 +204,8 @@ gmw_probe_device_data_save (GmwProbeDevice *dev,
 		}
 		item->data_random = gmw_probe_get_random_data (ONE_BLOCK);
 		item->bytes_read = gmw_probe_device_read (dev,
-							  item->address,
+							  item->address +
+							  item->offset,
 							  item->data_old,
 							  ONE_BLOCK);
 		g_ptr_array_add (dev->data_save, item);
@@ -228,7 +231,8 @@ gmw_probe_device_data_set_dummy (GmwProbeDevice *dev,
 	for (i = 0; i < dev->data_save->len; i++) {
 		item = g_ptr_array_index (dev->data_save, i);
 		item->bytes_wrote = gmw_probe_device_write (dev,
-							    item->address,
+							    item->address +
+							    item->offset,
 							    item->data_random,
 							    ONE_BLOCK);
 
@@ -262,7 +266,8 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 		 * the address and data in some phantom FAT */
 		offset = g_random_int_range (1, 0xff);
 		item->bytes_read = gmw_probe_device_read (dev,
-							  item->address - offset,
+							  item->address +
+							  item->offset - offset,
 							  wbuf2,
 							  ONE_BLOCK + offset);
 		if (item->bytes_read != ONE_BLOCK + offset) {
@@ -308,7 +313,8 @@ gmw_probe_device_data_restore (GmwProbeDevice *dev,
 		if (!item->valid)
 			continue;
 		item->bytes_wrote = gmw_probe_device_write (dev,
-							    item->address,
+							    item->address +
+							    item->offset,
 							    item->data_old,
 							    ONE_BLOCK);
 		if (item->bytes_wrote != ONE_BLOCK)
