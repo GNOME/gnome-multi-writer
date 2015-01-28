@@ -515,7 +515,7 @@ main (int argc, char **argv)
 {
 	GOptionContext *context;
 	const gchar *subsystems[] = { "usb", NULL };
-	gboolean verbose;
+	gboolean verbose = FALSE;
 	int status = EXIT_SUCCESS;
 	_cleanup_object_unref_ GUdevClient *udev_client = NULL;
 	_cleanup_error_free_ GError *error = NULL;
