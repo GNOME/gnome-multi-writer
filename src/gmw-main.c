@@ -1555,11 +1555,6 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 		g_debug ("%s has no org.freedesktop.UDisks2.Partition", object_path);
 		return FALSE;
 	}
-	iface_fs = g_dbus_object_get_interface (dbus_object, "org.freedesktop.UDisks2.Filesystem");
-	if (iface_fs != NULL) {
-		g_debug ("%s has no org.freedesktop.UDisks2.Filesystem", object_path);
-		return FALSE;
-	}
 
 	/* get the block device */
 	udisks_object = udisks_client_get_object (priv->udisks_client, object_path);
