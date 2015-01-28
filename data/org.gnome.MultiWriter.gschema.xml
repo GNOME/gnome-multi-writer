@@ -28,6 +28,13 @@
       <!-- TRANSLATORS: schema description -->
       <description>Read and verify the ISO image from each device after writing is complete.</description>
     </key>
+    <key name="enable-probe" type="b">
+      <default>false</default>
+      <!-- TRANSLATORS: schema summary -->
+      <summary>Inspect the device before writing images</summary>
+      <!-- TRANSLATORS: schema description -->
+      <description>Inspect the device to verify the reported device size is the actual media size.</description>
+    </key>
     <key name="show-warning" type="b">
       <default>true</default>
       <!-- TRANSLATORS: schema summary -->

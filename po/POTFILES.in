@@ -4,6 +4,7 @@
 data/appdata/org.gnome.MultiWriter.appdata.xml.in
 data/org.gnome.MultiWriter.gschema.xml
 data/org.gnome.MultiWriter.desktop.in
+data/org.gnome.MultiWriter.policy.in
 src/gmw-device.c
 src/gmw-main.c
 src/gmw-probe.c

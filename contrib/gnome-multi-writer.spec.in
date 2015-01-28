@@ -63,6 +63,7 @@ fi
 %{_datadir}/applications/org.gnome.MultiWriter.desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.MultiWriter.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*
+%{_datadir}/polkit-1/actions/org.gnome.MultiWriter.policy
 %{_mandir}/man1/gnome-multi-writer.1.gz
 
 %changelog

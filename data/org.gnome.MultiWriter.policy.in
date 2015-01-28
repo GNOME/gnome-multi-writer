@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+
+  <!--
+    Policy definitions for MultiWriter system actions.
+    Copyright (c) 2015 Richard Hughes <richard@hughsie.com>
+  -->
+
+  <vendor>GNOME</vendor>
+  <vendor_url>https://wiki.gnome.org/Apps/MultiWriter</vendor_url>
+  <icon_name>gnome-multi-writer</icon_name>
+
+  <action id="org.gnome.MultiWriter.probe">
+    <_description>Check the device</_description>
+    <_message>Authentication is required to probe the device</_message>
+    <icon_name>drive-harddisk-usb</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/gnome-multi-writer-probe</annotate>
+  </action>
+
+</policyconfig>

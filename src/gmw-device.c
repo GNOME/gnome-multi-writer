@@ -361,6 +361,8 @@ gmw_device_set_error (GmwDevice *device, const GError *error)
 	priv->error = g_error_copy (error);
 	g_mutex_unlock (&priv->mutex);
 	gmw_device_set_state (device, GMW_DEVICE_STATE_FAILED);
+	gmw_device_set_complete_read (device, 0.f);
+	gmw_device_set_complete_write (device, 0.f);
 }
 
 /**

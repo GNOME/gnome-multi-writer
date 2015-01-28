@@ -63,6 +63,7 @@ typedef struct {
 	GMutex			 idle_id_mutex;
 	GtkWidget		*switch_verify;
 	GtkWidget		*switch_blank;
+	GtkWidget		*switch_probe;
 } GmwPrivate;
 
 /**
@@ -406,8 +407,12 @@ gmw_refresh_ui (GmwPrivate *priv)
 			w = gtk_progress_bar_new ();
 			gtk_widget_set_valign (w, GTK_ALIGN_CENTER);
 			gtk_grid_attach (GTK_GRID (grid), w, col + 2, row, 1, 1);
-			gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w),
-						       gmw_device_get_complete (device));
+			if (gmw_device_get_complete (device) <= 100.f) {
+				gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (w),
+							       gmw_device_get_complete (device));
+			} else {
+				gtk_progress_bar_pulse (GTK_PROGRESS_BAR (w));
+			}
 		}
 
 		/* add optional status text */
@@ -874,6 +879,35 @@ gmw_refresh_titlebar_idle_cb (gpointer user_data)
 }
 
 /**
+ * gmw_block_device_probe:
+ **/
+static gboolean
+gmw_block_device_probe (const gchar *block_dev, GError **error)
+{
+	gboolean ret;
+	gint exit_status = 0;
+	_cleanup_free_ gchar *standard_output = NULL;
+	const gchar *argv[] = { "/usr/bin/pkexec",
+				"/usr/bin/gnome-multi-writer-probe",
+				block_dev,
+				NULL };
+	const gchar *envp[] = { NULL };
+
+	ret = g_spawn_sync (NULL, (gchar **) argv, (gchar **) envp,
+			    G_SPAWN_STDERR_TO_DEV_NULL,
+			    NULL, NULL,
+			    &standard_output, NULL, &exit_status, error);
+	if (!ret)
+		return FALSE;
+	g_strdelimit (standard_output, "\n", '\0');
+	if (exit_status != 0) {
+		g_set_error_literal (error, 1, 0, standard_output);
+		return FALSE;
+	}
+	return TRUE;
+}
+
+/**
  * gmw_copy_thread_cb:
  **/
 static void
@@ -888,6 +922,17 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 	gmw_device_set_write_alloc (device, 0.75f);
 	if (!g_settings_get_boolean (priv->settings, "enable-verify"))
 		gmw_device_set_write_alloc (device, 1.f);
+
+	/* probe the devices */
+	if (g_settings_get_boolean (priv->settings, "enable-probe")) {
+		const gchar *block_dev;
+		gmw_device_set_state (device, GMW_DEVICE_STATE_VERIFY);
+		block_dev = gmw_device_get_block_path (device);
+		if (!gmw_block_device_probe (block_dev, &error)) {
+			gmw_device_set_error (device, error);
+			goto out;
+		}
+	}
 
 	/* open input stream */
 	image_stream = (GInputStream *) g_file_read (priv->image_file, NULL, &error);
@@ -918,7 +963,8 @@ out:
 	gmw_refresh_in_idle (priv);
 	g_idle_add (gmw_refresh_titlebar_idle_cb, priv);
 	g_timeout_add_seconds (2, gmw_refresh_in_idle_cb, priv);
-	g_input_stream_close (G_INPUT_STREAM (image_stream), NULL, NULL);
+	if (image_stream != NULL)
+		g_input_stream_close (G_INPUT_STREAM (image_stream), NULL, NULL);
 	gmw_copy_done (priv);
 }
 
@@ -1375,6 +1421,9 @@ gmw_settings_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 	if (gtk_widget_get_parent (priv->switch_blank) != NULL)
 		g_object_ref (priv->switch_blank);
 	gtk_widget_unparent (priv->switch_blank);
+	if (gtk_widget_get_parent (priv->switch_probe) != NULL)
+		g_object_ref (priv->switch_probe);
+	gtk_widget_unparent (priv->switch_probe);
 
 	/* show settings */
 	pop = gtk_popover_new (widget);
@@ -1395,6 +1444,12 @@ gmw_settings_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 			 gtk_label_new (_("Wipe")),
 			 0, 1, 1, 1);
 	gtk_grid_attach (GTK_GRID (box), priv->switch_blank, 1, 1, 1, 1);
+	gtk_grid_attach (GTK_GRID (box),
+			 /* TRANSLATORS: a switch label: we check the device
+			  * is actually the size it says it is */
+			 gtk_label_new (_("Probe")),
+			 0, 2, 1, 1);
+	gtk_grid_attach (GTK_GRID (box), priv->switch_probe, 1, 2, 1, 1);
 	gtk_container_add (GTK_CONTAINER (pop), box);
 	gtk_widget_show_all (pop);
 }
@@ -1823,11 +1878,15 @@ main (int argc, char **argv)
 	/* keep these local as they get reparented to the popover */
 	priv->switch_verify = gtk_switch_new ();
 	priv->switch_blank = gtk_switch_new ();
+	priv->switch_probe = gtk_switch_new ();
 	g_settings_bind (priv->settings, "enable-verify",
 			 priv->switch_verify, "active",
 			 G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (priv->settings, "blank-drive",
 			 priv->switch_blank, "active",
+			 G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (priv->settings, "enable-probe",
+			 priv->switch_probe, "active",
 			 G_SETTINGS_BIND_DEFAULT);
 
 	/* wait */
