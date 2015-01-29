@@ -38,8 +38,9 @@
 
 #include "gmw-cleanup.h"
 
-#define ONE_MB			(1024 * 1024)
-#define ONE_BLOCK		(32 * 1024)
+#define ONE_BLOCK		0x8000
+#define ONE_MB			0x100000
+#define ONE_GB			0x40000000
 
 typedef struct {
 	guint8			*data_old;
@@ -356,10 +357,12 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 		return FALSE;
 	}
 	if (dev->disk_size > 0x800000000llu) {
-		g_set_error_literal (error,
-				     GMW_ERROR,
-				     GMW_ERROR_FAILED,
-				     "Disk capacity reported as invalid");
+		g_set_error (error,
+			     GMW_ERROR,
+			     GMW_ERROR_FAILED,
+			     "Disk capacity reported as invalid: %"
+			     G_GUINT64_FORMAT "MB",
+			     dev->disk_size / ONE_MB);
 		return FALSE;
 	}
 	g_debug ("Disk reports to be %luMB in size", dev->disk_size / ONE_MB);
