@@ -1626,6 +1626,12 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 		return FALSE;
 	}
 
+	/* ignore SD cards */
+	if (g_str_has_prefix (block_path, "/dev/mmcblk")) {
+		g_debug ("%s is not a USB device", block_path);
+		return FALSE;
+	}
+
 	/* ignore small or large devices */
 	device_size = udisks_block_get_size (udisks_block) / (1000 * 1000);
 	if (device_size < 1000) {
