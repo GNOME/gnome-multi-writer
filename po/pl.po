@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-25 17:22+0100\n"
-"PO-Revision-Date: 2015-01-25 17:23+0100\n"
+"POT-Creation-Date: 2015-02-01 14:49+0100\n"
+"PO-Revision-Date: 2015-02-01 14:50+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -28,7 +28,7 @@ msgstr ""
 #. set the title
 #: ../data/gmw-main.ui.h:2
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
-#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:849
+#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:855
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
@@ -54,7 +54,7 @@ msgstr "Za_kończ"
 
 #. TRANSLATORS: one-line description for the app
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
-#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1308
+#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1380
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Zapisywanie pliku ISO na wielu urządzeniach USB jednocześnie"
 
@@ -171,11 +171,25 @@ msgstr ""
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:18
+msgid "Inspect the device before writing images"
+msgstr "Badanie urządzenia przed zapisywaniem obrazów"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr ""
+"Badanie urządzenia, aby sprawdzić, czy zgłaszany rozmiar jest jego "
+"prawdziwym rozmiarem."
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:22
 msgid "Show a warning before writing to a drive"
 msgstr "Ostrzeżenie przed zapisaniem na urządzeniu"
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:24
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
@@ -186,6 +200,14 @@ msgstr ""
 #: ../data/org.gnome.MultiWriter.desktop.in.h:4
 msgid "Image;Writer;ISO;USB;"
 msgstr "Obraz;Zapisywanie;ISO;USB;"
+
+#: ../data/org.gnome.MultiWriter.policy.in.h:1
+msgid "Check the device"
+msgstr "Sprawdzanie urządzenia"
+
+#: ../data/org.gnome.MultiWriter.policy.in.h:2
+msgid "Authentication is required to probe the device"
+msgstr "Wymagane jest uwierzytelnienie, aby zbadać urządzenie"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
@@ -219,88 +241,88 @@ msgid "Verifying…"
 msgstr "Sprawdzanie poprawności…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:394
+#: ../src/gmw-device.c:396
 msgid "USB Flash Drive"
 msgstr "Dysk USB"
 
 #. TRANSLATORS: window title renaming labels
-#: ../src/gmw-main.c:315
+#: ../src/gmw-main.c:317
 msgid "New hub label"
 msgstr "Nowa etykieta koncentratora"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: ../src/gmw-main.c:481 ../src/gmw-main.c:1305 ../src/gmw-main.c:1751
+#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1833
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: ../src/gmw-main.c:483
+#: ../src/gmw-main.c:489
 msgid "Image written successfully"
 msgstr "Pomyślnie zapisano obraz"
 
 #. TRANSLATORS: copy aborted
-#: ../src/gmw-main.c:592 ../src/gmw-main.c:632 ../src/gmw-main.c:738
-#: ../src/gmw-main.c:773
+#: ../src/gmw-main.c:598 ../src/gmw-main.c:638 ../src/gmw-main.c:744
+#: ../src/gmw-main.c:779
 msgid "Cancelled"
 msgstr "Anulowano"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: ../src/gmw-main.c:962
+#: ../src/gmw-main.c:1020 ../src/gmw-main.c:1034
 msgid "Failed to open"
 msgstr "Otwarcie się nie powiodło"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: ../src/gmw-main.c:982
+#: ../src/gmw-main.c:1054
 msgid "Choose the file to write"
 msgstr "Wybór pliku do zapisania"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:986
+#: ../src/gmw-main.c:1058
 msgid "Cancel"
 msgstr "Anuluj"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:988
+#: ../src/gmw-main.c:1060
 msgid "Import"
 msgstr "Zaimportuj"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: ../src/gmw-main.c:992
+#: ../src/gmw-main.c:1064
 msgid "ISO files"
 msgstr "Pliki ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: ../src/gmw-main.c:1159 ../src/gmw-main.c:1172
+#: ../src/gmw-main.c:1231 ../src/gmw-main.c:1244
 msgid "Failed to copy"
 msgstr "Skopiowanie się nie powiodło"
 
 #. TRANSLATORS: the inhibit reason
-#: ../src/gmw-main.c:1190
+#: ../src/gmw-main.c:1262
 msgid "Writing ISO to devices"
 msgstr "Zapisywanie pliku ISO na urządzenia"
 
 #. TRANSLATORS: window title for the warning dialog
-#: ../src/gmw-main.c:1243
+#: ../src/gmw-main.c:1315
 msgid "Write to all disks?"
 msgstr "Zapisać na wszystkich dyskach?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: ../src/gmw-main.c:1248
+#: ../src/gmw-main.c:1320
 msgid "All data on the drives will be deleted."
 msgstr "Wszystkie dane na dyskach zostaną usunięte."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: ../src/gmw-main.c:1253
+#: ../src/gmw-main.c:1325
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "Plik ISO jest mniejszy niż pojemność dysku."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: ../src/gmw-main.c:1258
+#: ../src/gmw-main.c:1330
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -309,17 +331,17 @@ msgstr ""
 "specjalistyczne narzędzia nawet po skopiowaniu."
 
 #. TRANSLATORS: button text for the warning dialog
-#: ../src/gmw-main.c:1265
+#: ../src/gmw-main.c:1337
 msgid "I Understand"
 msgstr "Rozumiem"
 
 #. TRANSLATORS: the title of the about window
-#: ../src/gmw-main.c:1303
+#: ../src/gmw-main.c:1375
 msgid "About GNOME MultiWriter"
 msgstr "Informacje o GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
-#: ../src/gmw-main.c:1313
+#: ../src/gmw-main.c:1385
 msgid "translator-credits"
 msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2015\n"
@@ -327,27 +349,33 @@ msgstr ""
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: ../src/gmw-main.c:1363
+#: ../src/gmw-main.c:1438
 msgid "Verify"
 msgstr "Sprawdzanie"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: ../src/gmw-main.c:1369
+#: ../src/gmw-main.c:1444
 msgid "Wipe"
 msgstr "Czyszczenie"
 
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: ../src/gmw-main.c:1450
+msgid "Probe"
+msgstr "Badanie"
+
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1735
+#: ../src/gmw-main.c:1817
 msgid "Allow renaming the labels on hubs"
 msgstr "Pozwala na zmienianie etykiet na koncentratorach"
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1738
+#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:530
 msgid "Show extra debugging information"
 msgstr "Wyświetla dodatkowe informacje debugowania"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: ../src/gmw-main.c:1757
+#: ../src/gmw-main.c:1839
 msgid "Failed to parse command line options"
 msgstr "Przetworzenie opcji wiersza poleceń się nie powiodło"
