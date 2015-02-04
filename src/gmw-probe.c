@@ -192,13 +192,18 @@ gmw_probe_device_data_save (GmwProbeDevice *dev,
 			    GError **error)
 {
 	GmwProbeBlock *item;
+	guint64 chunk_size;
 	guint i;
 
+	/* aim for roughtly the same number of chunks for all device sizes */
+	chunk_size = dev->disk_size / 256;
+	g_debug ("using chunk size of %" G_GUINT64_FORMAT "MB",
+		 chunk_size / ONE_MB);
 	for (i = 1; i < 40; i++) {
 		item = g_new0 (GmwProbeBlock, 1);
 		item->valid = TRUE;
 		item->offset = g_random_int_range (1, 0xff);
-		item->address = (i * ONE_MB * 32);
+		item->address = i * chunk_size;
 		item->data_old = g_new0 (guint8, ONE_BLOCK);
 		if (item->address >= dev->disk_size) {
 			gmw_probe_block_free (item);
