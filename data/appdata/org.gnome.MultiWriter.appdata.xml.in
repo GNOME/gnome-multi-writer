@@ -58,16 +58,12 @@
     </screenshot>
   </screenshots>
   <!--
-   Unstable releases: Untranslated
-   Stable releases:   Translated, but only include user-visible changes.
-                      ASK YOURSELF: Does the end user really need to know this?
-
-   Validate with `appstream-util validate foo.appdata.xml`
+   Validate with `appstream-util validate *.appdata.xml`
    Use `date -d "2010-10-02" "+%s"` to get the timestamp.
   -->
   <releases>
     <release version="3.15.4" timestamp="1390089600">
-     <description>
+      <description>
         <p>This unstable release fixes the following bugs:</p>
         <ul>
           <li>Add quirks for the 36 port MegaHub</li>
@@ -83,7 +79,7 @@
       </description>
     </release>
     <release version="3.15.2" timestamp="1389225600">
-     <description>
+      <description>
         <p>This unstable release fixes the following bugs:</p>
         <ul>
           <li>Queue the device writes according to the connected root hub</li>
@@ -101,7 +97,7 @@
       </description>
     </release>
     <release version="3.15.1" timestamp="1388880000">
-     <description>
+      <description>
         <p>This initial release fixes the following bugs:</p>
         <ul>
           <li>Show the USB connection address in the UI</li>

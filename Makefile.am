@@ -60,7 +60,6 @@ ChangeLog:
 NEWS: data/appdata/org.gnome.MultiWriter.appdata.xml
 	$(AM_V_GEN) \
 	if test -e $(APPSTREAM_UTIL); then \
-		echo $^; \
 		$(APPSTREAM_UTIL) appdata-to-news $^ > $@; \
 	else \
 		touch $@; \
