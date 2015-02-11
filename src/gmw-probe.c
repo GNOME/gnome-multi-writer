@@ -366,8 +366,8 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 			     GMW_ERROR,
 			     GMW_ERROR_FAILED,
 			     "Disk capacity reported as invalid: %"
-			     G_GUINT64_FORMAT "MB",
-			     dev->disk_size / ONE_MB);
+			     G_GUINT64_FORMAT "GB",
+			     dev->disk_size / ONE_GB);
 		return FALSE;
 	}
 	g_debug ("Disk reports to be %luMB in size", dev->disk_size / ONE_MB);
