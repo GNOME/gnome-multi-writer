@@ -361,7 +361,7 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 				     "Disk capacity reported as zero");
 		return FALSE;
 	}
-	if (dev->disk_size > 0x800000000llu) {
+	if (dev->disk_size > 0x4000000000llu) {
 		g_set_error (error,
 			     GMW_ERROR,
 			     GMW_ERROR_FAILED,
