@@ -12,7 +12,6 @@
           <object class="GtkImage" id="image_usb">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="stock">gtk-cancel</property>
             <property name="icon_size">0</property>
           </object>
           <packing>
@@ -116,7 +115,6 @@
             <property name="label">gtk-cancel</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="use_stock">True</property>
             <style>
               <class name="destructive-action"/>
             </style>
