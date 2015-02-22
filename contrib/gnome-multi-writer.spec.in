@@ -19,6 +19,7 @@ BuildRequires: libcanberra-devel >= 0.10
 BuildRequires: libgusb-devel >= 0.2.4
 BuildRequires: libudisks2-devel
 BuildRequires: libgudev1-devel
+BuildRequires: libappstream-glib
 
 Requires:      gnome-icon-theme-extras
 
