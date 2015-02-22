@@ -59,7 +59,7 @@
   </screenshots>
   <!--
    Validate with `appstream-util validate *.appdata.xml`
-   Use `date -d "2010-10-02" "+%s"` to get the timestamp.
+   Use `date -d now +%s` or `date -d 2010-01-32 +%s` to get the timestamp.
   -->
   <releases>
     <release version="3.15.90" timestamp="1285974000">
