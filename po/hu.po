@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-11 13:36+0000\n"
-"PO-Revision-Date: 2015-01-18 19:05+0100\n"
+"POT-Creation-Date: 2015-01-28 21:45+0000\n"
+"PO-Revision-Date: 2015-03-01 17:05+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -28,7 +28,7 @@ msgstr ""
 #. set the title
 #: ../data/gmw-main.ui.h:2
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
-#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:651
+#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:855
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
@@ -54,7 +54,7 @@ msgstr "_Kilépés"
 
 #. TRANSLATORS: one-line description for the app
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
-#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1105
+#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1380
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Egy ISO fájl kiírása egyszerre több USB eszközre"
 
@@ -170,11 +170,25 @@ msgstr ""
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:18
+msgid "Inspect the device before writing images"
+msgstr "Az eszköz vizsgálata a lemezképek kiírása előtt"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr ""
+"Az eszköz vizsgálata annak ellenőrzéséhez, hogy a jelentett eszközméret "
+"megegyezik-e az aktuális adathordozó méretével."
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:22
 msgid "Show a warning before writing to a drive"
 msgstr "Figyelmeztetés megjelenítése a meghajtóra írás előtt"
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:24
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
@@ -186,115 +200,128 @@ msgstr ""
 msgid "Image;Writer;ISO;USB;"
 msgstr "Lemezkép;Író;ISO;USB;"
 
+#: ../data/org.gnome.MultiWriter.policy.in.h:1
+msgid "Check the device"
+msgstr "Az eszköz ellenőrzése"
+
+#: ../data/org.gnome.MultiWriter.policy.in.h:2
+msgid "Authentication is required to probe the device"
+msgstr "Hitelesítés szükséges az eszköz szondázásához"
+
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: ../src/gmw-device.c:286
+#: ../src/gmw-device.c:294
 msgid "Written successfully"
 msgstr "Sikeresen megírva"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: ../src/gmw-device.c:294
+#: ../src/gmw-device.c:302
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Írás: %.1f MB/s…"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: ../src/gmw-device.c:298
+#: ../src/gmw-device.c:306
 msgid "Writing…"
 msgstr "Írás…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: ../src/gmw-device.c:307
+#: ../src/gmw-device.c:315
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Ellenőrzés: %.1f MB/s…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: ../src/gmw-device.c:312
+#: ../src/gmw-device.c:320
 msgid "Verifying…"
 msgstr "Ellenőrzés…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:386
+#: ../src/gmw-device.c:396
 msgid "USB Flash Drive"
 msgstr "USB Flash meghajtó"
+
+#. TRANSLATORS: window title renaming labels
+#: ../src/gmw-main.c:317
+msgid "New hub label"
+msgstr "Új központcímke"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: ../src/gmw-main.c:283 ../src/gmw-main.c:1102 ../src/gmw-main.c:1559
+#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1827
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: ../src/gmw-main.c:285
+#: ../src/gmw-main.c:489
 msgid "Image written successfully"
 msgstr "Lemezkép sikeresen kiírva"
 
 #. TRANSLATORS: copy aborted
-#: ../src/gmw-main.c:394 ../src/gmw-main.c:434 ../src/gmw-main.c:540
-#: ../src/gmw-main.c:575
+#: ../src/gmw-main.c:598 ../src/gmw-main.c:638 ../src/gmw-main.c:744
+#: ../src/gmw-main.c:779
 msgid "Cancelled"
 msgstr "Megszakítva"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: ../src/gmw-main.c:764
+#: ../src/gmw-main.c:1020 ../src/gmw-main.c:1034
 msgid "Failed to open"
 msgstr "Nem sikerült megnyitni"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: ../src/gmw-main.c:784
+#: ../src/gmw-main.c:1054
 msgid "Choose the file to write"
 msgstr "Válassza ki az írandó fájlt"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:788
+#: ../src/gmw-main.c:1058
 msgid "Cancel"
 msgstr "Mégse"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:790
+#: ../src/gmw-main.c:1060
 msgid "Import"
 msgstr "Importálás"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: ../src/gmw-main.c:794
+#: ../src/gmw-main.c:1064
 msgid "ISO files"
 msgstr "ISO fájlok"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: ../src/gmw-main.c:952 ../src/gmw-main.c:965
+#: ../src/gmw-main.c:1231 ../src/gmw-main.c:1244
 msgid "Failed to copy"
 msgstr "Nem sikerült átmásolni"
 
 #. TRANSLATORS: the inhibit reason
-#: ../src/gmw-main.c:983
+#: ../src/gmw-main.c:1262
 msgid "Writing ISO to devices"
 msgstr "ISO kiírása az eszközökre"
 
 #. TRANSLATORS: window title for the warning dialog
-#: ../src/gmw-main.c:1036
+#: ../src/gmw-main.c:1315
 msgid "Write to all disks?"
 msgstr "Írás az összes lemezre?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: ../src/gmw-main.c:1041
+#: ../src/gmw-main.c:1320
 msgid "All data on the drives will be deleted."
 msgstr "A meghajtókon lévő minden adat törölve lesz."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: ../src/gmw-main.c:1046
+#: ../src/gmw-main.c:1325
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "Az ISO fájl kisebb mint a lemez kapacitása."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: ../src/gmw-main.c:1051
+#: ../src/gmw-main.c:1330
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -303,39 +330,50 @@ msgstr ""
 "megtalálható maradhat törvényszéki eszközök használatával."
 
 #. TRANSLATORS: button text for the warning dialog
-#: ../src/gmw-main.c:1058
+#: ../src/gmw-main.c:1337
 msgid "I Understand"
 msgstr "Megértettem"
 
 #. TRANSLATORS: the title of the about window
-#: ../src/gmw-main.c:1100
+#: ../src/gmw-main.c:1375
 msgid "About GNOME MultiWriter"
 msgstr "A GNOME MultiWriter névjegye"
 
 #. TRANSLATORS: you can put your name here :)
-#: ../src/gmw-main.c:1110
+#: ../src/gmw-main.c:1385
 msgid "translator-credits"
 msgstr "Úr Balázs <urbalazs@gmail.com>, 2015."
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: ../src/gmw-main.c:1160
+#: ../src/gmw-main.c:1438
 msgid "Verify"
 msgstr "Ellenőrzés"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: ../src/gmw-main.c:1166
+#: ../src/gmw-main.c:1444
 msgid "Wipe"
 msgstr "Törlés"
 
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: ../src/gmw-main.c:1450
+msgid "Probe"
+msgstr "Szondázás"
+
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1546
+#: ../src/gmw-main.c:1811
+msgid "Allow renaming the labels on hubs"
+msgstr "A címkék átnevezésének engedélyezése a központokon"
+
+#. TRANSLATORS: command line option
+#: ../src/gmw-main.c:1814 ../src/gmw-probe.c:527
 msgid "Show extra debugging information"
 msgstr "További hibakeresési információk megjelenítése"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: ../src/gmw-main.c:1565
+#: ../src/gmw-main.c:1833
 msgid "Failed to parse command line options"
 msgstr "Nem sikerült értelmezni a parancssori opciókat"
 
