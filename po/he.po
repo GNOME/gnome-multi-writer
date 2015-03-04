@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-05 00:01+0200\n"
-"PO-Revision-Date: 2015-03-05 00:19+0200\n"
-"Last-Translator: Yosef Or Boczko <yoseforb@gnome.org>\n"
+"PO-Revision-Date: 2015-03-05 00:21+0200\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
 #: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:855
 msgid "MultiWriter"
-msgstr "רב־כותב"
+msgstr "רב כותב"
 
 #. TRANSLATORS: button to start the copy
 #: ../data/gmw-main.ui.h:4
@@ -240,7 +240,7 @@ msgstr "תווית רכזת חדשה"
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
 #: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1833
 msgid "GNOME MultiWriter"
-msgstr "‏GNOME רב־כותב"
+msgstr "‏GNOME רב כותב"
 
 #. TRANSLATORS: the success sound description
 #: ../src/gmw-main.c:489
@@ -323,7 +323,7 @@ msgstr "הבנתי"
 #. TRANSLATORS: the title of the about window
 #: ../src/gmw-main.c:1375
 msgid "About GNOME MultiWriter"
-msgstr "על אודות GNOME רב־כותב"
+msgstr "על אודות GNOME רב כותב"
 
 #. TRANSLATORS: you can put your name here :)
 #: ../src/gmw-main.c:1385
