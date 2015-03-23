@@ -62,6 +62,11 @@
    Use `date -d now +%s` or `date -d 2010-01-32 +%s` to get the timestamp.
   -->
   <releases>
+    <release version="3.16.0" timestamp="1427103917">
+      <description>
+        <p>This stable release marks the release of GNOME 3.16!</p>
+      </description>
+    </release>
     <release version="3.15.92" timestamp="1426498834">
       <description>
         <p>This release only updates translations.</p>
