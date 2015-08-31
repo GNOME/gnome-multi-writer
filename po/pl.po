@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-01 14:49+0100\n"
-"PO-Revision-Date: 2015-02-01 14:50+0100\n"
+"POT-Creation-Date: 2015-08-31 02:24+0200\n"
+"PO-Revision-Date: 2015-08-31 02:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -166,8 +166,8 @@ msgstr "Sprawdzanie poprawności zapisu obrazu ISO"
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
 msgstr ""
-"Odczytywanie i sprawdzanie obrazu ISO z każdego urządznia po ukończeniu "
-"zapisywania."
+"Odczytywanie i sprawdzanie poprawności obrazu ISO z każdego urządzenia po "
+"ukończeniu zapisywania."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:18
@@ -338,7 +338,7 @@ msgstr "Rozumiem"
 #. TRANSLATORS: the title of the about window
 #: ../src/gmw-main.c:1375
 msgid "About GNOME MultiWriter"
-msgstr "Informacje o GNOME MultiWriter"
+msgstr "O programie GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
 #: ../src/gmw-main.c:1385
@@ -351,7 +351,7 @@ msgstr ""
 #. * reading back the original image from the device
 #: ../src/gmw-main.c:1438
 msgid "Verify"
-msgstr "Sprawdzanie"
+msgstr "Sprawdzanie poprawności"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
@@ -371,7 +371,7 @@ msgid "Allow renaming the labels on hubs"
 msgstr "Pozwala na zmienianie etykiet na koncentratorach"
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:530
+#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:535
 msgid "Show extra debugging information"
 msgstr "Wyświetla dodatkowe informacje debugowania"
 
