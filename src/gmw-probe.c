@@ -263,7 +263,7 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 	GmwProbeBlock *item;
 	guint i;
 	guint32 offset;
-	_cleanup_free_ guint8 *wbuf2 = NULL;
+	g_autofree guint8 *wbuf2 = NULL;
 
 	wbuf2 = g_new (guint8, ONE_BLOCK + 0xff);
 	for (i = 0; i < dev->data_save->len; i++) {
@@ -509,7 +509,7 @@ gmw_probe_is_block_device_valid (const gchar *block_device)
 static gboolean
 gmw_probe_is_block_device_mounted (const gchar *block_device)
 {
-	_cleanup_free_ gchar *data = NULL;
+	g_autofree gchar *data = NULL;
 	if (!g_file_get_contents ("/etc/mtab", &data, NULL, NULL))
 		return FALSE;
 	return g_strrstr (data, block_device) != NULL;
@@ -526,8 +526,8 @@ main (int argc, char **argv)
 	gboolean verbose = FALSE;
 	int status = EXIT_SUCCESS;
 	_cleanup_object_unref_ GUdevClient *udev_client = NULL;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GCancellable *cancellable = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GCancellable) cancellable = NULL;
 
 	const GOptionEntry options[] = {
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,

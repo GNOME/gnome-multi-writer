@@ -202,7 +202,7 @@ gmw_device_list_sort (GmwPrivate *priv)
 	guint j;
 	guint i;
 	guint idx = 0;
-	_cleanup_ptrarray_unref_ GPtrArray *root_hubs = NULL;
+	g_autoptr(GPtrArray) root_hubs = NULL;
 
 	/* first, sort the list for display */
 	g_ptr_array_sort (priv->devices, gmw_devices_sort_cb);
@@ -212,7 +212,7 @@ gmw_device_list_sort (GmwPrivate *priv)
 	root_hubs = gmw_root_hub_enumerate (priv->devices);
 	for (i = 0; i < priv->devices->len; i++) {
 		for (j = 0; j < root_hubs->len; j++) {
-			_cleanup_free_ gchar *key = NULL;
+			g_autofree gchar *key = NULL;
 			rh = g_ptr_array_index (root_hubs, j);
 			if (rh->devices->len <= i)
 				continue;
@@ -246,7 +246,7 @@ gmw_main_show_quirks (GmwPrivate *priv)
 	g_print ("\t/*     hub      hub-port  parent-hub     child-device"
 		 "   chps  dprt  chn  labl */\n");
 	for (i = 0; i < priv->devices->len; i++) {
-		_cleanup_free_ gchar *tmp = NULL;
+		g_autofree gchar *tmp = NULL;
 		device = g_ptr_array_index (priv->devices, i);
 		tmp = gmw_device_get_quirk_string (device);
 		g_print ("\t%s\n", tmp);
@@ -358,9 +358,9 @@ gmw_refresh_ui (GmwPrivate *priv)
 
 	/* add new children */
 	for (i = 0; i < priv->devices->len; i++) {
-		_cleanup_free_ gchar *label_markup = NULL;
-		_cleanup_free_ gchar *label = NULL;
-		_cleanup_free_ gchar *title = NULL;
+		g_autofree gchar *label_markup = NULL;
+		g_autofree gchar *label = NULL;
+		g_autofree gchar *title = NULL;
 		guint row = i % max_devices_per_column;
 		guint col = (i / max_devices_per_column) * 4;
 
@@ -536,12 +536,12 @@ gmw_device_write (GmwPrivate *priv,
 	guint64 bytes_completed = 0;
 	guint64 bytes_throughput = 0;
 	guint64 bytes_total;
-	_cleanup_error_free_ GError *error_local = NULL;
-	_cleanup_free_ guchar *buffer_unaligned = NULL;
-	_cleanup_object_unref_ GOutputStream *device_stream = NULL;
-	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
-	_cleanup_timer_destroy_ GTimer *timer = NULL;
-	_cleanup_variant_unref_ GVariant *fd_index = NULL;
+	g_autoptr(GError) error_local = NULL;
+	g_autofree guchar *buffer_unaligned = NULL;
+	g_autoptr(GOutputStream) device_stream = NULL;
+	g_autoptr(GUnixFDList) fd_list = NULL;
+	g_autoptr(GTimer) timer = NULL;
+	g_autoptr(GVariant) fd_index = NULL;
 
 	/* get fd from udisks */
 	if (!udisks_block_call_open_for_restore_sync (gmw_device_get_udisks_block (device),
@@ -682,13 +682,13 @@ gmw_device_verify (GmwPrivate *priv,
 	guchar *buffer_src = NULL;
 	guint64 bytes_completed = 0;
 	guint64 bytes_throughput = 0;
-	_cleanup_error_free_ GError *error_local = NULL;
-	_cleanup_free_ guchar *buffer_unaligned_src = NULL;
-	_cleanup_free_ guchar *buffer_unaligned_dest = NULL;
-	_cleanup_object_unref_ GInputStream *device_stream = NULL;
-	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
-	_cleanup_timer_destroy_ GTimer *timer = NULL;
-	_cleanup_variant_unref_ GVariant *fd_index = NULL;
+	g_autoptr(GError) error_local = NULL;
+	g_autofree guchar *buffer_unaligned_src = NULL;
+	g_autofree guchar *buffer_unaligned_dest = NULL;
+	g_autoptr(GInputStream) device_stream = NULL;
+	g_autoptr(GUnixFDList) fd_list = NULL;
+	g_autoptr(GTimer) timer = NULL;
+	g_autoptr(GVariant) fd_index = NULL;
 
 	/* rewind */
 	if (!g_seekable_seek (G_SEEKABLE (image_stream), 0,
@@ -842,7 +842,7 @@ gmw_refresh_titlebar (GmwPrivate *priv)
 	gdouble speed_read = 0.f;
 	gdouble speed_write = 0.f;
 	guint i;
-	_cleanup_string_free_ GString *title = NULL;
+	g_autoptr(GString) title = NULL;
 
 	/* find the throughput totals */
 	for (i = 0; i < priv->devices->len; i++) {
@@ -858,7 +858,7 @@ gmw_refresh_titlebar (GmwPrivate *priv)
 					speed_write / (1000 * 1000));
 	}
 	if (speed_read > 0.f) {
-		_cleanup_free_ gchar *tmp = NULL;
+		g_autofree gchar *tmp = NULL;
 		tmp = g_strdup_printf ("%.0f MB/s → ",
 				       speed_read / (1000 * 1000));
 		g_string_prepend (title, tmp);
@@ -886,7 +886,7 @@ gmw_block_device_probe (const gchar *block_dev, GError **error)
 {
 	gboolean ret;
 	gint exit_status = 0;
-	_cleanup_free_ gchar *standard_output = NULL;
+	g_autofree gchar *standard_output = NULL;
 	const gchar *argv[] = { "/usr/bin/pkexec",
 				"/usr/bin/gnome-multi-writer-probe",
 				block_dev,
@@ -915,8 +915,8 @@ gmw_copy_thread_cb (gpointer data, gpointer user_data)
 {
 	GmwDevice *device = (GmwDevice *) data;
 	GmwPrivate *priv = (GmwPrivate *) user_data;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GInputStream *image_stream = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GInputStream) image_stream = NULL;
 
 	/* set the factor for the write process */
 	gmw_device_set_write_alloc (device, 0.75f);
@@ -979,7 +979,7 @@ gmw_update_title (GmwPrivate *priv)
 	if (priv->image_file == NULL) {
 		gtk_header_bar_set_subtitle (GTK_HEADER_BAR (w), NULL);
 	} else {
-		_cleanup_free_ gchar *basename = NULL;
+		g_autofree gchar *basename = NULL;
 		basename = g_file_get_basename (priv->image_file);
 		gtk_header_bar_set_subtitle (GTK_HEADER_BAR (w), basename);
 	}
@@ -1004,8 +1004,8 @@ gmw_set_image_file_changed_cb (GFileMonitor *monitor,
 static void
 gmw_set_image_filename (GmwPrivate *priv, const gchar *filename)
 {
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GFileInfo *info = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GFileInfo) info = NULL;
 
 	if (priv->image_file != NULL)
 		g_object_unref (priv->image_file);
@@ -1046,8 +1046,8 @@ gmw_import_filename (GmwPrivate *priv)
 	GtkFileFilter *filter = NULL;
 	GtkWidget *d;
 	GtkWidget *w;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GFile *file = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GFile) file = NULL;
 
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_main"));
 	/* TRANSLATORS: window title for the file-chooser, file is an ISO */
@@ -1066,7 +1066,7 @@ gmw_import_filename (GmwPrivate *priv)
 	gtk_file_filter_add_pattern (filter, "*.img");
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (d), filter);
 	if (gtk_dialog_run (GTK_DIALOG (d)) == GTK_RESPONSE_ACCEPT) {
-		_cleanup_free_ gchar *filename = NULL;
+		g_autofree gchar *filename = NULL;
 		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (d));
 		gmw_set_image_filename (priv, filename);
 		gmw_update_title (priv);
@@ -1083,8 +1083,8 @@ gmw_auth_dummy_restore (GmwPrivate *priv, GmwDevice *device, GError **error)
 {
 	gboolean ret = FALSE;
 	gint fd = -1;
-	_cleanup_object_unref_ GUnixFDList *fd_list = NULL;
-	_cleanup_variant_unref_ GVariant *fd_index = NULL;
+	g_autoptr(GUnixFDList) fd_list = NULL;
+	g_autoptr(GVariant) fd_index = NULL;
 
 	if (!udisks_block_call_open_for_restore_sync (gmw_device_get_udisks_block (device),
 						      g_variant_new ("a{sv}", NULL), /* options */
@@ -1127,7 +1127,7 @@ gmw_udisks_unmount_cb (GObject *source_object,
 		       gpointer user_data)
 {
 	UDisksFilesystem *udisks_fs = UDISKS_FILESYSTEM (source_object);
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	if (!udisks_filesystem_call_unmount_finish (udisks_fs, res, &error))
 		g_warning ("Failed to unmount filesystem: %s", error->message);
@@ -1145,11 +1145,11 @@ gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 	 * one partition, but very occasionaly two or more */
 	for (i = 1; i <= 4; i++) {
 		UDisksFilesystem *udisks_fs = NULL;
-		_cleanup_error_free_ GError *error = NULL;
-		_cleanup_free_ gchar *object_path = NULL;
+		g_autoptr(GError) error = NULL;
+		g_autofree gchar *object_path = NULL;
 		_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
 		_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
-		_cleanup_strv_free_ gchar **mtab = NULL;
+		g_auto(GStrv) mtab = NULL;
 
 		object_path = g_strdup_printf ("%s%i",
 					       gmw_device_get_object_path (device),
@@ -1214,7 +1214,7 @@ gmw_start_copy (GmwPrivate *priv)
 	GmwDevice *device;
 	GtkWindow *window;
 	guint i;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	/* if nothing already set, request this now */
 	if (priv->image_file == NULL)
@@ -1263,7 +1263,7 @@ gmw_start_copy (GmwPrivate *priv)
 
 	/* start a thread for each copy operation */
 	for (i = 0; i < priv->devices->len; i++) {
-		_cleanup_free_ gchar *title = NULL;
+		g_autofree gchar *title = NULL;
 		device = g_ptr_array_index (priv->devices, i);
 		gmw_device_set_state (device, GMW_DEVICE_STATE_WAITING);
 		g_thread_pool_push (priv->thread_pool, device, &error);
@@ -1295,7 +1295,7 @@ gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 	GtkWidget *w;
 	GtkWidget *b;
 	GtkStyleContext *context;
-	_cleanup_string_free_ GString *str = g_string_new ("");
+	g_autoptr(GString) str = g_string_new ("");
 
 	/* no confirmation required */
 	if (!g_settings_get_boolean (priv->settings, "show-warning")) {
@@ -1463,9 +1463,9 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	GtkWidget *main_window;
 	GtkWidget *w;
 	gint retval;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_free_ gchar *filename = NULL;
-	_cleanup_object_unref_ GdkPixbuf *pixbuf = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autofree gchar *filename = NULL;
+	g_autoptr(GdkPixbuf) pixbuf = NULL;
 
 	/* add application menu items */
 	g_action_map_add_action_entries (G_ACTION_MAP (application),
@@ -1523,8 +1523,8 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 static guint8
 gmw_sysfs_get_busnum (const gchar *filename)
 {
-	_cleanup_free_ gchar *data = NULL;
-	_cleanup_free_ gchar *path = NULL;
+	g_autofree gchar *data = NULL;
+	g_autofree gchar *path = NULL;
 	path = g_build_filename (filename, "busnum", NULL);
 	if (!g_file_get_contents (path, &data, NULL, NULL))
 		return 0;
@@ -1537,8 +1537,8 @@ gmw_sysfs_get_busnum (const gchar *filename)
 static guint8
 gmw_sysfs_get_devnum (const gchar *filename)
 {
-	_cleanup_free_ gchar *data = NULL;
-	_cleanup_free_ gchar *path = NULL;
+	g_autofree gchar *data = NULL;
+	g_autofree gchar *path = NULL;
 	path = g_build_filename (filename, "devnum", NULL);
 	if (!g_file_get_contents (path, &data, NULL, NULL))
 		return 0;
@@ -1553,8 +1553,8 @@ gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 {
 	guint8 busnum;
 	guint8 devnum;
-	_cleanup_error_free_ GError *error = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_device = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GUsbDevice) usb_device = NULL;
 
 	/* failed to load GUsb */
 	if (priv->usb_ctx == NULL)
@@ -1590,9 +1590,9 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	const gchar *block_path;
 	const gchar *object_path;
 	guint64 device_size;
-	_cleanup_object_unref_ GDBusInterface *iface_block = NULL;
-	_cleanup_object_unref_ GDBusInterface *iface_fs = NULL;
-	_cleanup_object_unref_ GDBusInterface *iface_part = NULL;
+	g_autoptr(GDBusInterface) iface_block = NULL;
+	g_autoptr(GDBusInterface) iface_fs = NULL;
+	g_autoptr(GDBusInterface) iface_part = NULL;
 	_cleanup_object_unref_ UDisksBlock *udisks_block = NULL;
 	_cleanup_object_unref_ UDisksDrive *udisks_drive = NULL;
 	_cleanup_object_unref_ UDisksObjectInfo *object_info = NULL;
@@ -1682,7 +1682,7 @@ gmw_update_max_threads (GmwPrivate *priv)
 {
 	guint nr_root = 1; /* assume there is at least one root hub */
 	guint threads_per_root;
-	_cleanup_ptrarray_unref_ GPtrArray *root_hubs = NULL;
+	g_autoptr(GPtrArray) root_hubs = NULL;
 
 	/* get setting */
 	threads_per_root = g_settings_get_uint (priv->settings, "max-threads");
@@ -1750,7 +1750,7 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 	GDBusObjectManager *object_manager;
 	GList *l;
 	GList *objects;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	priv->udisks_client = udisks_client_new_finish (res, &error);
 	if (priv->udisks_client == NULL) {
@@ -1810,7 +1810,7 @@ main (int argc, char **argv)
 	gboolean verbose = FALSE;
 	gboolean rename_labels = FALSE;
 	int status = EXIT_SUCCESS;
-	_cleanup_error_free_ GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	const GOptionEntry options[] = {
 		{ "rename-labels", '\0', 0, G_OPTION_ARG_NONE, &rename_labels,
 			/* TRANSLATORS: command line option */

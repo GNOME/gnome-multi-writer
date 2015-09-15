@@ -148,7 +148,7 @@ gmw_device_get_order_display (GmwDevice *device)
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
 	if (priv->order_display == NULL) {
-		_cleanup_free_ gchar *key = NULL;
+		g_autofree gchar *key = NULL;
 		key = g_strdup_printf ("%s-%s", priv->hub_id, priv->hub_label);
 		gmw_device_set_order_display (device, key);
 	}
@@ -563,8 +563,8 @@ gmw_device_set_udisks_drive (GmwDevice *device, UDisksDrive *udisks_drive)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	const gchar *tmp;
-	_cleanup_free_ gchar *sysfs_path = NULL;
-	_cleanup_free_ gchar *hub_id = NULL;
+	g_autofree gchar *sysfs_path = NULL;
+	g_autofree gchar *hub_id = NULL;
 
 	g_return_if_fail (GMW_IS_DEVICE (device));
 
@@ -614,8 +614,8 @@ static GUsbDevice *
 gmw_device_get_toplevel_hub (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	_cleanup_object_unref_ GUsbDevice *usb_hub = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_parent = NULL;
+	g_autoptr(GUsbDevice) usb_hub = NULL;
+	g_autoptr(GUsbDevice) usb_hub_parent = NULL;
 
 	/* is this a USB hub already */
 	if (g_usb_device_get_device_class (priv->usb_device) == 0x09) {
@@ -647,13 +647,13 @@ gmw_device_get_quirk_string (GmwDevice *device)
 	GUsbDevice *child_tmp;
 	guint i;
 	guint number_ics = 0;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_child = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_parent = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_top = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *children = NULL;
-	_cleanup_ptrarray_unref_ GPtrArray *children_top = NULL;
-	_cleanup_string_free_ GString *str = NULL;
+	g_autoptr(GUsbDevice) usb_hub_child = NULL;
+	g_autoptr(GUsbDevice) usb_hub = NULL;
+	g_autoptr(GUsbDevice) usb_hub_parent = NULL;
+	g_autoptr(GUsbDevice) usb_hub_top = NULL;
+	g_autoptr(GPtrArray) children = NULL;
+	g_autoptr(GPtrArray) children_top = NULL;
+	g_autoptr(GString) str = NULL;
 
 	/* no tree to walk */
 	if (priv->usb_device == NULL)
@@ -742,10 +742,10 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	guint i;
 	guint j;
-	_cleanup_free_ gchar *hub_id = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_parent = NULL;
-	_cleanup_object_unref_ GUsbDevice *usb_hub_toplevel = NULL;
+	g_autofree gchar *hub_id = NULL;
+	g_autoptr(GUsbDevice) usb_hub = NULL;
+	g_autoptr(GUsbDevice) usb_hub_parent = NULL;
+	g_autoptr(GUsbDevice) usb_hub_toplevel = NULL;
 	const GmwDeviceQuirk quirks[] = {
 	/*
 	 * Orico PIO Series Hub
@@ -961,7 +961,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 		if (usb_hub != NULL && quirks[i].child_vid != 0x0000) {
 			GUsbDevice *tmp;
 			gboolean child_exists = FALSE;
-			_cleanup_ptrarray_unref_ GPtrArray *children = NULL;
+			g_autoptr(GPtrArray) children = NULL;
 
 			/* the specified child just has to exist once */
 			children = g_usb_device_get_children (usb_hub);
@@ -981,7 +981,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 		if (usb_hub_toplevel != NULL && quirks[i].number_ics != 0x00) {
 			GUsbDevice *tmp;
 			guint child_cnt = 1;
-			_cleanup_ptrarray_unref_ GPtrArray *children = NULL;
+			g_autoptr(GPtrArray) children = NULL;
 
 			children = g_usb_device_get_children (usb_hub_toplevel);
 			for (j = 0; j < children->len; j++) {
