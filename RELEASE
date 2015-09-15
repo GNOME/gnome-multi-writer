@@ -2,13 +2,13 @@ GNOME MultiWriter Release Notes
 
 1. Write NEWS entries in the same format as usual.
 
-git log --format="%s" GNOME_MULTI_WRITER_3_17_90.. | grep -i -v trivial | grep -v Merge | uniq
+git log --format="%s" GNOME_MULTI_WRITER_3_17_92.. | grep -i -v trivial | grep -v Merge | uniq
 Add any user visible changes into data/appdata/org.gnome.MultiWriter.appdata.xml.in
 
 2. Commit changes in git:
 
-git commit -a -m "Release version 3.17.92"
-git tag -s GNOME_MULTI_WRITER_3_17_92 -m "==== Version 3.17.92 ===="
+git commit -a -m "Release version 3.18.0"
+git tag -s GNOME_MULTI_WRITER_3_18_0 -m "==== Version 3.18.0 ===="
 <wait>
 git push --tags
 git push
