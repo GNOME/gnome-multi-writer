@@ -1,7 +1,7 @@
 # Copyright (C) 2011-2015 Richard Hughes <richard@hughsie.com>
 AC_PREREQ(2.63)
 
-AC_INIT([gnome-multi-writer],[3.18.0],[http://www.gnome.com])
+AC_INIT([gnome-multi-writer],[3.19.1],[http://www.gnome.com])
 AC_CONFIG_SRCDIR(src)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-xz tar-ustar foreign])
 AC_CONFIG_HEADERS([config.h])
