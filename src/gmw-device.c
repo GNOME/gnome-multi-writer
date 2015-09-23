@@ -374,9 +374,7 @@ gmw_device_set_udisks_block (GmwDevice *device, UDisksBlock *udisks_block)
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
 	g_return_if_fail (GMW_IS_DEVICE (device));
 	g_mutex_lock (&priv->mutex);
-	if (priv->udisks_block != NULL)
-		g_object_unref (priv->udisks_block);
-	priv->udisks_block = g_object_ref (udisks_block);
+	g_set_object (&priv->udisks_block, udisks_block);
 	g_mutex_unlock (&priv->mutex);
 }
 
