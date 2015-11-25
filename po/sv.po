@@ -1,6 +1,6 @@
 # Swedish translation for gnome multi writer.
-# Copyright  © YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright © 2015 gnome-multi-writer's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-multi-writer package.
 #
 # Translators:
 # Andreas Henriksson <andreas+github@fatal.se>, 2015
@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-07-21 07:20+0000\n"
+"POT-Creation-Date: 2015-11-25 21:22+0000\n"
 "PO-Revision-Date: 2015-07-04 22:49-0000\n"
 "Last-Translator: Josef Andersson <josef.andersson@fripost.org>\n"
-"Language-Team: Swedish <tp-sv@lists.tp-sv.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,6 +35,12 @@ msgstr "MultiWriter"
 #: ../data/gmw-main.ui.h:4
 msgid "Start Copying"
 msgstr "Starta kopiering"
+
+#. TRANSLATORS: button to cancel a copy process
+#. TRANSLATORS: button title
+#: ../data/gmw-main.ui.h:6 ../src/gmw-main.c:1058
+msgid "Cancel"
+msgstr "Avbryt"
 
 #. TRANSLATORS: app menu item for the file chooser
 #: ../data/gmw-menus.ui.h:2
@@ -236,7 +242,7 @@ msgid "Verifying…"
 msgstr "Verifierar…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:396
+#: ../src/gmw-device.c:394
 msgid "USB Flash Drive"
 msgstr "USB-flashminne"
 
@@ -272,11 +278,6 @@ msgstr "Misslyckade att öppna"
 #: ../src/gmw-main.c:1054
 msgid "Choose the file to write"
 msgstr "Välj fil att skriva"
-
-#. TRANSLATORS: button title
-#: ../src/gmw-main.c:1058
-msgid "Cancel"
-msgstr "Avbryt"
 
 #. TRANSLATORS: button title
 #: ../src/gmw-main.c:1060
