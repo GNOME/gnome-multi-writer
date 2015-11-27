@@ -152,6 +152,11 @@
       </description>
     </release>
   </releases>
+  <kudos>
+    <kudo>AppMenu</kudo>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
   <url type="homepage">https://wiki.gnome.org/Apps/MultiWriter</url>
   <url type="bugtracker">https://bugzilla.gnome.org/browse.cgi?product=gnome-multi-writer</url>
   <update_contact>richard_at_hughsie.com</update_contact>
