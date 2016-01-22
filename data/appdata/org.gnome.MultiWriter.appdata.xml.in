@@ -157,6 +157,7 @@
     <kudo>HiDpiIcon</kudo>
     <kudo>ModernToolkit</kudo>
   </kudos>
+  <project_group>GNOME</project_group>
   <url type="homepage">https://wiki.gnome.org/Apps/MultiWriter</url>
   <url type="bugtracker">https://bugzilla.gnome.org/browse.cgi?product=gnome-multi-writer</url>
   <update_contact>richard_at_hughsie.com</update_contact>
