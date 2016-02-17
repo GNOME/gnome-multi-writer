@@ -62,7 +62,7 @@
    Use `date -d now +%s` or `date -d 2010-01-32 +%s` to get the timestamp.
   -->
   <releases>
-    <release version="3.19.90" timestamp="2016-02-15">
+    <release version="3.19.90" date="2016-02-15">
       <description>
         <p>This unstable release fixes the following bug:</p>
         <ul>
