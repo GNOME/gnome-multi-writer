@@ -1,15 +1,15 @@
 # Finnish translation for gnome-multi-writer.
 # Copyright (C) 2015 gnome-multi-writer's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-multi-writer package.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2015.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-06 07:54+0000\n"
-"PO-Revision-Date: 2015-10-06 21:12+0300\n"
+"POT-Creation-Date: 2016-03-13 09:28+0000\n"
+"PO-Revision-Date: 2016-03-13 19:18+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
@@ -32,6 +32,12 @@ msgstr "MultiWriter"
 #: ../data/gmw-main.ui.h:4
 msgid "Start Copying"
 msgstr "Aloita kopiointi"
+
+#. TRANSLATORS: button to cancel a copy process
+#. TRANSLATORS: button title
+#: ../data/gmw-main.ui.h:6 ../src/gmw-main.c:1058
+msgid "Cancel"
+msgstr "Peru"
 
 #. TRANSLATORS: app menu item for the file chooser
 #: ../data/gmw-menus.ui.h:2
@@ -81,11 +87,13 @@ msgstr ""
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:13
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
 msgstr ""
+"Käytä USB 3.0 -keskittimiä, vaikka tiedontallennusvälineet ovat mallia USB "
+"2.0"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:15
 msgid "Install another USB 2.0 PCIe root hub"
-msgstr ""
+msgstr "Asenna toinen USB 2.0 PCIe -juurikeskitin"
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:17
@@ -112,7 +120,7 @@ msgstr "Kaikki laitteet on kirjoitettu"
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:2
 msgid "The filename to write to the USB disks"
-msgstr ""
+msgstr "USB-levyille kirjoitettavan tiedoston nimi"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:4
@@ -122,7 +130,7 @@ msgstr ""
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:6
 msgid "The maximum number of threads to use"
-msgstr ""
+msgstr "Käytettävien säikeiden enimmäismäärä"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:8
@@ -172,11 +180,12 @@ msgstr "Näytä varoitus ennen asemalle kirjoittamista"
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
+"Näytä varoitusikkuna ja kysy vahvistusta laitteen tietojen poistamiselle."
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 #: ../data/org.gnome.MultiWriter.desktop.in.h:4
 msgid "Image;Writer;ISO;USB;"
-msgstr ""
+msgstr "Image;Writer;ISO;USB;levykuva;kirjoitin;"
 
 #: ../data/org.gnome.MultiWriter.policy.in.h:1
 msgid "Check the device"
@@ -225,7 +234,7 @@ msgstr ""
 #. TRANSLATORS: window title renaming labels
 #: ../src/gmw-main.c:317
 msgid "New hub label"
-msgstr ""
+msgstr "Uusi keskittimen nimike"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
@@ -254,11 +263,6 @@ msgstr "Avaus epäonnistui"
 #: ../src/gmw-main.c:1054
 msgid "Choose the file to write"
 msgstr "Valitse kirjoitettava tiedosto"
-
-#. TRANSLATORS: button title
-#: ../src/gmw-main.c:1058
-msgid "Cancel"
-msgstr "Peru"
 
 #. TRANSLATORS: button title
 #: ../src/gmw-main.c:1060
@@ -353,4 +357,4 @@ msgstr ""
 #. TRANSLATORS: the user has sausages for fingers
 #: ../src/gmw-main.c:1839
 msgid "Failed to parse command line options"
-msgstr ""
+msgstr "Komentorivivalitsimien jäsentäminen epäonnistui"
