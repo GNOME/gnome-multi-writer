@@ -2,13 +2,13 @@ GNOME MultiWriter Release Notes
 
  * Write NEWS entries in the same format as usual.
 
-git log --format="%s" GNOME_MULTI_WRITER_3_19_90.. | grep -i -v trivial | grep -v Merge | uniq
+git log --format="%s" GNOME_MULTI_WRITER_3_20_0.. | grep -i -v trivial | grep -v Merge | uniq
 Add any user visible changes into data/appdata/org.gnome.MultiWriter.appdata.xml.in
 
  * Commit changes in git:
 
-git commit -a -m "Release version 3.20.0"
-git tag -s GNOME_MULTI_WRITER_3_20_0 -m "==== Version 3.20.0 ===="
+git commit -a -m "Release version 3.20.1"
+git tag -s GNOME_MULTI_WRITER_3_20_1 -m "==== Version 3.20.1 ===="
 make distcheck
 git push --tags
 git push
