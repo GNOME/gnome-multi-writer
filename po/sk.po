@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-28 21:45+0000\n"
-"PO-Revision-Date: 2015-02-03 19:29+0100\n"
+"POT-Creation-Date: 2016-03-21 18:23+0000\n"
+"PO-Revision-Date: 2016-03-26 11:10+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/gnome-multi-"
 "writer/language/sk/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 1.7.3\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
@@ -34,6 +34,12 @@ msgstr "MultiWriter"
 #: ../data/gmw-main.ui.h:4
 msgid "Start Copying"
 msgstr "Spustiť kopírovanie"
+
+#. TRANSLATORS: button to cancel a copy process
+#. TRANSLATORS: button title
+#: ../data/gmw-main.ui.h:6 ../src/gmw-main.c:1058
+msgid "Cancel"
+msgstr "Zrušiť"
 
 #. TRANSLATORS: app menu item for the file chooser
 #: ../data/gmw-menus.ui.h:2
@@ -73,6 +79,9 @@ msgid ""
 "MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
 "code sprint or to create hundreds of LiveUSB drives for a trade show."
 msgstr ""
+"Aplikácia MultiWriter môže byť užitočná pri testovaní kvality, na vytvorenie "
+"Live obrazu prostredia GNOME pre urýchlenie práce programátorov, alebo na "
+"vytvorenie stoviek jednotiek LiveUSB použitých na výstavách."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
@@ -234,7 +243,7 @@ msgid "Verifying…"
 msgstr "Overuje sa…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:396
+#: ../src/gmw-device.c:394
 msgid "USB Flash Drive"
 msgstr "Flashdisk USB"
 
@@ -246,7 +255,7 @@ msgstr "Nová menovka rozbočovača"
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1827
+#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1833
 msgid "GNOME MultiWriter"
 msgstr "MultiWriter pre prostredie GNOME"
 
@@ -270,11 +279,6 @@ msgstr "Zlyhalo otvorenie"
 #: ../src/gmw-main.c:1054
 msgid "Choose the file to write"
 msgstr "Výber súboru na zapísanie"
-
-#. TRANSLATORS: button title
-#: ../src/gmw-main.c:1058
-msgid "Cancel"
-msgstr "Zrušiť"
 
 #. TRANSLATORS: button title
 #: ../src/gmw-main.c:1060
@@ -357,16 +361,16 @@ msgid "Probe"
 msgstr "Preskúmať"
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1811
+#: ../src/gmw-main.c:1817
 msgid "Allow renaming the labels on hubs"
 msgstr "Umožní premenovať menovky rozbočovačov"
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1814 ../src/gmw-probe.c:527
+#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:535
 msgid "Show extra debugging information"
 msgstr "Zobrazí rozšírené ladiace informácie"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: ../src/gmw-main.c:1833
+#: ../src/gmw-main.c:1839
 msgid "Failed to parse command line options"
 msgstr "Zlyhalo analyzovanie volieb príkazového riadku"
