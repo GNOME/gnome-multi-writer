@@ -1,27 +1,28 @@
 # Indonesian translation for gnome-multi-writer.
 # Copyright (C) 2015 gnome-multi-writer's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-multi-writer package.
-# Andika Triwidada <andika@gmail.com>, 2015.
+# Andika Triwidada <andika@gmail.com>, 2015, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-multi-writer master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-multi-"
-"writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-31 07:20+0000\n"
-"PO-Revision-Date: 2015-05-31 17:49+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"Project-Id-Version: gnome-multi-writer gnome-3-20\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"multi-writer&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-05-05 08:58+0000\n"
+"PO-Revision-Date: 2016-06-13 18:50+0700\n"
+"Last-Translator: Andika Triwidada <atriwidada@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
 #. set the title
-#: ../data/gmw-main.ui.h:2 ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
+#: ../data/gmw-main.ui.h:2
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
 #: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:855
 msgid "MultiWriter"
 msgstr "MultiWriter"
@@ -30,6 +31,12 @@ msgstr "MultiWriter"
 #: ../data/gmw-main.ui.h:4
 msgid "Start Copying"
 msgstr "Mulai Menyalin"
+
+#. TRANSLATORS: button to cancel a copy process
+#. TRANSLATORS: button title
+#: ../data/gmw-main.ui.h:6 ../src/gmw-main.c:1058
+msgid "Cancel"
+msgstr "Batal"
 
 #. TRANSLATORS: app menu item for the file chooser
 #: ../data/gmw-menus.ui.h:2
@@ -50,46 +57,57 @@ msgstr "_Keluar"
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
 #: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1380
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr ""
+msgstr "Menulis sebuah berkas ISO ke beberapa perangkat USB sekaligus"
 
 #. TRANSLATORS: AppData description marketing paragraph
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:6
 msgid ""
-"GNOME MultiWriter can be used to write an ISO file to multiple USB devices at "
-"once. Supported drive sizes are between 1GB and 32GB."
+"GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
+"at once. Supported drive sizes are between 1GB and 32GB."
 msgstr ""
+"GNOME MultiWriter dapat dipakai untuk menulis sebuah berkas ISO ke banyak "
+"perangkat USB sekaligus. Ukuran drive yang didukung antara 1 GB dan 32 GB."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:9
 msgid ""
-"MultiWriter may be useful for QA testing, to create a GNOME Live image for a code "
-"sprint or to create hundreds of LiveUSB drives for a trade show."
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
 msgstr ""
+"MultiWriter mungkin berguna untuk pengujian QA, untuk membuat image GNOME "
+"Live bagi sebuah code sprint atau membuat ratusan drive LiveUSB untuk sebuah "
+"pameran dagang."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
 msgid ""
-"Writing a more than 10 devices simultaneously can easy saturate the USB bus for "
-"most storage devices. There are two ways to write more devices in parallel:"
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
 msgstr ""
+"Menulis lebih dari 10 perangkat secara simultan dapat dengan mudah "
+"mensaturasi bus USB bagi kebanyakan perangkat penyimpanan. Ada dua cara "
+"untuk menulis ke lebih banyak perangkat secara paralel:"
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:13
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
-msgstr ""
+msgstr "Gunakan hub USB 3.0, walaupun perangkat penyimpanan adalah USB 2.0"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:15
 msgid "Install another USB 2.0 PCIe root hub"
-msgstr ""
+msgstr "Pasang hub akar PCIe USB 2.0 lain"
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:17
 msgid ""
-"MultiWriter was originally written as part of the ColorHug project but was split "
-"off as an independent application in 2015."
+"MultiWriter was originally written as part of the ColorHug project but was "
+"split off as an independent application in 2015."
 msgstr ""
+"MultiWriter aslinya ditulis sebagai bagian dari projek ColorHug tapi dipecah "
+"sebagai sebuah aplikasi independen pada tahun 2015."
 
 #. TRANSLATORS: the 1st screenshot caption
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:19
@@ -109,12 +127,12 @@ msgstr "Semua perangkat telah ditulis"
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:2
 msgid "The filename to write to the USB disks"
-msgstr ""
+msgstr "Nama berkas yang akan ditulis ke disk USB"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:4
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr ""
+msgstr "Nama berkas image ISO yang akan ditulis ke disk USB yang tersambung."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:6
@@ -124,48 +142,57 @@ msgstr "Cacah maksimum thread yang akan dipakai"
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:8
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr ""
+msgstr "Cacah maksimum thread paralel yang dipakai ketika menyalin data."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:10
 msgid "Completely blank drive when writing"
-msgstr ""
+msgstr "Kosongkan drive sepenuhnya ketika menulis"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:12
 msgid "Write the ISO to the drive and then blank the remainder of the drive."
-msgstr ""
+msgstr "Tulis ISO ke drive lalu kosongkan sisa drive."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:14
 msgid "Verify the ISO image was written correctly"
-msgstr ""
+msgstr "Verifikasikan image ISO telah ditulis dengan benar"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:16
-msgid "Read and verify the ISO image from each device after writing is complete."
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
 msgstr ""
+"Baca dan verifikasi image ISO bagi setiap perangkat setelah penulisan "
+"komplit."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:18
 msgid "Inspect the device before writing images"
-msgstr ""
+msgstr "Periksa perangkat sebelum menulis image"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:20
 msgid ""
-"Inspect the device to verify the reported device size is the actual media size."
+"Inspect the device to verify the reported device size is the actual media "
+"size."
 msgstr ""
+"Periksa perangkat untuk verifikasi bahwa ukuran perangkat yang dilaporkan "
+"adalah ukuran media sebenarnya."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:22
 msgid "Show a warning before writing to a drive"
-msgstr ""
+msgstr "Tampilkan peringatan sebelum menulis ke sebuah drive"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:24
-msgid "Show a warning dialog confirming that the device contents are to be erased."
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
+"Tampilkan sebuah dialog peringatan yang mengkonfirmasikan bahwa isi "
+"perangkat akan dihapus."
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 #: ../data/org.gnome.MultiWriter.desktop.in.h:4
@@ -174,7 +201,7 @@ msgstr "Citra;Penulis;ISO;USB;"
 
 #: ../data/org.gnome.MultiWriter.policy.in.h:1
 msgid "Check the device"
-msgstr ""
+msgstr "Periksa perangkat"
 
 #: ../data/org.gnome.MultiWriter.policy.in.h:2
 msgid "Authentication is required to probe the device"
@@ -212,12 +239,9 @@ msgid "Verifying…"
 msgstr "Memberifikasi…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:396
-#, fuzzy
+#: ../src/gmw-device.c:394
 msgid "USB Flash Drive"
-msgstr ""
-"Hapus semua berkas dan folder dari suatu hard disk eksternal atau flash drive USB "
-"dengan memformatnya."
+msgstr "USB Flash Drive"
 
 #. TRANSLATORS: window title renaming labels
 #: ../src/gmw-main.c:317
@@ -253,11 +277,6 @@ msgid "Choose the file to write"
 msgstr "Pilih berkas yang akan ditulisi"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:1058
-msgid "Cancel"
-msgstr "Batal"
-
-#. TRANSLATORS: button title
 #: ../src/gmw-main.c:1060
 msgid "Import"
 msgstr "Impor"
@@ -280,31 +299,29 @@ msgstr "Menulis ISO ke perangkat"
 
 #. TRANSLATORS: window title for the warning dialog
 #: ../src/gmw-main.c:1315
-#, fuzzy
 msgid "Write to all disks?"
-msgstr "Tulis semua pesan galat ke sebuah berkas"
+msgstr "Tulis ke semua disk?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
 #: ../src/gmw-main.c:1320
-#, fuzzy
 msgid "All data on the drives will be deleted."
-msgstr ""
-"Semua informasi pertemuan ini akan dihapus dan tidak akan dikembalikan menjadi "
-"semula."
+msgstr "Semua data pada drive akan dihapus."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
 #: ../src/gmw-main.c:1325
 msgid "The ISO file is smaller than the disk capacity."
-msgstr ""
+msgstr "Berkas ISO lebih kecil daripada kapasitas disk."
 
 #. TRANSLATORS: this could leave your personal files on the drive
 #: ../src/gmw-main.c:1330
 msgid ""
-"Some of the current contents of the drives could be still found using forensic "
-"tools even after copying."
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
 msgstr ""
+"Sebagian dari isi drive saat ini masih dapat ditemukan memakai perkakas "
+"forensic setelah penyalinan."
 
 #. TRANSLATORS: button text for the warning dialog
 #: ../src/gmw-main.c:1337
@@ -336,23 +353,20 @@ msgstr "Hapus"
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
 #: ../src/gmw-main.c:1450
-#, fuzzy
 msgid "Probe"
-msgstr "tidak dapat mengalokasikan probe libblkid baru"
+msgstr "Probe"
 
 #. TRANSLATORS: command line option
 #: ../src/gmw-main.c:1817
 msgid "Allow renaming the labels on hubs"
-msgstr ""
+msgstr "Ijinkan penamaan ulang label pada hub"
 
 #. TRANSLATORS: command line option
 #: ../src/gmw-main.c:1820 ../src/gmw-probe.c:535
-#, fuzzy
 msgid "Show extra debugging information"
-msgstr "Menampilkan informasi ekstra"
+msgstr "Tampilkan informasi pengawakutuan ekstra"
 
 #. TRANSLATORS: the user has sausages for fingers
 #: ../src/gmw-main.c:1839
-#, fuzzy
 msgid "Failed to parse command line options"
-msgstr "Gagal mengurai opsi baris perintah: %s\n"
+msgstr "Gagal mengurai opsi baris perintah"
