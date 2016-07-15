@@ -152,6 +152,8 @@ gmw_probe_device_free (GmwProbeDevice *dev)
 {
 	if (dev->fd > 0)
 		close (dev->fd);
+	if (dev->udev_device != NULL)
+		g_object_unref (dev->udev_device);
 	g_free (dev->block_dev);
 	g_ptr_array_unref (dev->data_save);
 	g_free (dev);
