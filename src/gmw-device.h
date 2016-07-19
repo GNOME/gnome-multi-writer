@@ -27,16 +27,8 @@
 #include <gusb.h>
 #include <udisks/udisks.h>
 
-typedef struct _GmwDevice	GmwDevice;
-typedef struct _GmwDeviceClass	GmwDeviceClass;
-
-#define GMW_TYPE_DEVICE		(gmw_device_get_type ())
-#define GMW_DEVICE(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), GMW_TYPE_DEVICE, GmwDevice))
-#define GMW_IS_DEVICE(o)	(G_TYPE_CHECK_INSTANCE_TYPE ((o), GMW_TYPE_DEVICE))
-
-struct _GmwDevice {
-	GObject		 parent_instance;
-};
+#define GMW_TYPE_DEVICE (gmw_device_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GmwDevice, gmw_device, GMW, DEVICE, GObject)
 
 struct _GmwDeviceClass {
 	GObjectClass	 parent_class;
