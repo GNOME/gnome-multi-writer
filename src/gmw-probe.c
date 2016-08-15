@@ -168,7 +168,8 @@ gmw_probe_device_read (GmwProbeDevice *dev, guint64 addr, guint8 *buf, gssize le
 	gsize bytes_read;
 	lseek (dev->fd, addr, SEEK_SET);
 	bytes_read = read (dev->fd, buf, len);
-	g_debug ("read %" G_GSSIZE_FORMAT " @ %liMB", bytes_read, addr / ONE_MB);
+	g_debug ("read %" G_GSIZE_FORMAT " @ %" G_GUINT64_FORMAT "MB",
+		 bytes_read, addr / ONE_MB);
 	return bytes_read;
 }
 
@@ -181,7 +182,8 @@ gmw_probe_device_write (GmwProbeDevice *dev, guint64 addr, const guint8 *buf, gs
 	gsize bytes_written;
 	lseek (dev->fd, addr, SEEK_SET);
 	bytes_written = write (dev->fd, buf, len);
-	g_debug ("wrote %" G_GSSIZE_FORMAT " @ %liMB", bytes_written, addr / ONE_MB);
+	g_debug ("wrote %" G_GSIZE_FORMAT " @ %" G_GUINT64_FORMAT "MB",
+		 bytes_written, addr / ONE_MB);
 	return bytes_written;
 }
 
@@ -391,7 +393,7 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 			g_set_error (error,
 				     GMW_ERROR,
 				     GMW_ERROR_FAILED,
-				     "Failed to write len at %liMB",
+				     "Failed to write len at %" G_GUINT64_FORMAT "MB",
 				     item->address / ONE_MB);
 			gmw_probe_device_data_restore (dev, cancellable, NULL);
 			return FALSE;
@@ -426,7 +428,7 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 			g_set_error (error,
 				     GMW_ERROR,
 				     GMW_ERROR_IS_FAKE,
-				     "Failed to verify data at %liMB",
+				     "Failed to verify data at %" G_GUINT64_FORMAT "MB",
 				     item->address / ONE_MB);
 			return FALSE;
 		}

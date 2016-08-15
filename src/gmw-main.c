@@ -217,7 +217,7 @@ gmw_device_list_sort (GmwPrivate *priv)
 			if (rh->devices->len <= i)
 				continue;
 			device = g_ptr_array_index (rh->devices, i);
-			key = g_strdup_printf ("%04i", idx++);
+			key = g_strdup_printf ("%04u", idx++);
 			gmw_device_set_order_process (device, key);
 			g_debug ("set sort key %s for [%02x:] %s", key,
 				 rh->idx, gmw_device_get_block_path (device));
@@ -374,7 +374,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 			gtk_widget_set_margin_start (w, 30);
 		if (gmw_device_get_hub_label (device) != NULL) {
 			if (priv->rename_labels) {
-				label = g_strdup_printf ("%s [%s<a href=\"%i\">?</a>]",
+				label = g_strdup_printf ("%s [%s<a href=\"%u\">?</a>]",
 							 gmw_device_get_hub_id (device),
 							 gmw_device_get_hub_label (device), i);
 			} else {
@@ -384,7 +384,7 @@ gmw_refresh_ui (GmwPrivate *priv)
 			}
 		} else {
 			if (priv->rename_labels) {
-				label = g_strdup_printf ("%s [<a href=\"%i\">?</a>]",
+				label = g_strdup_printf ("%s [<a href=\"%u\">?</a>]",
 							 gmw_device_get_hub_id (device), i);
 			} else {
 				label = g_strdup (gmw_device_get_hub_id (device));
@@ -1151,7 +1151,7 @@ gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 		_cleanup_object_unref_ UDisksObject *udisks_object = NULL;
 		g_auto(GStrv) mtab = NULL;
 
-		object_path = g_strdup_printf ("%s%i",
+		object_path = g_strdup_printf ("%s%u",
 					       gmw_device_get_object_path (device),
 					       i);
 		udisks_object = udisks_client_get_object (priv->udisks_client,
@@ -1691,7 +1691,7 @@ gmw_update_max_threads (GmwPrivate *priv)
 	root_hubs = gmw_root_hub_enumerate (priv->devices);
 	if (root_hubs->len > 0)
 		nr_root = root_hubs->len;
-	g_debug ("%i root %s in use", nr_root, nr_root > 1 ? "hubs" : "hub");
+	g_debug ("%u root %s in use", nr_root, nr_root > 1 ? "hubs" : "hub");
 	g_thread_pool_set_max_threads (priv->thread_pool,
 				       threads_per_root * nr_root,
 				       NULL);

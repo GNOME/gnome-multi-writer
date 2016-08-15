@@ -22,7 +22,7 @@ gnome_multi_writer_LDADD =				\
 	$(UDISKS_LIBS)
 
 gnome_multi_writer_CFLAGS =				\
-	$(WARNINGFLAGS_C)
+	$(WARN_CFLAGS)
 
 gnome_multi_writer_SOURCES =				\
 	gmw-cleanup.h					\
@@ -37,7 +37,7 @@ gnome_multi_writer_probe_LDADD =			\
 	$(GUDEV_LIBS)
 
 gnome_multi_writer_probe_CFLAGS =			\
-	$(WARNINGFLAGS_C)
+	$(WARN_CFLAGS)
 
 gnome_multi_writer_probe_SOURCES =			\
 	gmw-cleanup.h					\

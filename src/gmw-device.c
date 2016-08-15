@@ -675,8 +675,8 @@ gmw_device_get_quirk_string (GmwDevice *device)
 	/* parent */
 	usb_hub_top = gmw_device_get_toplevel_hub (device);
 	if (usb_hub_top == NULL) {
-		g_string_append_printf (str, "0x%02x, ", 0x00);
-		g_string_append_printf (str, "0x%04x, 0x%04x, ", 0x0000, 0x0000);
+		g_string_append_printf (str, "0x%02x, ", 0x00u);
+		g_string_append_printf (str, "0x%04x, 0x%04x, ", 0x0000u, 0x0000u);
 	} else {
 		g_string_append_printf (str, "0x%02x, ",
 					g_usb_device_get_port_number (usb_hub));
@@ -696,7 +696,7 @@ gmw_device_get_quirk_string (GmwDevice *device)
 	}
 	if (usb_hub_child == NULL) {
 		g_string_append_printf (str, "0x%04x, 0x%04x, ",
-					0x0000, 0x0000);
+					0x0000u, 0x0000u);
 	} else {
 		g_string_append_printf (str, "0x%04x, 0x%04x, ",
 					g_usb_device_get_vid (usb_hub_child),
@@ -720,7 +720,7 @@ gmw_device_get_quirk_string (GmwDevice *device)
 				g_usb_device_get_port_number (priv->usb_device));
 
 	/* chain length */
-	g_string_append_printf (str, "0x%01x, ", usb_hub_child ? 0x00 : 0x01);
+	g_string_append_printf (str, "0x%01x, ", usb_hub_child ? 0x00u : 0x01u);
 
 	/* label */
 	if (priv->hub_label == NULL)
@@ -925,15 +925,15 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 	g_debug ("Quirk info: 0x%04x:0x%04x@0x%02x -> "
 		 "0x%04x:0x%04x@0x%02x -> "
 		 "0x%04x:0x%04x@0x%02x",
-		 usb_hub_parent ? g_usb_device_get_vid (usb_hub_parent) : 0x0,
-		 usb_hub_parent ? g_usb_device_get_pid (usb_hub_parent) : 0x0,
-		 usb_hub_parent ? g_usb_device_get_port_number (usb_hub_parent) : 0x0,
-		 g_usb_device_get_vid (usb_hub),
-		 g_usb_device_get_pid (usb_hub),
-		 g_usb_device_get_port_number (usb_hub),
-		 g_usb_device_get_vid (usb_device),
-		 g_usb_device_get_pid (usb_device),
-		 g_usb_device_get_port_number (usb_device));
+		 usb_hub_parent ? (guint) g_usb_device_get_vid (usb_hub_parent) : 0x0u,
+		 usb_hub_parent ? (guint) g_usb_device_get_pid (usb_hub_parent) : 0x0u,
+		 usb_hub_parent ? (guint) g_usb_device_get_port_number (usb_hub_parent) : 0x0u,
+		 (guint) g_usb_device_get_vid (usb_hub),
+		 (guint) g_usb_device_get_pid (usb_hub),
+		 (guint) g_usb_device_get_port_number (usb_hub),
+		 (guint) g_usb_device_get_vid (usb_device),
+		 (guint) g_usb_device_get_pid (usb_device),
+		 (guint) g_usb_device_get_port_number (usb_device));
 	for (i = 0; quirks[i].hub_label != NULL; i++) {
 		/* check grandparent */
 		if (usb_hub_parent != NULL && quirks[i].hub_parent_vid != 0x0000) {
@@ -988,7 +988,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 					child_cnt++;
 			}
 			if (child_cnt != quirks[i].number_ics) {
-				g_debug ("no matching quirk %i != %i",
+				g_debug ("no matching quirk %u != %u",
 					 child_cnt, quirks[i].number_ics);
 				continue;
 			}
