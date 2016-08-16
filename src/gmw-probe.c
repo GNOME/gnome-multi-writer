@@ -374,7 +374,8 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 			     dev->disk_size / ONE_GB);
 		return FALSE;
 	}
-	g_debug ("Disk reports to be %luMB in size", dev->disk_size / ONE_MB);
+	g_debug ("Disk reports to be %" G_GUINT64_FORMAT "MB in size",
+		 dev->disk_size / ONE_MB);
 
 	/* save data that's there already */
 	if (!gmw_probe_device_data_save (dev, cancellable, error))

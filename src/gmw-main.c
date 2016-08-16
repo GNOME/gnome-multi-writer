@@ -1670,7 +1670,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	g_mutex_lock (&priv->devices_mutex);
 	g_ptr_array_add (priv->devices, device);
 	g_mutex_unlock (&priv->devices_mutex);
-	g_debug ("Added %s [%lu]", block_path, device_size);
+	g_debug ("Added %s [%" G_GUINT64_FORMAT "]", block_path, device_size);
 	return TRUE;
 }
 
