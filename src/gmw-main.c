@@ -32,6 +32,7 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <udisks/udisks.h>
+#include <polkit/polkit.h>
 
 #include "gmw-cleanup.h"
 #include "gmw-device.h"
