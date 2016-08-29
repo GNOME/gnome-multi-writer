@@ -86,6 +86,7 @@ PKG_CHECK_MODULES(UDISKS, udisks2)
 PKG_CHECK_MODULES(GUDEV, gudev-1.0)
 PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.11.2)
 PKG_CHECK_MODULES(CANBERRA, libcanberra-gtk3 >= 0.10)
+PKG_CHECK_MODULES(POLKIT, polkit-gobject-1)
 AC_PATH_PROG(APPSTREAM_UTIL, [appstream-util], [unfound])
 
 dnl ---------------------------------------------------------------------------

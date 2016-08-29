@@ -56,7 +56,6 @@ typedef struct {
 	UDisksClient		*udisks_client;
 	GThreadPool		*thread_pool;
 	GMutex			 thread_pool_mutex;
-	gboolean		 done_polkit_auth;
 	guint			 inhibit_id;
 	guint			 throughput_id;
 	guint			 idle_id;
@@ -1213,8 +1212,10 @@ gmw_start_copy (GmwPrivate *priv)
 {
 	GmwDevice *device;
 	GtkWindow *window;
+	const gchar *action_id = "org.freedesktop.udisks2.open-device";
 	guint i;
 	g_autoptr(GError) error = NULL;
+	g_autoptr(GPermission) permission = NULL;
 
 	/* if nothing already set, request this now */
 	if (priv->image_file == NULL)
@@ -1233,8 +1234,14 @@ gmw_start_copy (GmwPrivate *priv)
 		}
 	}
 
+
 	/* do a dummy call to get the PolicyKit auth */
-	if (!priv->done_polkit_auth) {
+	permission = polkit_permission_new_sync (action_id, NULL, NULL, &error);
+	if (permission == NULL) {
+		gmw_error_dialog (priv, "Failed to get permission", error->message);
+		return;
+	}
+	if (!g_permission_get_allowed (permission)) {
 		device = g_ptr_array_index (priv->devices, 0);
 		if (!gmw_auth_dummy_restore (priv, device, &error)) {
 			g_dbus_error_strip_remote_error (error);
@@ -1245,7 +1252,6 @@ gmw_start_copy (GmwPrivate *priv)
 					  error->message);
 			return;
 		}
-		priv->done_polkit_auth = TRUE;
 	}
 
 	/* update the global stats */

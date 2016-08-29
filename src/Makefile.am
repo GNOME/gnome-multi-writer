@@ -5,6 +5,7 @@ AM_CPPFLAGS =						\
 	$(GUDEV_CFLAGS)					\
 	$(GUSB_CFLAGS)					\
 	$(SOUP_CFLAGS)					\
+	$(POLKIT_CFLAGS)				\
 	$(UDISKS_CFLAGS)				\
 	-DG_LOG_DOMAIN=\"GnomeMultiWriter\"		\
 	-DG_USB_API_IS_SUBJECT_TO_CHANGE		\
@@ -19,6 +20,7 @@ gnome_multi_writer_LDADD =				\
 	$(GLIB_LIBS)					\
 	$(GTK_LIBS)					\
 	$(GUSB_LIBS)					\
+	$(POLKIT_LIBS)					\
 	$(UDISKS_LIBS)
 
 gnome_multi_writer_CFLAGS =				\
