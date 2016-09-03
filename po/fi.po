@@ -6,12 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-13 09:28+0000\n"
-"PO-Revision-Date: 2016-03-13 19:18+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-15 10:40+0000\n"
+"PO-Revision-Date: 2016-09-03 15:43+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
-"Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
+"Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +65,9 @@ msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Supported drive sizes are between 1GB and 32GB."
 msgstr ""
+"Gnome MultiWriteria on mahdollista käyttää ISO-tiedoston kirjoittamiseen "
+"useisiin USB-laitteisiin samanaikaisesti. Tuettuna ovat asemat, joiden koko "
+"on yhden ja 32 gigatavun välillä."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
@@ -74,6 +76,8 @@ msgid ""
 "MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
 "code sprint or to create hundreds of LiveUSB drives for a trade show."
 msgstr ""
+"MultiWriter saattaa olla hyödyllinen laadunvarmistukseen tai Live USB -"
+"asemien valmistukseen isoja tilaisuuksia varten."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
@@ -82,6 +86,9 @@ msgid ""
 "for most storage devices. There are two ways to write more devices in "
 "parallel:"
 msgstr ""
+"Yli 10 laitteelle kirjoittaminen samanaikaisesti voi hidastaa USB-väylän "
+"toimintaa. On kaksi tapaa kirjoittaa useammalle kuin 10 laitteelle "
+"samanaikaisesti:"
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:13
@@ -101,6 +108,8 @@ msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr ""
+"MultiWriter kirjoitettiin alkujaan osana ColorHug-projektia, mutta siitä "
+"luotiin oma itsenäinen sovellus vuonna 2015."
 
 #. TRANSLATORS: the 1st screenshot caption
 #: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:19
@@ -125,7 +134,7 @@ msgstr "USB-levyille kirjoitettavan tiedoston nimi"
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:4
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr ""
+msgstr "USB-levyille kirjoitettavan ISO-levykuvatiedoston tiedostonimi."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:6
@@ -140,7 +149,7 @@ msgstr ""
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:10
 msgid "Completely blank drive when writing"
-msgstr ""
+msgstr "Tyhjennä asema täysin kirjoittamisen yhteydessä"
 
 #. TRANSLATORS: schema description
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:12
@@ -157,6 +166,7 @@ msgstr "Vahvista ISO-levykuvan kirjoituksen onnistuminen"
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
 msgstr ""
+"Lue ja vahvista ISO-levykuva jokaisesta laitteesta kirjoittamisen jälkeen."
 
 #. TRANSLATORS: schema summary
 #: ../data/org.gnome.MultiWriter.gschema.xml.h:18
@@ -229,7 +239,7 @@ msgstr "Vahvistetaan…"
 #. TRANSLATORS: This is a generic no-name USB flash disk
 #: ../src/gmw-device.c:394
 msgid "USB Flash Drive"
-msgstr ""
+msgstr "USB-asema"
 
 #. TRANSLATORS: window title renaming labels
 #: ../src/gmw-main.c:317
@@ -350,7 +360,7 @@ msgid "Allow renaming the labels on hubs"
 msgstr ""
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:535
+#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:539
 msgid "Show extra debugging information"
 msgstr ""
 
