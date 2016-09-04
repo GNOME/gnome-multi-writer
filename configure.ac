@@ -19,8 +19,6 @@ LT_INIT
 AM_PROG_CC_C_O
 IT_PROG_INTLTOOL([0.50.0])
 GLIB_GSETTINGS
-GOBJECT_INTROSPECTION_CHECK([0.9.8])
-YELP_HELP_INIT
 
 dnl ---------------------------------------------------------------------------
 dnl - gettext stuff
