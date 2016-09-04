@@ -888,7 +888,7 @@ gmw_block_device_probe (const gchar *block_dev, GError **error)
 	gint exit_status = 0;
 	g_autofree gchar *standard_output = NULL;
 	const gchar *argv[] = { "/usr/bin/pkexec",
-				"/usr/bin/gnome-multi-writer-probe",
+				LIBEXECDIR"/gnome-multi-writer-probe",
 				block_dev,
 				NULL };
 	const gchar *envp[] = { NULL };

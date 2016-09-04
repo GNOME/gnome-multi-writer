@@ -9,10 +9,13 @@ AM_CPPFLAGS =						\
 	$(UDISKS_CFLAGS)				\
 	-DG_LOG_DOMAIN=\"GnomeMultiWriter\"		\
 	-DG_USB_API_IS_SUBJECT_TO_CHANGE		\
-	-DLOCALEDIR=\""$(localedir)"\"
+	-DLOCALEDIR=\""$(localedir)"\"			\
+	-DLIBEXECDIR=\""$(libexecdir)"\"
+
+libexec_PROGRAMS =					\
+	gnome-multi-writer-probe
 
 bin_PROGRAMS =						\
-	gnome-multi-writer-probe			\
 	gnome-multi-writer
 
 gnome_multi_writer_LDADD =				\

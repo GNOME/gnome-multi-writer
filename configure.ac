@@ -124,6 +124,7 @@ echo "
 
         prefix:                    ${prefix}
         datadir:                   ${datadir}
+        libexecdir:                ${libexecdir}
         compiler:                  ${CC}
         cflags:                    ${CFLAGS}
         cppflags:                  ${CPPFLAGS}
