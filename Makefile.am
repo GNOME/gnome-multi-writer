@@ -37,12 +37,6 @@ MAINTAINERCLEANFILES =					\
 	$(srcdir)/gnome-multi-writer-*.tar.*		\
 	`find "$(srcdir)" -type f -name Makefile.in -print`
 
-distclean-local:
-	if test $(srdcir) = .; then :; else \
-		rm -f ChangeLog; \
-		rm -f NEWS; \
-	fi
-
 ChangeLog:
 	@echo Creating $@
 	@if test -d "$(srcdir)/.git"; then \
