@@ -1,16 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Adolfo Jayme Barrientos <fito@libreoffice.org>, 2015
 # Olivier Banus <olivier@banuscorp.eu>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-28 21:45+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-15 10:40+0000\n"
 "PO-Revision-Date: 2015-06-09 \n"
 "Last-Translator: Richard Hughes <richard@hughsie.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/gnome-multi-"
@@ -34,6 +33,12 @@ msgstr "MultiWriter"
 #: ../data/gmw-main.ui.h:4
 msgid "Start Copying"
 msgstr "Empezar a copiar"
+
+#. TRANSLATORS: button to cancel a copy process
+#. TRANSLATORS: button title
+#: ../data/gmw-main.ui.h:6 ../src/gmw-main.c:1058
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. TRANSLATORS: app menu item for the file chooser
 #: ../data/gmw-menus.ui.h:2
@@ -239,7 +244,7 @@ msgid "Verifying…"
 msgstr "Comprobando…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:396
+#: ../src/gmw-device.c:394
 msgid "USB Flash Drive"
 msgstr "Dispositivo USB flash"
 
@@ -251,7 +256,7 @@ msgstr "Etiqueta nueva del concentrador"
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1827
+#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1833
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
@@ -275,11 +280,6 @@ msgstr "Error al abrir"
 #: ../src/gmw-main.c:1054
 msgid "Choose the file to write"
 msgstr "Elija el archivo que se escribirá"
-
-#. TRANSLATORS: button title
-#: ../src/gmw-main.c:1058
-msgid "Cancel"
-msgstr "Cancelar"
 
 #. TRANSLATORS: button title
 #: ../src/gmw-main.c:1060
@@ -362,16 +362,16 @@ msgid "Probe"
 msgstr "Probar"
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1811
+#: ../src/gmw-main.c:1817
 msgid "Allow renaming the labels on hubs"
 msgstr "Permitir renombrar las etiquetas en los concentradores"
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1814 ../src/gmw-probe.c:527
+#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:539
 msgid "Show extra debugging information"
 msgstr "Mostrar información de depuración"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: ../src/gmw-main.c:1833
+#: ../src/gmw-main.c:1839
 msgid "Failed to parse command line options"
 msgstr "Error al analizar opciones de la línea de comandos"
