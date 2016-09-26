@@ -1646,7 +1646,7 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 			 block_path, (guint) device_size);
 		return FALSE;
 	}
-	if (device_size > 1024 * 32) {
+	if (device_size > 1024 * 64) {
 		g_debug ("%s is too large [%u]",
 			 block_path, (guint) device_size);
 		return FALSE;
