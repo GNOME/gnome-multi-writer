@@ -138,9 +138,12 @@ gmw_probe_device_open (GmwProbeDevice *dev, GError **error)
 	}
 
 	/* do not use the OS cache */
-	posix_fadvise (dev->fd, 0, 0, POSIX_FADV_DONTNEED |
-				      POSIX_FADV_RANDOM |
-				      POSIX_FADV_NOREUSE);
+	if (posix_fadvise (dev->fd, 0, 0,
+			   POSIX_FADV_DONTNEED |
+			   POSIX_FADV_RANDOM |
+			   POSIX_FADV_NOREUSE) != 0) {
+		g_warning ("Unable to call fadvise on %s", dev->block_dev);
+	}
 	return TRUE;
 }
 
@@ -166,7 +169,8 @@ static gsize
 gmw_probe_device_read (GmwProbeDevice *dev, guint64 addr, guint8 *buf, gssize len)
 {
 	gsize bytes_read;
-	lseek (dev->fd, addr, SEEK_SET);
+	if (lseek (dev->fd, addr, SEEK_SET) < 0)
+		return 0;
 	bytes_read = read (dev->fd, buf, len);
 	g_debug ("read %" G_GSIZE_FORMAT " @ %" G_GUINT64_FORMAT "MB",
 		 bytes_read, addr / ONE_MB);
@@ -180,7 +184,8 @@ static gsize
 gmw_probe_device_write (GmwProbeDevice *dev, guint64 addr, const guint8 *buf, gssize len)
 {
 	gsize bytes_written;
-	lseek (dev->fd, addr, SEEK_SET);
+	if (lseek (dev->fd, addr, SEEK_SET) < 0)
+		return 0;
 	bytes_written = write (dev->fd, buf, len);
 	g_debug ("wrote %" G_GSIZE_FORMAT " @ %" G_GUINT64_FORMAT "MB",
 		 bytes_written, addr / ONE_MB);
