@@ -13,7 +13,6 @@ BuildRequires: docbook-utils
 BuildRequires: gettext
 BuildRequires: glib2-devel
 BuildRequires: gtk3-devel
-BuildRequires: intltool
 BuildRequires: itstool
 BuildRequires: libcanberra-devel >= 0.10
 BuildRequires: libgusb-devel >= 0.2.4

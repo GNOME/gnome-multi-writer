@@ -17,16 +17,16 @@ AC_PROG_INSTALL
 AC_OBJEXT
 LT_INIT
 AM_PROG_CC_C_O
-IT_PROG_INTLTOOL([0.50.0])
 GLIB_GSETTINGS
 
 dnl ---------------------------------------------------------------------------
 dnl - gettext stuff
 dnl ---------------------------------------------------------------------------
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.7])
 GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE(GETTEXT_PACKAGE, "AC_PACKAGE_NAME", [foo])
-AM_GLIB_GNU_GETTEXT
 
 WARN_CFLAGS_EXTRA="
 	-Waggregate-return

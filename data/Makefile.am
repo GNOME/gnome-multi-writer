@@ -2,7 +2,9 @@ SUBDIRS = 						\
 	appdata						\
 	icons
 
-@INTLTOOL_DESKTOP_RULE@
+%.desktop: %.desktop.in
+	$(AM_V_GEN) msgfmt --desktop -d $(top_srcdir)/po --template $< -o $@
+
 desktopdir = $(datadir)/applications
 desktop_in_files =					\
 	org.gnome.MultiWriter.desktop.in
@@ -11,7 +13,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @GSETTINGS_RULES@
 gsettings_SCHEMAS = org.gnome.MultiWriter.gschema.xml
 
-@INTLTOOL_POLICY_RULE@
+%.policy: %.policy.in
+	$(AM_V_GEN) msgfmt --xml -d $(top_srcdir)/po --template $< -o $@
+
 polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\
 	org.gnome.MultiWriter.policy
