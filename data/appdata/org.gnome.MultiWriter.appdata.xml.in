@@ -62,6 +62,11 @@
    Use `date -d now +%s` or `date -d 2010-01-32 +%s` to get the timestamp.
   -->
   <releases>
+    <release date="2017-03-11" version="3.23.92">
+      <description>
+        <p>This unstable release updates several translations.</p>
+      </description>
+    </release>
     <release version="3.22.1" date="2016-10-12">
       <description>
         <p>This release fixes the following bugs:</p>
