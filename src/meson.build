@@ -4,7 +4,7 @@ gnome_multi_writer_resources = gnome.compile_resources(
   'gnome-multi-writer-resources',
   'gnome-multi-writer.gresource.xml',
   source_dir : '.',
-  c_name : 'gpm'
+  c_name : 'gmw'
 )
 
 executable(
