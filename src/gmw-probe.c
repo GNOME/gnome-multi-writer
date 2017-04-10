@@ -64,9 +64,6 @@ typedef struct {
 #define GMW_ERROR_FAILED	0
 #define GMW_ERROR_IS_FAKE	1
 
-/**
- * gmw_probe_get_random_data:
- **/
 static guint8 *
 gmw_probe_get_random_data (guint len)
 {
@@ -79,9 +76,6 @@ gmw_probe_get_random_data (guint len)
 	return data;
 }
 
-/**
- * gmw_probe_block_free:
- **/
 static void
 gmw_probe_block_free (GmwProbeBlock *item)
 {
@@ -90,9 +84,6 @@ gmw_probe_block_free (GmwProbeBlock *item)
 	g_free (item);
 }
 
-/**
- * gmw_probe_device_reset:
- **/
 static gboolean
 gmw_probe_device_reset (GmwProbeDevice *dev, GError **error)
 {
@@ -122,9 +113,6 @@ gmw_probe_device_reset (GmwProbeDevice *dev, GError **error)
 	return TRUE;
 }
 
-/**
- * gmw_probe_device_open:
- **/
 static gboolean
 gmw_probe_device_open (GmwProbeDevice *dev, GError **error)
 {
@@ -147,9 +135,6 @@ gmw_probe_device_open (GmwProbeDevice *dev, GError **error)
 	return TRUE;
 }
 
-/**
- * gmw_probe_device_free:
- **/
 static void
 gmw_probe_device_free (GmwProbeDevice *dev)
 {
@@ -162,9 +147,6 @@ gmw_probe_device_free (GmwProbeDevice *dev)
 	g_free (dev);
 }
 
-/**
- * gmw_probe_device_read:
- **/
 static gsize
 gmw_probe_device_read (GmwProbeDevice *dev, guint64 addr, guint8 *buf, gssize len)
 {
@@ -177,9 +159,6 @@ gmw_probe_device_read (GmwProbeDevice *dev, guint64 addr, guint8 *buf, gssize le
 	return bytes_read;
 }
 
-/**
- * gmw_probe_device_write:
- **/
 static gsize
 gmw_probe_device_write (GmwProbeDevice *dev, guint64 addr, const guint8 *buf, gssize len)
 {
@@ -192,9 +171,6 @@ gmw_probe_device_write (GmwProbeDevice *dev, guint64 addr, const guint8 *buf, gs
 	return bytes_written;
 }
 
-/**
- * gmw_probe_device_data_save:
- **/
 static gboolean
 gmw_probe_device_data_save (GmwProbeDevice *dev,
 			    GCancellable *cancellable,
@@ -233,9 +209,6 @@ gmw_probe_device_data_save (GmwProbeDevice *dev,
 	return TRUE;
 }
 
-/**
- * gmw_probe_device_data_set_dummy:
- **/
 static gboolean
 gmw_probe_device_data_set_dummy (GmwProbeDevice *dev,
 				 GCancellable *cancellable,
@@ -261,9 +234,6 @@ gmw_probe_device_data_set_dummy (GmwProbeDevice *dev,
 	return TRUE;
 }
 
-/**
- * gmw_probe_device_data_verify:
- **/
 static gboolean
 gmw_probe_device_data_verify (GmwProbeDevice *dev,
 			      GCancellable *cancellable,
@@ -313,9 +283,6 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 	return TRUE;
 }
 
-/**
- * gmw_probe_device_data_restore:
- **/
 static gboolean
 gmw_probe_device_data_restore (GmwProbeDevice *dev,
 			       GCancellable *cancellable,
@@ -342,9 +309,6 @@ gmw_probe_device_data_restore (GmwProbeDevice *dev,
 	return TRUE;
 }
 
-/**
- * gmw_probe_scan_device:
- **/
 static gboolean
 gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **error)
 {
@@ -442,9 +406,6 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 	return TRUE;
 }
 
-/**
- * gmw_probe_use_device:
- **/
 static gboolean
 gmw_probe_use_device (GUdevClient *udev_client,
 		      const gchar *block_dev,
@@ -492,9 +453,6 @@ gmw_probe_use_device (GUdevClient *udev_client,
 	return TRUE;
 }
 
-/**
- * gmw_probe_is_block_device_valid:
- **/
 static gboolean
 gmw_probe_is_block_device_valid (const gchar *block_device)
 {
@@ -513,9 +471,6 @@ gmw_probe_is_block_device_valid (const gchar *block_device)
 }
 
 
-/**
- * gmw_probe_is_block_device_mounted:
- **/
 static gboolean
 gmw_probe_is_block_device_mounted (const gchar *block_device)
 {
@@ -525,9 +480,6 @@ gmw_probe_is_block_device_mounted (const gchar *block_device)
 	return g_strrstr (data, block_device) != NULL;
 }
 
-/**
- * main:
- **/
 int
 main (int argc, char **argv)
 {

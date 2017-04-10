@@ -49,9 +49,6 @@ typedef struct {
 
 G_DEFINE_TYPE_WITH_PRIVATE (GmwDevice, gmw_device, G_TYPE_OBJECT)
 
-/**
- * gmw_device_get_state:
- **/
 GmwDeviceState
 gmw_device_get_state (GmwDevice *device)
 {
@@ -60,9 +57,6 @@ gmw_device_get_state (GmwDevice *device)
 	return priv->state;
 }
 
-/**
- * gmw_device_get_udisks_block:
- **/
 UDisksBlock *
 gmw_device_get_udisks_block (GmwDevice *device)
 {
@@ -71,9 +65,6 @@ gmw_device_get_udisks_block (GmwDevice *device)
 	return priv->udisks_block;
 }
 
-/**
- * gmw_device_get_name:
- **/
 const gchar *
 gmw_device_get_name (GmwDevice *device)
 {
@@ -82,9 +73,6 @@ gmw_device_get_name (GmwDevice *device)
 	return priv->name;
 }
 
-/**
- * gmw_device_get_block_path:
- **/
 const gchar *
 gmw_device_get_block_path (GmwDevice *device)
 {
@@ -93,9 +81,6 @@ gmw_device_get_block_path (GmwDevice *device)
 	return priv->block_path;
 }
 
-/**
- * gmw_device_get_hub_label:
- **/
 const gchar *
 gmw_device_get_hub_label (GmwDevice *device)
 {
@@ -104,9 +89,6 @@ gmw_device_get_hub_label (GmwDevice *device)
 	return priv->hub_label;
 }
 
-/**
- * gmw_device_get_hub_id:
- **/
 const gchar *
 gmw_device_get_hub_id (GmwDevice *device)
 {
@@ -115,9 +97,6 @@ gmw_device_get_hub_id (GmwDevice *device)
 	return priv->hub_id;
 }
 
-/**
- * gmw_device_get_hub_root:
- **/
 guint8
 gmw_device_get_hub_root (GmwDevice *device)
 {
@@ -128,9 +107,6 @@ gmw_device_get_hub_root (GmwDevice *device)
 	return g_usb_device_get_bus (priv->usb_device);
 }
 
-/**
- * gmw_device_get_object_path:
- **/
 const gchar *
 gmw_device_get_object_path (GmwDevice *device)
 {
@@ -139,9 +115,6 @@ gmw_device_get_object_path (GmwDevice *device)
 	return priv->object_path;
 }
 
-/**
- * gmw_device_get_order_display:
- **/
 const gchar *
 gmw_device_get_order_display (GmwDevice *device)
 {
@@ -155,9 +128,6 @@ gmw_device_get_order_display (GmwDevice *device)
 	return priv->order_display;
 }
 
-/**
- * gmw_device_get_order_process:
- **/
 const gchar *
 gmw_device_get_order_process (GmwDevice *device)
 {
@@ -168,9 +138,6 @@ gmw_device_get_order_process (GmwDevice *device)
 	return priv->order_process;
 }
 
-/**
- * gmw_device_get_sysfs_path:
- **/
 const gchar *
 gmw_device_get_sysfs_path (GmwDevice *device)
 {
@@ -179,9 +146,6 @@ gmw_device_get_sysfs_path (GmwDevice *device)
 	return priv->sysfs_path;
 }
 
-/**
- * gmw_device_get_complete:
- **/
 gdouble
 gmw_device_get_complete (GmwDevice *device)
 {
@@ -190,9 +154,6 @@ gmw_device_get_complete (GmwDevice *device)
 	return priv->complete;
 }
 
-/**
- * gmw_device_get_speed_write:
- **/
 gdouble
 gmw_device_get_speed_write (GmwDevice *device)
 {
@@ -201,9 +162,6 @@ gmw_device_get_speed_write (GmwDevice *device)
 	return priv->speed_write;
 }
 
-/**
- * gmw_device_get_speed_read:
- **/
 gdouble
 gmw_device_get_speed_read (GmwDevice *device)
 {
@@ -212,9 +170,6 @@ gmw_device_get_speed_read (GmwDevice *device)
 	return priv->speed_read;
 }
 
-/**
- * gmw_device_get_size:
- **/
 guint64
 gmw_device_get_size (GmwDevice *device)
 {
@@ -225,9 +180,6 @@ gmw_device_get_size (GmwDevice *device)
 	return udisks_block_get_size (priv->udisks_block);
 }
 
-/**
- * gmw_device_get_icon:
- **/
 const gchar *
 gmw_device_get_icon (GmwDevice *device)
 {
@@ -251,9 +203,6 @@ gmw_device_get_icon (GmwDevice *device)
 	return "drive-harddisk-usb";
 }
 
-/**
- * gmw_device_get_description:
- **/
 gchar *
 gmw_device_get_description (GmwDevice *device)
 {
@@ -324,9 +273,6 @@ gmw_device_get_description (GmwDevice *device)
 	return NULL;
 }
 
-/**
- * gmw_device_set_state:
- **/
 void
 gmw_device_set_state (GmwDevice *device, GmwDeviceState device_state)
 {
@@ -347,9 +293,6 @@ gmw_device_set_state (GmwDevice *device, GmwDeviceState device_state)
 	priv->state = device_state;
 }
 
-/**
- * gmw_device_set_error:
- **/
 void
 gmw_device_set_error (GmwDevice *device, const GError *error)
 {
@@ -365,9 +308,6 @@ gmw_device_set_error (GmwDevice *device, const GError *error)
 	gmw_device_set_complete_write (device, 0.f);
 }
 
-/**
- * gmw_device_set_udisks_block:
- **/
 void
 gmw_device_set_udisks_block (GmwDevice *device, UDisksBlock *udisks_block)
 {
@@ -378,9 +318,6 @@ gmw_device_set_udisks_block (GmwDevice *device, UDisksBlock *udisks_block)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_name:
- **/
 void
 gmw_device_set_name (GmwDevice *device, const gchar *name)
 {
@@ -411,9 +348,6 @@ gmw_device_set_name (GmwDevice *device, const gchar *name)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_block_path:
- **/
 void
 gmw_device_set_block_path (GmwDevice *device, const gchar *block_path)
 {
@@ -425,9 +359,6 @@ gmw_device_set_block_path (GmwDevice *device, const gchar *block_path)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_hub_label:
- **/
 void
 gmw_device_set_hub_label (GmwDevice *device, const gchar *hub_label)
 {
@@ -442,9 +373,6 @@ gmw_device_set_hub_label (GmwDevice *device, const gchar *hub_label)
 	gmw_device_set_order_display (device, NULL);
 }
 
-/**
- * gmw_device_set_hub_id:
- **/
 void
 gmw_device_set_hub_id (GmwDevice *device, const gchar *hub_id)
 {
@@ -456,9 +384,6 @@ gmw_device_set_hub_id (GmwDevice *device, const gchar *hub_id)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_object_path:
- **/
 void
 gmw_device_set_object_path (GmwDevice *device, const gchar *object_path)
 {
@@ -470,9 +395,6 @@ gmw_device_set_object_path (GmwDevice *device, const gchar *object_path)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_order_display:
- **/
 void
 gmw_device_set_order_display (GmwDevice *device, const gchar *order_display)
 {
@@ -484,9 +406,6 @@ gmw_device_set_order_display (GmwDevice *device, const gchar *order_display)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_order_process:
- **/
 void
 gmw_device_set_order_process (GmwDevice *device, const gchar *order_process)
 {
@@ -498,9 +417,6 @@ gmw_device_set_order_process (GmwDevice *device, const gchar *order_process)
 	g_mutex_unlock (&priv->mutex);
 }
 
-/**
- * gmw_device_set_complete_read:
- **/
 void
 gmw_device_set_complete_read (GmwDevice *device, gdouble complete)
 {
@@ -509,9 +425,6 @@ gmw_device_set_complete_read (GmwDevice *device, gdouble complete)
 	priv->complete = priv->write_alloc + (1.0 - priv->write_alloc) * complete;
 }
 
-/**
- * gmw_device_set_complete_write:
- **/
 void
 gmw_device_set_complete_write (GmwDevice *device, gdouble complete)
 {
@@ -520,9 +433,6 @@ gmw_device_set_complete_write (GmwDevice *device, gdouble complete)
 	priv->complete = priv->write_alloc * complete;
 }
 
-/**
- * gmw_device_set_speed_write:
- **/
 void
 gmw_device_set_speed_write (GmwDevice *device, gdouble speed_write)
 {
@@ -531,9 +441,6 @@ gmw_device_set_speed_write (GmwDevice *device, gdouble speed_write)
 	priv->speed_write = speed_write;
 }
 
-/**
- * gmw_device_set_speed_read:
- **/
 void
 gmw_device_set_speed_read (GmwDevice *device, gdouble speed_read)
 {
@@ -542,9 +449,6 @@ gmw_device_set_speed_read (GmwDevice *device, gdouble speed_read)
 	priv->speed_read = speed_read;
 }
 
-/**
- * gmw_device_set_write_alloc:
- **/
 void
 gmw_device_set_write_alloc (GmwDevice *device, gdouble write_alloc)
 {
@@ -553,9 +457,6 @@ gmw_device_set_write_alloc (GmwDevice *device, gdouble write_alloc)
 	priv->write_alloc = write_alloc;
 }
 
-/**
- * gmw_device_set_udisks_drive:
- **/
 void
 gmw_device_set_udisks_drive (GmwDevice *device, UDisksDrive *udisks_drive)
 {
@@ -605,9 +506,6 @@ static guint8 g_usb_device_get_port_number (GUsbDevice *d) {return 0x00;}
 static GPtrArray *g_usb_device_get_children (GUsbDevice *d) {return g_ptr_array_new ();}
 #endif
 
-/**
- * gmw_device_get_toplevel_hub:
- **/
 static GUsbDevice *
 gmw_device_get_toplevel_hub (GmwDevice *device)
 {
@@ -635,9 +533,6 @@ gmw_device_get_toplevel_hub (GmwDevice *device)
 	return g_object_ref (usb_hub);
 }
 
-/**
- * gmw_device_get_quirk_string:
- **/
 gchar *
 gmw_device_get_quirk_string (GmwDevice *device)
 {
@@ -731,9 +626,6 @@ gmw_device_get_quirk_string (GmwDevice *device)
 	return g_strdup (str->str);
 }
 
-/**
- * gmw_device_set_usb_device:
- **/
 void
 gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 {
@@ -1073,9 +965,6 @@ gmw_device_init (GmwDevice *device)
 	g_mutex_init (&priv->mutex);
 }
 
-/**
- * gmw_device_new:
- **/
 GmwDevice *
 gmw_device_new (void)
 {
