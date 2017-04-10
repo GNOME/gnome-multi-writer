@@ -30,9 +30,9 @@
     </p>
     <ul>
       <!-- TRANSLATORS: storage devices refers to the things we're writing to -->
-      <_li>Use USB 3.0 hubs, even if the storage devices are USB 2.0</_li>
+      <li>Use USB 3.0 hubs, even if the storage devices are USB 2.0</li>
       <!-- TRANSLATORS: PCIe is the data bus, don't translate please -->
-      <_li>Install another USB 2.0 PCIe root hub</_li>
+      <li>Install another USB 2.0 PCIe root hub</li>
     </ul>
     <!-- TRANSLATORS: the ColorHug is an open hardware product, don't translate the name -->
     <p>
