@@ -106,21 +106,23 @@ subdir('man')
 subdir('po')
 subdir('data')
 
-archiver = find_program('git', required : false)
-if archiver.found()
-  run_target('dist',
-    # git config tar.tar.xz.command "xz -c"
-    command: [
-      'git', 'archive',
-      '--prefix=' + meson.project_name() + '-' + meson.project_version() + '/',
-      'HEAD',
-      '--format=tar.xz',
-      '--output',
-      meson.project_name() + '-' + meson.project_version() + '.tar.xz'
-    ]
-  )
-else
-  message('git not found, you will not be able to run `ninja dist`')
+if meson.version().version_compare('<0.41.0')
+  archiver = find_program('git', required : false)
+  if archiver.found()
+    run_target('dist',
+      # git config tar.tar.xz.command "xz -c"
+      command: [
+        'git', 'archive',
+        '--prefix=' + meson.project_name() + '-' + meson.project_version() + '/',
+        'HEAD',
+        '--format=tar.xz',
+        '--output',
+        meson.project_name() + '-' + meson.project_version() + '.tar.xz'
+      ]
+    )
+  else
+    message('git not found, you will not be able to run `ninja dist`')
+  endif
 endif
 
 appstream_util = find_program('appstream-util', required : false)
