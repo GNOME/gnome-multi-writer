@@ -3,13 +3,13 @@ GNOME MultiWriter Release Notes
  * Write NEWS entries in the same format as usual.
 
 git log --format="%s" GNOME_MULTI_WRITER_3_24_0.. | grep -i -v trivial | grep -v Merge | uniq
-Add any user visible changes into data/appdata/org.gnome.MultiWriter.appdata.xml.in
+Add any user visible changes into ../data/appdata/org.gnome.MultiWriter.appdata.xml.in
 
  * Commit changes in git:
 
-git commit -a -m "Release version 3.24.1"
-git tag -s GNOME_MULTI_WRITER_3_24_1 -m "==== Version 3.24.1 ===="
-make distcheck
+git commit -a -m "Release version 3.25.90"
+git tag -s GNOME_MULTI_WRITER_3_25_90 -m "==== Version 3.25.90 ===="
+ninja dist
 git push --tags
 git push
 
@@ -19,7 +19,7 @@ scp *.tar.xz rhughes@master.gnome.org:
 ssh rhughes@master.gnome.org
 ftpadmin install gnome-multi-writer-*.tar.xz
 
- * Do post release version bump in configure.ac
+ * Do post release version bump in meson.build
 
 git commit -a -m "trivial: Post release version bump"
 git push

@@ -59,9 +59,16 @@
   </screenshots>
   <!--
    Validate with `appstream-util validate *.appdata.xml`
-   Use `date -d now +%s` or `date -d 2010-01-32 +%s` to get the timestamp.
   -->
   <releases>
+    <release date="2017-08-07" version="3.25.90">
+      <description>
+        <p>
+          This unstable release switched to the meson buildsystem and updated
+          several translations.
+        </p>
+      </description>
+    </release>
     <release date="2017-03-20" version="3.24.0">
       <description>
         <p>This is the first stable release for GNOME 3.24.</p>
