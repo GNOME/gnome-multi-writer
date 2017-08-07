@@ -15,7 +15,7 @@ git push
 
  * Upload tarballs and install module
 
-scp *.tar.xz rhughes@master.gnome.org:
+scp meson-dist/*.tar.xz rhughes@master.gnome.org:
 ssh rhughes@master.gnome.org
 ftpadmin install gnome-multi-writer-*.tar.xz
 
