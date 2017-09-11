@@ -61,6 +61,14 @@
    Validate with `appstream-util validate *.appdata.xml`
   -->
   <releases>
+    <release date="2017-09-11" version="3.26.0">
+      <description>
+        <p>
+          This is the first stable release for GNOME 3.26 and updates several
+          translations.
+        </p>
+      </description>
+    </release>
     <release date="2017-08-07" version="3.25.90">
       <description>
         <p>
