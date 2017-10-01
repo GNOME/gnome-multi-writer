@@ -1,12 +1,13 @@
 [Desktop Entry]
-_Name=MultiWriter
-_Comment=Write an ISO file to multiple USB devices at once
-Icon=gnome-multi-writer
+Name=MultiWriter
+Comment=Write an ISO file to multiple USB devices at once
+# TRANSLATORS: Do NOT translate or transliterate this text (this is an icon file name)!
+Icon=org.gnome.MultiWriter
 Exec=gnome-multi-writer
 Terminal=false
 Type=Application
 Categories=GNOME;GTK;System;
 # TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
-_Keywords=Image;Writer;ISO;USB;
+Keywords=Image;Writer;ISO;USB;
 StartupNotify=true
 NoDisplay=false

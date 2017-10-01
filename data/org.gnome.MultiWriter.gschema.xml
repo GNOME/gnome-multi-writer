@@ -1,5 +1,5 @@
 <schemalist>
-  <schema id="org.gnome.MultiWriter" path="/org/gnome/MultiWriter/">
+  <schema id="org.gnome.MultiWriter" path="/org/gnome/MultiWriter/" gettext-domain="gnome-multi-writer">
     <key name="filename" type="s">
       <default>''</default>
       <!-- TRANSLATORS: schema summary -->

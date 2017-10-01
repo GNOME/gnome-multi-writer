@@ -66,9 +66,6 @@ typedef struct {
 	GtkWidget		*switch_probe;
 } GmwPrivate;
 
-/**
- * gmw_error_dialog:
- **/
 static void
 gmw_error_dialog (GmwPrivate *priv, const gchar *title, const gchar *message)
 {
@@ -87,9 +84,6 @@ gmw_error_dialog (GmwPrivate *priv, const gchar *title, const gchar *message)
 	gtk_widget_destroy (dialog);
 }
 
-/**
- * gmw_activate_cb:
- **/
 static void
 gmw_activate_cb (GApplication *application, GmwPrivate *priv)
 {
@@ -98,18 +92,12 @@ gmw_activate_cb (GApplication *application, GmwPrivate *priv)
 	gtk_window_present (window);
 }
 
-/**
- * gmw_cancel_clicked_cb:
- **/
 static void
 gmw_cancel_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 {
 	g_cancellable_cancel (priv->cancellable);
 }
 
-/**
- * gmw_devices_sort_cb:
- **/
 static gint
 gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 {
@@ -119,9 +107,6 @@ gmw_devices_sort_cb (gconstpointer a, gconstpointer b)
 			  gmw_device_get_order_display (devb));
 }
 
-/**
- * gmw_root_hub_free:
- **/
 static void
 gmw_root_hub_free (GmwRootHub *rh)
 {
@@ -129,9 +114,6 @@ gmw_root_hub_free (GmwRootHub *rh)
 	g_free (rh);
 }
 
-/**
- * gmw_root_hub_new:
- **/
 static GmwRootHub *
 gmw_root_hub_new (guint idx)
 {
@@ -142,9 +124,6 @@ gmw_root_hub_new (guint idx)
 	return rh;
 }
 
-/**
- * gmw_root_hub_find_by_idx:
- **/
 static GmwRootHub *
 gmw_root_hub_find_by_idx (GPtrArray *root_hubs, guint idx)
 {
@@ -191,9 +170,6 @@ gmw_root_hub_enumerate (GPtrArray *devices)
 	return array;
 }
 
-/**
- * gmw_device_list_sort:
- **/
 static void
 gmw_device_list_sort (GmwPrivate *priv)
 {
@@ -234,9 +210,6 @@ typedef struct {
 
 static void gmw_refresh_ui (GmwPrivate *priv);
 
-/**
- * gmw_main_show_quirks:
- **/
 static void
 gmw_main_show_quirks (GmwPrivate *priv)
 {
@@ -253,9 +226,6 @@ gmw_main_show_quirks (GmwPrivate *priv)
 	}
 }
 
-/**
- * gmw_main_rename_response_cb:
- **/
 static void
 gmw_main_rename_response_cb (GtkDialog *dialog,
 			     GtkResponseType response_id,
@@ -278,18 +248,12 @@ gmw_main_rename_response_cb (GtkDialog *dialog,
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
-/**
- * gmw_main_rename_labels_cb:
- **/
 static void
 gmw_main_rename_activate_cb (GtkEntry *entry, GmwRenumberHelper *helper)
 {
 	gtk_dialog_response (helper->dialog, GTK_RESPONSE_OK);
 }
 
-/**
- * gmw_main_rename_labels_cb:
- **/
 static gboolean
 gmw_main_rename_labels_cb (GtkLabel *label, const gchar *uri, GmwPrivate *priv)
 {
@@ -339,9 +303,6 @@ gmw_main_rename_labels_cb (GtkLabel *label, const gchar *uri, GmwPrivate *priv)
 	return TRUE;
 }
 
-/**
- * gmw_refresh_ui:
- **/
 static void
 gmw_refresh_ui (GmwPrivate *priv)
 {
@@ -444,9 +405,6 @@ gmw_refresh_ui (GmwPrivate *priv)
 	gtk_stack_set_visible_child_name (GTK_STACK (w), priv->devices->len > 0 ? "status" : "usb");
 }
 
-/**
- * gmw_refresh_in_idle_cb:
- **/
 static gboolean
 gmw_refresh_in_idle_cb (gpointer user_data)
 {
@@ -460,9 +418,6 @@ gmw_refresh_in_idle_cb (gpointer user_data)
 	return FALSE;
 }
 
-/**
- * gmw_refresh_in_idle:
- **/
 static void
 gmw_refresh_in_idle (GmwPrivate *priv)
 {
@@ -473,9 +428,6 @@ gmw_refresh_in_idle (GmwPrivate *priv)
 	g_mutex_unlock (&priv->idle_id_mutex);
 }
 
-/**
- * gmw_copy_done:
- **/
 static void
 gmw_copy_done (GmwPrivate *priv)
 {
@@ -502,9 +454,6 @@ gmw_copy_done (GmwPrivate *priv)
 	g_mutex_unlock (&priv->thread_pool_mutex);
 }
 
-/**
- * gmw_get_aligned_buffer:
- **/
 static guchar *
 gmw_get_aligned_buffer (gint buffer_size, guchar **buffer)
 {
@@ -518,9 +467,6 @@ gmw_get_aligned_buffer (gint buffer_size, guchar **buffer)
 	return buffer_unaligned;
 }
 
-/**
- * gmw_device_write:
- **/
 static gboolean
 gmw_device_write (GmwPrivate *priv,
 		  GmwDevice *device,
@@ -665,9 +611,6 @@ out:
 	return ret;
 }
 
-/**
- * gmw_device_verify:
- **/
 static gboolean
 gmw_device_verify (GmwPrivate *priv,
 		   GmwDevice *device,
@@ -831,9 +774,6 @@ out:
 	return ret;
 }
 
-/**
- * gmw_refresh_titlebar:
- **/
 static void
 gmw_refresh_titlebar (GmwPrivate *priv)
 {
@@ -867,9 +807,6 @@ gmw_refresh_titlebar (GmwPrivate *priv)
 	gtk_header_bar_set_title (GTK_HEADER_BAR (w), title->str);
 }
 
-/**
- * gmw_refresh_titlebar_idle_cb:
- **/
 static gboolean
 gmw_refresh_titlebar_idle_cb (gpointer user_data)
 {
@@ -878,9 +815,6 @@ gmw_refresh_titlebar_idle_cb (gpointer user_data)
 	return G_SOURCE_REMOVE;
 }
 
-/**
- * gmw_block_device_probe:
- **/
 static gboolean
 gmw_block_device_probe (const gchar *block_dev, GError **error)
 {
@@ -907,9 +841,6 @@ gmw_block_device_probe (const gchar *block_dev, GError **error)
 	return TRUE;
 }
 
-/**
- * gmw_copy_thread_cb:
- **/
 static void
 gmw_copy_thread_cb (gpointer data, gpointer user_data)
 {
@@ -968,9 +899,6 @@ out:
 	gmw_copy_done (priv);
 }
 
-/**
- * gmw_update_title:
- **/
 static void
 gmw_update_title (GmwPrivate *priv)
 {
@@ -985,9 +913,6 @@ gmw_update_title (GmwPrivate *priv)
 	}
 }
 
-/**
- * gmw_set_image_file_changed_cb:
- **/
 static void
 gmw_set_image_file_changed_cb (GFileMonitor *monitor,
 			       GFile *file,
@@ -998,9 +923,6 @@ gmw_set_image_file_changed_cb (GFileMonitor *monitor,
 	g_debug ("ISO file changed");
 }
 
-/**
- * gmw_set_image_filename:
- **/
 static void
 gmw_set_image_filename (GmwPrivate *priv, const gchar *filename)
 {
@@ -1037,9 +959,6 @@ gmw_set_image_filename (GmwPrivate *priv, const gchar *filename)
 	priv->image_file_size = g_file_info_get_size (info);
 }
 
-/**
- * gmw_import_filename:
- **/
 static void
 gmw_import_filename (GmwPrivate *priv)
 {
@@ -1075,9 +994,6 @@ gmw_import_filename (GmwPrivate *priv)
 	gtk_widget_destroy (d);
 }
 
-/**
- * gmw_auth_dummy_restore:
- **/
 static gboolean
 gmw_auth_dummy_restore (GmwPrivate *priv, GmwDevice *device, GError **error)
 {
@@ -1107,9 +1023,6 @@ out:
 	return ret;
 }
 
-/**
- * gmw_throughput_update_titlebar_cb:
- **/
 static gboolean
 gmw_throughput_update_titlebar_cb (gpointer user_data)
 {
@@ -1118,9 +1031,6 @@ gmw_throughput_update_titlebar_cb (gpointer user_data)
 	return G_SOURCE_CONTINUE;
 }
 
-/**
- * gmw_udisks_unmount_cb:
- **/
 static void
 gmw_udisks_unmount_cb (GObject *source_object,
 		       GAsyncResult *res,
@@ -1133,9 +1043,6 @@ gmw_udisks_unmount_cb (GObject *source_object,
 		g_warning ("Failed to unmount filesystem: %s", error->message);
 }
 
-/**
- * gmw_udisks_get_filesystem_for_device:
- **/
 static UDisksFilesystem *
 gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 {
@@ -1172,9 +1079,6 @@ gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 	return NULL;
 }
 
-/**
- * gmw_udisks_unmount_filesystems_async:
- **/
 static void
 gmw_udisks_unmount_filesystems_async (GmwPrivate *priv, GmwDevice *device)
 {
@@ -1189,9 +1093,6 @@ gmw_udisks_unmount_filesystems_async (GmwPrivate *priv, GmwDevice *device)
 					device);
 }
 
-/**
- * gmw_udisks_unmount_filesystems_sync:
- **/
 static gboolean
 gmw_udisks_unmount_filesystems_sync (GmwPrivate *priv, GmwDevice *device, GError **error)
 {
@@ -1205,9 +1106,6 @@ gmw_udisks_unmount_filesystems_sync (GmwPrivate *priv, GmwDevice *device, GError
 						    error);
 }
 
-/**
- * gmw_start_copy:
- **/
 static void
 gmw_start_copy (GmwPrivate *priv)
 {
@@ -1278,9 +1176,6 @@ gmw_start_copy (GmwPrivate *priv)
 	gmw_refresh_ui (priv);
 }
 
-/**
- * gmw_start_confirm_response_cb:
- **/
 static void
 gmw_start_confirm_response_cb (GtkDialog *dialog,
 			       GtkResponseType response_id,
@@ -1293,9 +1188,6 @@ gmw_start_confirm_response_cb (GtkDialog *dialog,
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
-/**
- * gmw_start_clicked_cb:
- **/
 static void
 gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 {
@@ -1349,9 +1241,6 @@ gmw_start_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 	gtk_window_present (GTK_WINDOW (w));
 }
 
-/**
- * gmw_import_activated_cb:
- **/
 static void
 gmw_import_activated_cb (GSimpleAction *action,
 			 GVariant *parameter,
@@ -1361,9 +1250,6 @@ gmw_import_activated_cb (GSimpleAction *action,
 	gmw_import_filename (priv);
 }
 
-/**
- * gmw_about_activated_cb:
- **/
 static void
 gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
@@ -1394,9 +1280,6 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 			       NULL);
 }
 
-/**
- * gmw_quit_activated_cb:
- **/
 static void
 gmw_quit_activated_cb (GSimpleAction *action,
 		       GVariant *parameter,
@@ -1412,9 +1295,6 @@ static GActionEntry actions[] = {
 	{ "quit", gmw_quit_activated_cb, NULL, NULL, NULL }
 };
 
-/**
- * gmw_settings_clicked_cb:
- **/
 static void
 gmw_settings_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 {
@@ -1461,9 +1341,6 @@ gmw_settings_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 	gtk_widget_show_all (pop);
 }
 
-/**
- * gmw_startup_cb:
- **/
 static void
 gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 {
@@ -1524,9 +1401,6 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	gtk_widget_show (main_window);
 }
 
-/**
- * gmw_sysfs_get_busnum:
- **/
 static guint8
 gmw_sysfs_get_busnum (const gchar *filename)
 {
@@ -1538,9 +1412,6 @@ gmw_sysfs_get_busnum (const gchar *filename)
 	return g_ascii_strtoull (data, NULL, 10);
 }
 
-/**
- * gmw_sysfs_get_devnum:
- **/
 static guint8
 gmw_sysfs_get_devnum (const gchar *filename)
 {
@@ -1552,9 +1423,6 @@ gmw_sysfs_get_devnum (const gchar *filename)
 	return g_ascii_strtoull (data, NULL, 10);
 }
 
-/**
- * gmw_udisks_find_usb_device:
- **/
 static void
 gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 {
@@ -1587,9 +1455,6 @@ gmw_udisks_find_usb_device (GmwPrivate *priv, GmwDevice *device)
 	gmw_device_set_usb_device (device, usb_device);
 }
 
-/**
- * gmw_udisks_object_add:
- **/
 static gboolean
 gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 {
@@ -1681,9 +1546,6 @@ gmw_udisks_object_add (GmwPrivate *priv, GDBusObject *dbus_object)
 	return TRUE;
 }
 
-/**
- * gmw_update_max_threads:
- **/
 static void
 gmw_update_max_threads (GmwPrivate *priv)
 {
@@ -1704,9 +1566,6 @@ gmw_update_max_threads (GmwPrivate *priv)
 				       NULL);
 }
 
-/**
- * gmw_udisks_object_added_cb:
- **/
 static void
 gmw_udisks_object_added_cb (GDBusObjectManager *object_manager,
 			    GDBusObject *dbus_object,
@@ -1719,9 +1578,6 @@ gmw_udisks_object_added_cb (GDBusObjectManager *object_manager,
 	}
 }
 
-/**
- * gmw_udisks_object_removed_cb:
- **/
 static void
 gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 			      GDBusObject *dbus_object,
@@ -1745,9 +1601,6 @@ gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 	}
 }
 
-/**
- * gmw_udisks_client_connect_cb:
- **/
 static void
 gmw_udisks_client_connect_cb (GObject *source_object,
 			      GAsyncResult *res,
@@ -1778,9 +1631,6 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 	g_list_free_full (objects, (GDestroyNotify) g_object_unref);
 }
 
-/**
- * gmw_settings_changed_cb:
- **/
 static void
 gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv)
 {
@@ -1794,9 +1644,6 @@ gmw_settings_changed_cb (GSettings *settings, const gchar *key, GmwPrivate *priv
 	}
 }
 
-/**
- * gmw_thread_pool_sort_func:
- **/
 static gint
 gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
 {
@@ -1806,9 +1653,6 @@ gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
 			  gmw_device_get_order_process (devb));
 }
 
-/**
- * main:
- **/
 int
 main (int argc, char **argv)
 {

@@ -1,8 +1,0 @@
-[main]
-host = https://www.transifex.com
-
-[gnome-multi-writer.master]
-file_filter = po/<lang>.po
-source_file = po/gnome-multi-writer.pot
-source_lang = en
-type = PO
