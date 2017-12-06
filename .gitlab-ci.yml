@@ -1,0 +1,30 @@
+image: fedora:26
+
+stages:
+  - build
+
+before_script:
+  - dnf update -y
+  - >
+    dnf install -y \
+      desktop-file-utils \
+      docbook-utils \
+      gettext \
+      glib2-devel \
+      gtk3-devel \
+      itstool \
+      libcanberra-devel \
+      libgusb-devel \
+      libudisks2-devel \
+      libgudev1-devel \
+      libappstream-glib \
+      polkit-devel
+      meson \
+      ninja-build
+
+build-gnome-multi-writer:
+  stage: build
+  script:
+  - meson _build .
+  - ninja -v -C _build
+  - meson test -v -C _build
