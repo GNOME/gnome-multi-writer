@@ -4,7 +4,7 @@ gnome_multi_writer_resources = gnome.compile_resources(
   'gnome-multi-writer-resources',
   'gnome-multi-writer.gresource.xml',
   source_dir : '.',
-  c_name : 'gmw'
+  c_name : 'gmw',
 )
 
 executable(
@@ -27,7 +27,6 @@ executable(
   ],
   c_args : cargs,
   install : true,
-  install_dir : 'bin'
 )
 
 executable(
@@ -44,5 +43,5 @@ executable(
   ],
   c_args : cargs,
   install : true,
-  install_dir : 'libexec'
+  install_dir : prefixed_libexecdir,
 )
