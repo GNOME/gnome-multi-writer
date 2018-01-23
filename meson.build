@@ -74,8 +74,13 @@ foreach arg: test_link_args
 endforeach
 add_global_link_arguments(
   global_link_args,
-  language: 'c'
+  language: 'c',
 )
+
+prefixed_localedir = join_paths(get_option('prefix'), get_option('localedir'))
+prefixed_libexecdir = join_paths(get_option('prefix'), get_option('libexecdir'))
+prefixed_mandir = join_paths(get_option('prefix'), get_option('mandir'))
+prefixed_datadir = join_paths(get_option('prefix'), get_option('datadir'))
 
 gtk = dependency('gtk+-3.0', version : '>= 3.11.2')
 gio = dependency('gio-2.0')
@@ -90,15 +95,12 @@ i18n = import('i18n')
 
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf.set_quoted('VERSION', meson.project_version())
-conf.set_quoted('LOCALEDIR',
-                join_paths(get_option('prefix'),
-                           get_option('localedir')))
-conf.set_quoted('LIBEXECDIR',
-                join_paths(get_option('prefix'),
-                           get_option('libexecdir')))
+conf.set_quoted('LOCALEDIR', prefixed_localedir)
+conf.set_quoted('LIBEXECDIR', prefixed_libexecdir)
+
 configure_file(
   output : 'config.h',
-  configuration : conf
+  configuration : conf,
 )
 
 subdir('src')

@@ -5,6 +5,6 @@ if docbook2man.found()
     input : 'gnome-multi-writer.sgml',
     command : [docbook2man, '@INPUT@', '--output', 'man'],
     install : true,
-    install_dir : 'share/man/man1'
+    install_dir : join_paths(prefixed_mandir, 'man1'),
   )
 endif
