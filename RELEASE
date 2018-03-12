@@ -7,8 +7,8 @@ Add any user visible changes into ../data/appdata/org.gnome.MultiWriter.appdata.
 
  * Commit changes in git:
 
-git commit -a -m "Release version 3.26.1"
-git tag -s GNOME_MULTI_WRITER_3_26_1 -m "==== Version 3.26.1 ===="
+git commit -a -m "Release version 3.28.0"
+git tag -s GNOME_MULTI_WRITER_3_28_0 -m "==== Version 3.28.0 ===="
 ninja dist
 git push --tags
 git push
