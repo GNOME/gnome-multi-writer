@@ -1257,7 +1257,7 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 	GList *windows;
 	GtkWindow *parent = NULL;
 	const gchar *authors[] = { "Richard Hughes", NULL };
-	const gchar *copyright = "Copyright \xc2\xa9 2014-2015 Richard Hughes";
+	const gchar *copyright = "Copyright \xc2\xa9 2014-2018 Richard Hughes";
 
 	windows = gtk_application_get_windows (GTK_APPLICATION (priv->application));
 	if (windows)
