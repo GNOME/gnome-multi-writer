@@ -18,6 +18,7 @@ executable(
     include_directories('..'),
   ],
   dependencies : [
+    gio_unix,
     gtk,
     gusb,
     udisks,

@@ -80,6 +80,7 @@ prefixed_datadir = join_paths(get_option('prefix'), get_option('datadir'))
 
 gtk = dependency('gtk+-3.0', version : '>= 3.11.2')
 gio = dependency('gio-2.0')
+gio_unix = dependency('gio-unix-2.0')
 gusb = dependency('gusb', version : '>= 0.2.7')
 udisks = dependency('udisks2')
 gudev = dependency('gudev-1.0')
