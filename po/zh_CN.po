@@ -1,0 +1,361 @@
+# Chinese (China) translation for gnome-multi-writer.
+# Copyright (C) 2015 gnome-multi-writer's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-multi-writer package.
+# Dingzhong Chen <wsxy162@gmail.com>, 2015, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-multi-writer 3.20\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-09 20:38+0000\n"
+"PO-Revision-Date: 2017-03-01 22:45+0800\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#. TRANSLATORS: Application window title
+#. TRANSLATORS: the application name
+#. set the title
+#: ../data/gmw-main.ui.h:2
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
+#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:855
+msgid "MultiWriter"
+msgstr "MultiWriter"
+
+#. TRANSLATORS: button to start the copy
+#: ../data/gmw-main.ui.h:4
+msgid "Start Copying"
+msgstr "开始复制"
+
+#. TRANSLATORS: button to cancel a copy process
+#. TRANSLATORS: button title
+#: ../data/gmw-main.ui.h:6 ../src/gmw-main.c:1058
+msgid "Cancel"
+msgstr "取消"
+
+#. TRANSLATORS: app menu item for the file chooser
+#: ../data/gmw-menus.ui.h:2
+msgid "Import ISO file…"
+msgstr "导入 ISO 文件…"
+
+#. TRANSLATORS: app menu item for the About UI
+#: ../data/gmw-menus.ui.h:4
+msgid "_About"
+msgstr "关于(_A)"
+
+#. TRANSLATORS: app menu item for Quit
+#: ../data/gmw-menus.ui.h:6
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#. TRANSLATORS: one-line description for the app
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
+#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1387
+msgid "Write an ISO file to multiple USB devices at once"
+msgstr "将 ISO 文件一次写入多个 USB 设备中"
+
+#. TRANSLATORS: AppData description marketing paragraph
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:6
+msgid ""
+"GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
+"at once. Supported drive sizes are between 1GB and 32GB."
+msgstr ""
+"GNOME MultiWriter 可以用于将 ISO 文件一次写入多个 USB 设备中。支持的驱动器大"
+"小介于 1GB 和 32GB 之间。"
+
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
+#. GNOME refers to the desktop environment
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:9
+msgid ""
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+"MultiWriter 对于 QA 测试很有用，为代码冲刺活动创建 GNOME Live 映像或者为展览"
+"会创建上百份的 LiveUSB 驱动器。"
+
+#. TRANSLATORS: saturate as in the throughput can get no more
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
+msgid ""
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
+msgstr ""
+"同时写入超过 10 个以上的设备，对于大多数的存储设备很容易使 USB 总线达到饱和。"
+"这里有两种方式以并行地写入更多设备："
+
+#. TRANSLATORS: storage devices refers to the things we're writing to
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:13
+msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
+msgstr "使用 USB 3.0 集线器，即使你的储存设备是 USB 2.0 的"
+
+#. TRANSLATORS: PCIe is the data bus, don't translate please
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:15
+msgid "Install another USB 2.0 PCIe root hub"
+msgstr "加装 USB 2.0 PCIe 根集线器"
+
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:17
+msgid ""
+"MultiWriter was originally written as part of the ColorHug project but was "
+"split off as an independent application in 2015."
+msgstr ""
+"MultiWriter 原来是编写于 ColorHug 项目的一部分，但后来在 2015 年分离出来作为"
+"独立的应用程序。"
+
+#. TRANSLATORS: the 1st screenshot caption
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:19
+msgid "Initial screen for the application"
+msgstr "应用程序的初始画面"
+
+#. TRANSLATORS: the 2nd screenshot caption
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:21
+msgid "Writing and verifying images"
+msgstr "写入并校验映像"
+
+#. TRANSLATORS: the 3rd screenshot caption
+#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:23
+msgid "All devices have been written"
+msgstr "所有设备已被写入"
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:2
+msgid "The filename to write to the USB disks"
+msgstr "要写入 USB 磁盘的文件名"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:4
+msgid "The filename of the ISO image to write to the connected USB disks."
+msgstr "要写入已连接的 USB 磁盘的 ISO 映像文件名"
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:6
+msgid "The maximum number of threads to use"
+msgstr "要使用的最大线程数"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:8
+msgid "The maximum number of parallel threads to use when copying data."
+msgstr "复制数据时要使用的最大并行线程数目"
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:10
+msgid "Completely blank drive when writing"
+msgstr "写入时完全清空驱动器"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:12
+msgid "Write the ISO to the drive and then blank the remainder of the drive."
+msgstr "将 ISO 文件写入到驱动器后清空驱动器的剩余空间"
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:14
+msgid "Verify the ISO image was written correctly"
+msgstr "校验 ISO 映像是否正确写入"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:16
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
+msgstr "写入完成后，读取各个驱动器的 ISO 映像并校验"
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:18
+msgid "Inspect the device before writing images"
+msgstr "写入映像前先检测设备"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr "检测设备以验证报告的设备大小是否是实际的媒体大小。"
+
+#. TRANSLATORS: schema summary
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:22
+msgid "Show a warning before writing to a drive"
+msgstr "写入驱动器前显示警告"
+
+#. TRANSLATORS: schema description
+#: ../data/org.gnome.MultiWriter.gschema.xml.h:24
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
+msgstr "显示一个对话框警告以确认设备内容将被清除。"
+
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: ../data/org.gnome.MultiWriter.desktop.in.h:4
+msgid "Image;Writer;ISO;USB;"
+msgstr "Image;Writer;ISO;USB;镜像;映像;写入器;"
+
+#: ../data/org.gnome.MultiWriter.policy.in.h:1
+msgid "Check the device"
+msgstr "检测设备"
+
+#: ../data/org.gnome.MultiWriter.policy.in.h:2
+msgid "Authentication is required to probe the device"
+msgstr "需要认证来探测设备"
+
+#. TRANSLATORS: The image has been written and verified to
+#. * *one* device, not all
+#: ../src/gmw-device.c:294
+msgid "Written successfully"
+msgstr "写入成功"
+
+#. TRANSLATORS: we're writing the image to the device
+#. * and we now know the speed
+#: ../src/gmw-device.c:302
+#, c-format
+msgid "Writing at %.1f MB/s…"
+msgstr "正以 %.1f MB/s 速度写入中…"
+
+#. TRANSLATORS: we're writing the image to the USB device
+#: ../src/gmw-device.c:306
+msgid "Writing…"
+msgstr "正在写入…"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data and we now know the speed
+#: ../src/gmw-device.c:315
+#, c-format
+msgid "Verifying at %.1f MB/s…"
+msgstr "正以 %.1f MB/s 速度校验中…"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data
+#: ../src/gmw-device.c:320
+msgid "Verifying…"
+msgstr "正在校验…"
+
+#. TRANSLATORS: This is a generic no-name USB flash disk
+#: ../src/gmw-device.c:394
+msgid "USB Flash Drive"
+msgstr "USB 闪存驱动器"
+
+#. TRANSLATORS: window title renaming labels
+#: ../src/gmw-main.c:317
+msgid "New hub label"
+msgstr "新的集线器标签"
+
+#. TRANSLATORS: the application name
+#. TRANSLATORS: the application name for the about UI
+#. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: ../src/gmw-main.c:487 ../src/gmw-main.c:1384 ../src/gmw-main.c:1840
+msgid "GNOME MultiWriter"
+msgstr "GNOME MultiWriter"
+
+#. TRANSLATORS: the success sound description
+#: ../src/gmw-main.c:489
+msgid "Image written successfully"
+msgstr "映像已成功写入"
+
+#. TRANSLATORS: copy aborted
+#: ../src/gmw-main.c:598 ../src/gmw-main.c:638 ../src/gmw-main.c:744
+#: ../src/gmw-main.c:779
+msgid "Cancelled"
+msgstr "已取消"
+
+#. TRANSLATORS: we couldn't open the ISO file the user chose
+#: ../src/gmw-main.c:1020 ../src/gmw-main.c:1034
+msgid "Failed to open"
+msgstr "打开失败"
+
+#. TRANSLATORS: window title for the file-chooser, file is an ISO
+#: ../src/gmw-main.c:1054
+msgid "Choose the file to write"
+msgstr "选择要写入的文件"
+
+#. TRANSLATORS: button title
+#: ../src/gmw-main.c:1060
+msgid "Import"
+msgstr "导入"
+
+#. TRANSLATORS: the file filter description, e.g. *.iso
+#: ../src/gmw-main.c:1064
+msgid "ISO files"
+msgstr "ISO 文件"
+
+#. TRANSLATORS: error dialog title:
+#. * we probably didn't authenticate
+#: ../src/gmw-main.c:1233 ../src/gmw-main.c:1252
+msgid "Failed to copy"
+msgstr "复制失败"
+
+#. TRANSLATORS: the inhibit reason
+#: ../src/gmw-main.c:1269
+msgid "Writing ISO to devices"
+msgstr "正在将 ISO 写入设备"
+
+#. TRANSLATORS: window title for the warning dialog
+#: ../src/gmw-main.c:1322
+msgid "Write to all disks?"
+msgstr "写入到所有磁盘？"
+
+#. TRANSLATORS: check that we can nuke everything from all disks
+#: ../src/gmw-main.c:1327
+msgid "All data on the drives will be deleted."
+msgstr "驱动器上的所有数据将被删除。"
+
+#. TRANSLATORS: if the image file is smaller than the disks and
+#. * we've disabled wiping the device we only write enough data
+#. * to transfer the image
+#: ../src/gmw-main.c:1332
+msgid "The ISO file is smaller than the disk capacity."
+msgstr "ISO 文件小于磁盘容量。"
+
+#. TRANSLATORS: this could leave your personal files on the drive
+#: ../src/gmw-main.c:1337
+msgid ""
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
+msgstr "一些驱动器上的最近的内容即使在复制后仍可能使用取证工具找出来。"
+
+#. TRANSLATORS: button text for the warning dialog
+#: ../src/gmw-main.c:1344
+msgid "I Understand"
+msgstr "我清楚了"
+
+#. TRANSLATORS: the title of the about window
+#: ../src/gmw-main.c:1382
+msgid "About GNOME MultiWriter"
+msgstr "关于 GNOME MultiWriter"
+
+#. TRANSLATORS: you can put your name here :)
+#: ../src/gmw-main.c:1392
+msgid "translator-credits"
+msgstr "Dingzhong Chen <wsxy162@gmail.com>, 2015, 2017"
+
+#. TRANSLATORS: a switch label: verify the image by
+#. * reading back the original image from the device
+#: ../src/gmw-main.c:1445
+msgid "Verify"
+msgstr "校验"
+
+#. TRANSLATORS: a switch label: we write zeros after
+#. * the image so it erases the entire device
+#: ../src/gmw-main.c:1451
+msgid "Wipe"
+msgstr "清除"
+
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: ../src/gmw-main.c:1457
+msgid "Probe"
+msgstr "检测"
+
+#. TRANSLATORS: command line option
+#: ../src/gmw-main.c:1824
+msgid "Allow renaming the labels on hubs"
+msgstr "允许重命名集线器标签"
+
+#. TRANSLATORS: command line option
+#: ../src/gmw-main.c:1827 ../src/gmw-probe.c:545
+msgid "Show extra debugging information"
+msgstr "显示额外的调试信息"
+
+#. TRANSLATORS: the user has sausages for fingers
+#: ../src/gmw-main.c:1846
+msgid "Failed to parse command line options"
+msgstr "解析命令行选项失败"
