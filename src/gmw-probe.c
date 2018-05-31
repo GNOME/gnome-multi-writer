@@ -434,10 +434,15 @@ gmw_probe_use_device (GUdevClient *udev_client,
 								    "usb",
 								    "usb_device");
 	if (dev->udev_device == NULL) {
+		dev->udev_device = g_udev_device_get_parent_with_subsystem (udev_device,
+									    "mmc",
+									    NULL);
+	}
+	if (dev->udev_device == NULL) {
 		g_set_error_literal (error,
 				     GMW_ERROR,
 				     GMW_ERROR_FAILED,
-				     "Not a USB device");
+				     "Not a USB or MMC device");
 		gmw_probe_device_free (dev);
 		return FALSE;
 	}
@@ -493,7 +498,7 @@ int
 main (int argc, char **argv)
 {
 	GOptionContext *context;
-	const gchar *subsystems[] = { "usb", NULL };
+	const gchar *subsystems[] = { "usb", "block", "mmc", NULL };
 	gboolean verbose = FALSE;
 	int status = EXIT_SUCCESS;
 	_cleanup_object_unref_ GUdevClient *udev_client = NULL;
