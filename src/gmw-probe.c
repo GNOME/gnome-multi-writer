@@ -462,6 +462,15 @@ gmw_probe_is_block_device_valid (const gchar *block_device)
 	if (!g_str_has_prefix (block_device, "/dev/"))
 		return FALSE;
 
+	/* is it an mmcblk device? */
+	if (g_str_has_prefix (block_device, "/dev/mmcblk")) {
+		/* has no partition number */
+		char *s;
+
+		s = block_device + strlen ("/dev/mmcblk");
+		return (strchr (s, 'p') == NULL);
+	}
+
 	/* has no partition number */
 	for (i = strlen ("/dev/"); block_device[i] != '\0'; i++) {
 		if (g_ascii_isdigit (block_device[i]))
