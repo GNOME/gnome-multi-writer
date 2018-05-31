@@ -463,7 +463,7 @@ gmw_probe_is_block_device_valid (const gchar *block_device)
 		return FALSE;
 
 	/* has no partition number */
-	for (i = 5; block_device[i] != '\0'; i++) {
+	for (i = strlen ("/dev/"); block_device[i] != '\0'; i++) {
 		if (g_ascii_isdigit (block_device[i]))
 			return FALSE;
 	}
