@@ -85,7 +85,7 @@ gmw_probe_block_free (GmwProbeBlock *item)
 }
 
 static gboolean
-gmw_probe_device_reset (GmwProbeDevice *dev, GError **error)
+gmw_probe_device_reset_usb (GmwProbeDevice *dev, GError **error)
 {
 	int fd;
 	const gchar *devnode;
@@ -111,6 +111,96 @@ gmw_probe_device_reset (GmwProbeDevice *dev, GError **error)
 	}
 	close (fd);
 	return TRUE;
+}
+
+static gboolean
+gmw_probe_device_reset_mmc (GmwProbeDevice *dev, GError **error)
+{
+	char *driver_path;
+	char *device_name = NULL;
+	char *abs_driver_path = NULL;
+	char *action_path = NULL;
+	char driver_path_link[PATH_MAX + 1];
+	GFile *driver_file, *abs_driver_file;
+	gboolean retval = FALSE;
+	int fd;
+
+	/* Find the canonical driver folder's path */
+	driver_path = g_build_filename (g_udev_device_get_sysfs_path (dev->udev_device),
+					"driver",
+					NULL);
+
+	if (readlink (driver_path, driver_path_link, sizeof(driver_path_link) - 1) < 0) {
+		g_set_error (error,
+			     GMW_ERROR,
+			     GMW_ERROR_FAILED,
+			     "Failed to find driver link in %s", driver_path);
+		g_free (driver_path);
+		return FALSE;
+	}
+
+	driver_file = g_file_new_for_path (g_udev_device_get_sysfs_path (dev->udev_device));
+	g_free (driver_path);
+	abs_driver_file = g_file_resolve_relative_path (driver_file,
+							driver_path_link);
+	g_object_unref (driver_file);
+	abs_driver_path = g_file_get_path (abs_driver_file);
+	g_object_unref (abs_driver_file);
+
+	/* Get the device's name */
+	device_name = g_path_get_basename (g_udev_device_get_sysfs_path (dev->udev_device));
+
+	/* Unbind the device */
+	action_path = g_build_filename (abs_driver_path, "unbind", NULL);
+	fd = open (action_path, O_WRONLY | O_NONBLOCK);
+	if (fd < 0) {
+		g_set_error (error,
+			     GMW_ERROR,
+			     GMW_ERROR_FAILED,
+			     "Failed to open %s", action_path);
+		goto out;
+	}
+	if (write (fd, device_name, strlen (device_name)) < 0) {
+		g_set_error (error,
+			     GMW_ERROR,
+			     GMW_ERROR_FAILED,
+			     "Failed to reset device");
+		close (fd);
+		goto out;
+	}
+	close (fd);
+
+	/* Re-bind the device */
+	action_path = g_build_filename (abs_driver_path, "bind", NULL);
+	fd = open (action_path, O_WRONLY | O_NONBLOCK);
+	if (fd < 0) {
+		g_set_error (error,
+			     GMW_ERROR,
+			     GMW_ERROR_FAILED,
+			     "Failed to open %s", action_path);
+		goto out;
+	}
+	if (write (fd, device_name, strlen (device_name)) < 0) {
+		g_set_error (error,
+			     GMW_ERROR,
+			     GMW_ERROR_FAILED,
+			     "Failed to reset device");
+		close (fd);
+		goto out;
+	}
+	close (fd);
+
+	/* Stay a while, and listen */
+	g_usleep (G_USEC_PER_SEC * 2);
+
+	retval = TRUE;
+
+out:
+	g_free (device_name);
+	g_free (abs_driver_path);
+	g_free (action_path);
+
+	return retval;
 }
 
 static gboolean
@@ -371,9 +461,16 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 	}
 
 	/* reset device */
-	if (!gmw_probe_device_reset (dev, error)) {
-		gmw_probe_device_data_restore (dev, cancellable, NULL);
-		return FALSE;
+	if (g_str_equal (g_udev_device_get_subsystem (dev->udev_device), "usb")) {
+		if (!gmw_probe_device_reset_usb (dev, error)) {
+			gmw_probe_device_data_restore (dev, cancellable, NULL);
+			return FALSE;
+		}
+	} else {
+		if (!gmw_probe_device_reset_mmc (dev, error)) {
+			gmw_probe_device_data_restore (dev, cancellable, NULL);
+			return FALSE;
+		}
 	}
 
 	/* wait for block drive to reappear */
