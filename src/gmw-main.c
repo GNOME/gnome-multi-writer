@@ -1273,7 +1273,7 @@ gmw_about_activated_cb (GSimpleAction *action, GVariant *parameter, gpointer use
 			       "comments", _("Write an ISO file to multiple USB devices at once"),
 			       "copyright", copyright,
 			       "license-type", GTK_LICENSE_GPL_2_0,
-			       "logo-icon-name", "gnome-multi-writer",
+			       "logo-icon-name", "org.gnome.MultiWriter",
 			       /* TRANSLATORS: you can put your name here :) */
 			       "translator-credits", _("translator-credits"),
 			       "version", VERSION,
