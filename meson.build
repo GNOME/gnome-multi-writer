@@ -36,6 +36,7 @@ test_args = [
   '-Wno-strict-aliasing',
   '-Wno-suggest-attribute=format',
   '-Wno-unused-parameter',
+  '-Wno-cast-function-type',
   '-Wold-style-definition',
   '-Woverride-init',
   '-Wpacked',

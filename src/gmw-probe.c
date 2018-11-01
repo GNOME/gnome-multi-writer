@@ -67,11 +67,8 @@ typedef struct {
 static guint8 *
 gmw_probe_get_random_data (guint len)
 {
-	guint i;
-	guint8 *data;
-
-	data = g_new (guint8, len);
-	for (i = 0; i < len; i++)
+	guint8 *data = g_new (guint8, len);
+	for (guint i = 0; i < len; i++)
 		data[i] = g_random_int_range ('a', 'z');
 	return data;
 }
@@ -176,16 +173,12 @@ gmw_probe_device_data_save (GmwProbeDevice *dev,
 			    GCancellable *cancellable,
 			    GError **error)
 {
-	GmwProbeBlock *item;
-	guint64 chunk_size;
-	guint i;
-
 	/* aim for roughtly the same number of chunks for all device sizes */
-	chunk_size = dev->disk_size / 256;
+	guint64 chunk_size = dev->disk_size / 256;
 	g_debug ("using chunk size of %" G_GUINT64_FORMAT "MB",
 		 chunk_size / ONE_MB);
-	for (i = 1; i < 40; i++) {
-		item = g_new0 (GmwProbeBlock, 1);
+	for (guint i = 1; i < 40; i++) {
+		GmwProbeBlock *item = g_new0 (GmwProbeBlock, 1);
 		item->valid = TRUE;
 		item->offset = g_random_int_range (1, 0xff);
 		item->address = i * chunk_size;
@@ -214,11 +207,8 @@ gmw_probe_device_data_set_dummy (GmwProbeDevice *dev,
 				 GCancellable *cancellable,
 				 GError **error)
 {
-	GmwProbeBlock *item;
-	guint i;
-
-	for (i = 0; i < dev->data_save->len; i++) {
-		item = g_ptr_array_index (dev->data_save, i);
+	for (guint i = 0; i < dev->data_save->len; i++) {
+		GmwProbeBlock *item = g_ptr_array_index (dev->data_save, i);
 		item->bytes_wrote = gmw_probe_device_write (dev,
 							    item->address +
 							    item->offset,
@@ -239,18 +229,14 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 			      GCancellable *cancellable,
 			      GError **error)
 {
-	GmwProbeBlock *item;
 	guint i;
-	guint32 offset;
-	g_autofree guint8 *wbuf2 = NULL;
-
-	wbuf2 = g_new (guint8, ONE_BLOCK + 0xff);
+	g_autofree guint8 *wbuf2 = g_new (guint8, ONE_BLOCK + 0xff);
 	for (i = 0; i < dev->data_save->len; i++) {
-		item = g_ptr_array_index (dev->data_save, i);
+		GmwProbeBlock *item = g_ptr_array_index (dev->data_save, i);
 
 		/* use a random offset to confuse drives that are just saving
 		 * the address and data in some phantom FAT */
-		offset = g_random_int_range (1, 0xff);
+		guint32 offset = g_random_int_range (1, 0xff);
 		item->bytes_read = gmw_probe_device_read (dev,
 							  item->address +
 							  item->offset - offset,
@@ -276,7 +262,7 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 
 	/* if we aborted early, the rest of the drive is junk */
 	for (i = i; i < dev->data_save->len; i++) {
-		item = g_ptr_array_index (dev->data_save, i);
+		GmwProbeBlock *item = g_ptr_array_index (dev->data_save, i);
 		item->valid = FALSE;
 	}
 
@@ -288,11 +274,8 @@ gmw_probe_device_data_restore (GmwProbeDevice *dev,
 			       GCancellable *cancellable,
 			       GError **error)
 {
-	GmwProbeBlock *item;
-	guint i;
-
-	for (i = 0; i < dev->data_save->len; i++) {
-		item = g_ptr_array_index (dev->data_save, i);
+	for (guint i = 0; i < dev->data_save->len; i++) {
+		GmwProbeBlock *item = g_ptr_array_index (dev->data_save, i);
 		if (!item->valid)
 			continue;
 		item->bytes_wrote = gmw_probe_device_write (dev,
@@ -312,9 +295,6 @@ gmw_probe_device_data_restore (GmwProbeDevice *dev,
 static gboolean
 gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **error)
 {
-	GmwProbeBlock *item;
-	guint i;
-
 	/* open block device */
 	if (!gmw_probe_device_open (dev, error))
 		return FALSE;
@@ -357,8 +337,8 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 	}
 
 	/* sanity check for really broken devices */
-	for (i = 0; i < dev->data_save->len; i++) {
-		item = g_ptr_array_index (dev->data_save, i);
+	for (guint i = 0; i < dev->data_save->len; i++) {
+		GmwProbeBlock *item = g_ptr_array_index (dev->data_save, i);
 		if (item->bytes_read != item->bytes_wrote) {
 			g_set_error (error,
 				     GMW_ERROR,
@@ -392,8 +372,8 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 		return FALSE;
 
 	/* get results */
-	for (i = 0; i < dev->data_save->len; i++) {
-		item = g_ptr_array_index (dev->data_save, i);
+	for (guint i = 0; i < dev->data_save->len; i++) {
+		GmwProbeBlock *item = g_ptr_array_index (dev->data_save, i);
 		if (!item->valid) {
 			g_set_error (error,
 				     GMW_ERROR,
@@ -456,14 +436,12 @@ gmw_probe_use_device (GUdevClient *udev_client,
 static gboolean
 gmw_probe_is_block_device_valid (const gchar *block_device)
 {
-	guint i;
-
 	/* dev prefix */
 	if (!g_str_has_prefix (block_device, "/dev/"))
 		return FALSE;
 
 	/* has no partition number */
-	for (i = 5; block_device[i] != '\0'; i++) {
+	for (guint i = 5; block_device[i] != '\0'; i++) {
 		if (g_ascii_isdigit (block_device[i]))
 			return FALSE;
 	}
@@ -483,13 +461,12 @@ gmw_probe_is_block_device_mounted (const gchar *block_device)
 int
 main (int argc, char **argv)
 {
-	GOptionContext *context;
 	const gchar *subsystems[] = { "usb", NULL };
 	gboolean verbose = FALSE;
-	int status = EXIT_SUCCESS;
 	_cleanup_object_unref_ GUdevClient *udev_client = NULL;
-	g_autoptr(GError) error = NULL;
 	g_autoptr(GCancellable) cancellable = NULL;
+	g_autoptr(GError) error = NULL;
+	g_autoptr(GOptionContext) context = NULL;
 
 	const GOptionEntry options[] = {
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
@@ -505,9 +482,8 @@ main (int argc, char **argv)
 	context = g_option_context_new (NULL);
 	g_option_context_add_main_entries (context, options, NULL);
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
-		status = EXIT_FAILURE;
 		g_print ("Failed to parse command line: %s\n", error->message);
-		goto out;
+		return EXIT_FAILURE;
 	}
 
 	if (verbose)
@@ -515,32 +491,27 @@ main (int argc, char **argv)
 
 	/* valid arguments */
 	if (argc != 2 || !gmw_probe_is_block_device_valid (argv[1])) {
-		status = EXIT_FAILURE;
 		g_print ("Block device required as argument\n");
-		goto out;
+		return EXIT_FAILURE;
 	}
 
 	/* already mounted */
 	if (gmw_probe_is_block_device_mounted (argv[1])) {
-		status = EXIT_FAILURE;
 		g_print ("Partition mounted from block device\n");
-		goto out;
+		return EXIT_FAILURE;
 	}
 
 	/* probe device */
 	cancellable = g_cancellable_new ();
 	udev_client = g_udev_client_new (subsystems);
 	if (!gmw_probe_use_device (udev_client, argv[1], cancellable, &error)) {
-		status = EXIT_FAILURE;
 		if (g_error_matches (error, GMW_ERROR, GMW_ERROR_IS_FAKE)) {
 			g_print ("Device is FAKE: %s\n", error->message);
 		} else {
 			g_print ("Failed to scan device: %s\n", error->message);
 		}
-		goto out;
+		return EXIT_FAILURE;
 	}
 	g_print ("Device is GOOD\n");
-out:
-	g_option_context_free (context);
-	return status;
+	return EXIT_SUCCESS;
 }

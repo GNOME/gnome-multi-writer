@@ -184,7 +184,6 @@ const gchar *
 gmw_device_get_icon (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	const gchar *tmp;
 
 	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
 
@@ -195,7 +194,7 @@ gmw_device_get_icon (GmwDevice *device)
 
 	/* try to get from UDisks */
 	if (priv->udisks_block != NULL) {
-		tmp = udisks_block_get_hint_icon_name (priv->udisks_block);
+		const gchar *tmp = udisks_block_get_hint_icon_name (priv->udisks_block);
 		if (tmp != NULL && tmp[0] != '\0')
 			return tmp;
 	}
@@ -207,13 +206,12 @@ gchar *
 gmw_device_get_description (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	guint64 size;
 
 	g_return_val_if_fail (GMW_IS_DEVICE (device), NULL);
 
 	/* waiting to be written */
 	if (priv->state == GMW_DEVICE_STATE_IDLE) {
-		size = gmw_device_get_size (device) / (1000 * 1000 * 1000);
+		guint64 size = gmw_device_get_size (device) / (1000 * 1000 * 1000);
 		if (size == 0)
 			return g_strdup (priv->name);
 		return g_strdup_printf ("%s (%" G_GUINT64_FORMAT "GB)",
@@ -322,7 +320,6 @@ void
 gmw_device_set_name (GmwDevice *device, const gchar *name)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	guint i;
 	struct {
 		const gchar *old;
 		const gchar *new;
@@ -335,7 +332,7 @@ gmw_device_set_name (GmwDevice *device, const gchar *name)
 	g_return_if_fail (GMW_IS_DEVICE (device));
 
 	/* replace any generic names */
-	for (i = 0; replace[i].old != NULL; i++) {
+	for (guint i = 0; replace[i].old != NULL; i++) {
 		if (g_strcmp0 (replace[i].old, name) == 0) {
 			name = replace[i].new;
 			break;
@@ -537,8 +534,6 @@ gchar *
 gmw_device_get_quirk_string (GmwDevice *device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	GUsbDevice *child_tmp;
-	guint i;
 	guint number_ics = 0;
 	g_autoptr(GUsbDevice) usb_hub_child = NULL;
 	g_autoptr(GUsbDevice) usb_hub = NULL;
@@ -582,8 +577,8 @@ gmw_device_get_quirk_string (GmwDevice *device)
 
 	/* get any child hub */
 	children = g_usb_device_get_children (usb_hub);
-	for (i = 0; i < children->len; i++) {
-		child_tmp = g_ptr_array_index (children, i);
+	for (guint i = 0; i < children->len; i++) {
+		GUsbDevice *child_tmp = g_ptr_array_index (children, i);
 		if (g_usb_device_get_device_class (child_tmp) != 0x09)
 			continue;
 		if (usb_hub_child == NULL)
@@ -601,8 +596,8 @@ gmw_device_get_quirk_string (GmwDevice *device)
 	/* count child USB hubs in the device */
 	if (usb_hub_top != NULL) {
 		children_top = g_usb_device_get_children (usb_hub_top);
-		for (i = 0; i < children_top->len; i++) {
-			child_tmp = g_ptr_array_index (children_top, i);
+		for (guint i = 0; i < children_top->len; i++) {
+			GUsbDevice *child_tmp = g_ptr_array_index (children_top, i);
 			if (g_usb_device_get_device_class (child_tmp) != 0x09)
 				continue;
 			number_ics++;
@@ -630,8 +625,6 @@ void
 gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 {
 	GmwDevicePrivate *priv = gmw_device_get_instance_private (device);
-	guint i;
-	guint j;
 	g_autofree gchar *hub_id = NULL;
 	g_autoptr(GUsbDevice) usb_hub = NULL;
 	g_autoptr(GUsbDevice) usb_hub_parent = NULL;
@@ -826,7 +819,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 		 (guint) g_usb_device_get_vid (usb_device),
 		 (guint) g_usb_device_get_pid (usb_device),
 		 (guint) g_usb_device_get_port_number (usb_device));
-	for (i = 0; quirks[i].hub_label != NULL; i++) {
+	for (guint i = 0; quirks[i].hub_label != NULL; i++) {
 		/* check grandparent */
 		if (usb_hub_parent != NULL && quirks[i].hub_parent_vid != 0x0000) {
 			if (quirks[i].hub_parent_vid != g_usb_device_get_vid (usb_hub_parent))
@@ -855,7 +848,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 
 			/* the specified child just has to exist once */
 			children = g_usb_device_get_children (usb_hub);
-			for (j = 0; j < children->len; j++) {
+			for (guint j = 0; j < children->len; j++) {
 				tmp = g_ptr_array_index (children, j);
 				if (g_usb_device_get_vid (tmp) == quirks[i].child_vid &&
 				    g_usb_device_get_pid (tmp) == quirks[i].child_pid) {
@@ -874,7 +867,7 @@ gmw_device_set_usb_device (GmwDevice *device, GUsbDevice *usb_device)
 			g_autoptr(GPtrArray) children = NULL;
 
 			children = g_usb_device_get_children (usb_hub_toplevel);
-			for (j = 0; j < children->len; j++) {
+			for (guint j = 0; j < children->len; j++) {
 				tmp = g_ptr_array_index (children, j);
 				if (g_usb_device_get_device_class (tmp) == 0x09)
 					child_cnt++;

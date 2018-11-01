@@ -136,11 +136,8 @@ gmw_root_hub_new (guint idx)
 static GmwRootHub *
 gmw_root_hub_find_by_idx (GPtrArray *root_hubs, guint idx)
 {
-	GmwRootHub *rh;
-	guint i;
-
-	for (i = 0; i < root_hubs->len; i++) {
-		rh = g_ptr_array_index (root_hubs, i);
+	for (guint i = 0; i < root_hubs->len; i++) {
+		GmwRootHub *rh = g_ptr_array_index (root_hubs, i);
 		if (rh->idx == idx)
 			return rh;
 	}
@@ -158,18 +155,14 @@ gmw_root_hub_find_by_idx (GPtrArray *root_hubs, guint idx)
 static GPtrArray *
 gmw_root_hub_enumerate (GPtrArray *devices)
 {
-	GmwDevice *device;
-	GmwRootHub *rh;
 	GPtrArray *array;
-	guint i;
-	guint idx;
 
 	/* put each device into an array of its root hub */
 	array = g_ptr_array_new_with_free_func ((GDestroyNotify) gmw_root_hub_free);
-	for (i = 0; i < devices->len; i++) {
-		device = g_ptr_array_index (devices, i);
-		idx = gmw_device_get_hub_root (device);
-		rh = gmw_root_hub_find_by_idx (array, idx);
+	for (guint i = 0; i < devices->len; i++) {
+		GmwDevice *device = g_ptr_array_index (devices, i);
+		guint idx = gmw_device_get_hub_root (device);
+		GmwRootHub *rh = gmw_root_hub_find_by_idx (array, idx);
 		if (rh == NULL) {
 			rh = gmw_root_hub_new (idx);
 			g_ptr_array_add (array, rh);
@@ -183,9 +176,6 @@ static void
 gmw_device_list_sort (GmwPrivate *priv)
 {
 	GmwDevice *device;
-	GmwRootHub *rh;
-	guint j;
-	guint i;
 	guint idx = 0;
 	g_autoptr(GPtrArray) root_hubs = NULL;
 
@@ -195,10 +185,10 @@ gmw_device_list_sort (GmwPrivate *priv)
 	/* queue the devices according to the root hub they are connected
 	 * to ensure we saturate as many busses as possible */
 	root_hubs = gmw_root_hub_enumerate (priv->devices);
-	for (i = 0; i < priv->devices->len; i++) {
-		for (j = 0; j < root_hubs->len; j++) {
+	for (guint i = 0; i < priv->devices->len; i++) {
+		for (guint j = 0; j < root_hubs->len; j++) {
 			g_autofree gchar *key = NULL;
-			rh = g_ptr_array_index (root_hubs, j);
+			GmwRootHub *rh = g_ptr_array_index (root_hubs, j);
 			if (rh->devices->len <= i)
 				continue;
 			device = g_ptr_array_index (rh->devices, i);
@@ -222,14 +212,11 @@ static void gmw_refresh_ui (GmwPrivate *priv);
 static void
 gmw_main_show_quirks (GmwPrivate *priv)
 {
-	GmwDevice *device;
-	guint i;
-
 	g_print ("\t/*     hub      hub-port  parent-hub     child-device"
 		 "   chps  dprt  chn  labl */\n");
-	for (i = 0; i < priv->devices->len; i++) {
+	for (guint i = 0; i < priv->devices->len; i++) {
 		g_autofree gchar *tmp = NULL;
-		device = g_ptr_array_index (priv->devices, i);
+		GmwDevice *device = g_ptr_array_index (priv->devices, i);
 		tmp = gmw_device_get_quirk_string (device);
 		g_print ("\t%s\n", tmp);
 	}
@@ -315,11 +302,9 @@ gmw_main_rename_labels_cb (GtkLabel *label, const gchar *uri, GmwPrivate *priv)
 static void
 gmw_refresh_ui (GmwPrivate *priv)
 {
-	GmwDevice *device;
 	GtkWidget *grid;
 	GtkWidget *w;
 	const guint max_devices_per_column = 10;
-	guint i;
 
 	/* remove old children */
 	grid = GTK_WIDGET (gtk_builder_get_object (priv->builder, "grid_status"));
@@ -327,14 +312,13 @@ gmw_refresh_ui (GmwPrivate *priv)
 			       (GtkCallback) gtk_widget_destroy, priv);
 
 	/* add new children */
-	for (i = 0; i < priv->devices->len; i++) {
+	for (guint i = 0; i < priv->devices->len; i++) {
 		g_autofree gchar *label_markup = NULL;
 		g_autofree gchar *label = NULL;
 		g_autofree gchar *title = NULL;
 		guint row = i % max_devices_per_column;
 		guint col = (i / max_devices_per_column) * 4;
-
-		device = g_ptr_array_index (priv->devices, i);
+		GmwDevice *device = g_ptr_array_index (priv->devices, i);
 
 		/* add label */
 		w = gtk_label_new (NULL);
@@ -786,16 +770,14 @@ out:
 static void
 gmw_refresh_titlebar (GmwPrivate *priv)
 {
-	GmwDevice *device;
 	GtkWidget *w;
 	gdouble speed_read = 0.f;
 	gdouble speed_write = 0.f;
-	guint i;
 	g_autoptr(GString) title = NULL;
 
 	/* find the throughput totals */
-	for (i = 0; i < priv->devices->len; i++) {
-		device = g_ptr_array_index (priv->devices, i);
+	for (guint i = 0; i < priv->devices->len; i++) {
+		GmwDevice *device = g_ptr_array_index (priv->devices, i);
 		speed_read += gmw_device_get_speed_read (device);
 		speed_write += gmw_device_get_speed_write (device);
 	}
@@ -1055,11 +1037,9 @@ gmw_udisks_unmount_cb (GObject *source_object,
 static UDisksFilesystem *
 gmw_udisks_get_filesystem_for_device (GmwPrivate *priv, GmwDevice *device)
 {
-	guint i;
-
 	/* this is crude, but fast -- LiveUSB devices will only typically have
 	 * one partition, but very occasionaly two or more */
-	for (i = 1; i <= 4; i++) {
+	for (guint i = 1; i <= 4; i++) {
 		UDisksFilesystem *udisks_fs = NULL;
 		g_autoptr(GError) error = NULL;
 		g_autofree gchar *object_path = NULL;
@@ -1118,10 +1098,8 @@ gmw_udisks_unmount_filesystems_sync (GmwPrivate *priv, GmwDevice *device, GError
 static void
 gmw_start_copy (GmwPrivate *priv)
 {
-	GmwDevice *device;
 	GtkWindow *window;
 	const gchar *action_id = "org.freedesktop.udisks2.open-device";
-	guint i;
 	g_autoptr(GError) error = NULL;
 	g_autoptr(GPermission) permission = NULL;
 
@@ -1134,8 +1112,8 @@ gmw_start_copy (GmwPrivate *priv)
 	g_cancellable_reset (priv->cancellable);
 
 	/* unmount all filesystems */
-	for (i = 0; i < priv->devices->len; i++) {
-		device = g_ptr_array_index (priv->devices, i);
+	for (guint i = 0; i < priv->devices->len; i++) {
+		GmwDevice *device = g_ptr_array_index (priv->devices, i);
 		if (!gmw_udisks_unmount_filesystems_sync (priv, device, &error)) {
 			gmw_error_dialog (priv, _("Failed to copy"), error->message);
 			return;
@@ -1150,7 +1128,7 @@ gmw_start_copy (GmwPrivate *priv)
 		return;
 	}
 	if (!g_permission_get_allowed (permission)) {
-		device = g_ptr_array_index (priv->devices, 0);
+		GmwDevice *device = g_ptr_array_index (priv->devices, 0);
 		if (!gmw_auth_dummy_restore (priv, device, &error)) {
 			g_dbus_error_strip_remote_error (error);
 			gmw_error_dialog (priv,
@@ -1176,9 +1154,9 @@ gmw_start_copy (GmwPrivate *priv)
 						    _("Writing ISO to devices"));
 
 	/* start a thread for each copy operation */
-	for (i = 0; i < priv->devices->len; i++) {
+	for (guint i = 0; i < priv->devices->len; i++) {
 		g_autofree gchar *title = NULL;
-		device = g_ptr_array_index (priv->devices, i);
+		GmwDevice *device = g_ptr_array_index (priv->devices, i);
 		gmw_device_set_state (device, GMW_DEVICE_STATE_WAITING);
 		g_thread_pool_push (priv->thread_pool, device, &error);
 	}
@@ -1595,14 +1573,9 @@ gmw_udisks_object_removed_cb (GDBusObjectManager *object_manager,
 			      GDBusObject *dbus_object,
 			      GmwPrivate *priv)
 {
-	GmwDevice *device;
-	guint i;
-	const gchar *tmp;
-
-	/* remove device */
-	tmp = g_dbus_object_get_object_path (dbus_object);
-	for (i = 0; i < priv->devices->len; i++) {
-		device = g_ptr_array_index (priv->devices, i);
+	const gchar *tmp = g_dbus_object_get_object_path (dbus_object);
+	for (guint i = 0; i < priv->devices->len; i++) {
+		GmwDevice *device = g_ptr_array_index (priv->devices, i);
 		if (g_strcmp0 (gmw_device_get_object_path (device), tmp) == 0) {
 			g_ptr_array_remove (priv->devices, device);
 			gmw_device_list_sort (priv);
@@ -1620,7 +1593,6 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 {
 	GmwPrivate *priv = (GmwPrivate *) user_data;
 	GDBusObjectManager *object_manager;
-	GList *l;
 	GList *objects;
 	g_autoptr(GError) error = NULL;
 
@@ -1635,7 +1607,7 @@ gmw_udisks_client_connect_cb (GObject *source_object,
 	g_signal_connect (object_manager, "object-removed",
 			  G_CALLBACK (gmw_udisks_object_removed_cb), priv);
 	objects = g_dbus_object_manager_get_objects (object_manager);
-	for (l = objects; l != NULL; l = l->next)
+	for (GList *l = objects; l != NULL; l = l->next)
 		gmw_udisks_object_add (priv, G_DBUS_OBJECT (l->data));
 	gmw_device_list_sort (priv);
 	gmw_update_max_threads (priv);
@@ -1665,17 +1637,44 @@ gmw_thread_pool_sort_func (gconstpointer a, gconstpointer b, gpointer user_data)
 			  gmw_device_get_order_process (devb));
 }
 
+static void
+gmw_priv_free (GmwPrivate *priv)
+{
+	if (priv->builder != NULL)
+		g_object_unref (priv->builder);
+	if (priv->settings != NULL)
+		g_object_unref (priv->settings);
+	if (priv->udisks_client != NULL)
+		g_object_unref (priv->udisks_client);
+	if (priv->usb_ctx != NULL)
+		g_object_unref (priv->usb_ctx);
+	if (priv->image_file != NULL)
+		g_object_unref (priv->image_file);
+	if (priv->image_monitor != NULL)
+		g_object_unref (priv->image_monitor);
+	if (priv->cancellable != NULL)
+		g_object_unref (priv->cancellable);
+	if (priv->application != NULL)
+		g_object_unref (priv->application);
+	g_thread_pool_free (priv->thread_pool, TRUE, TRUE);
+	g_mutex_clear (&priv->thread_pool_mutex);
+	g_mutex_clear (&priv->devices_mutex);
+	g_mutex_clear (&priv->idle_id_mutex);
+	g_ptr_array_unref (priv->devices);
+	g_free (priv);
+}
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC(GmwPrivate, gmw_priv_free)
+
 int
 main (int argc, char **argv)
 {
-	GmwPrivate *priv = NULL;
-	GOptionContext *context;
 	gboolean verbose = FALSE;
-	gboolean rename_labels = FALSE;
-	int status = EXIT_SUCCESS;
 	g_autoptr(GError) error = NULL;
+	g_autoptr(GmwPrivate) priv = g_new0 (GmwPrivate, 1);
+	g_autoptr(GOptionContext) context = NULL;
 	const GOptionEntry options[] = {
-		{ "rename-labels", '\0', 0, G_OPTION_ARG_NONE, &rename_labels,
+		{ "rename-labels", '\0', 0, G_OPTION_ARG_NONE, &priv->rename_labels,
 			/* TRANSLATORS: command line option */
 			_("Allow renaming the labels on hubs"), NULL },
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
@@ -1697,15 +1696,12 @@ main (int argc, char **argv)
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	g_option_context_add_main_entries (context, options, NULL);
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
-		status = EXIT_FAILURE;
 		/* TRANSLATORS: the user has sausages for fingers */
 		g_print ("%s: %s\n", _("Failed to parse command line options"),
 			 error->message);
-		goto out;
+		return EXIT_FAILURE;
 	}
 
-	priv = g_new0 (GmwPrivate, 1);
-	priv->rename_labels = rename_labels;
 	g_mutex_init (&priv->thread_pool_mutex);
 	g_mutex_init (&priv->devices_mutex);
 	g_mutex_init (&priv->idle_id_mutex);
@@ -1716,9 +1712,8 @@ main (int argc, char **argv)
 	priv->thread_pool = g_thread_pool_new (gmw_copy_thread_cb, priv,
 					       1, FALSE, &error);
 	if (priv->thread_pool == NULL) {
-		status = EXIT_FAILURE;
 		g_print ("Failed to create thread pool: %s\n", error->message);
-		goto out;
+		return EXIT_FAILURE;
 	}
 	g_thread_pool_set_sort_function (priv->thread_pool,
 					 gmw_thread_pool_sort_func,
@@ -1726,9 +1721,8 @@ main (int argc, char **argv)
 	priv->devices = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
 	priv->usb_ctx = g_usb_context_new (&error);
 	if (priv->usb_ctx == NULL) {
-		status = EXIT_FAILURE;
 		g_print ("Failed to load libusb: %s\n", error->message);
-		goto out;
+		return EXIT_FAILURE;
 	}
 
 	/* connect to UDisks */
@@ -1759,32 +1753,5 @@ main (int argc, char **argv)
 			 G_SETTINGS_BIND_DEFAULT);
 
 	/* wait */
-	status = g_application_run (G_APPLICATION (priv->application), argc, argv);
-out:
-	g_option_context_free (context);
-	if (priv != NULL) {
-		if (priv->builder != NULL)
-			g_object_unref (priv->builder);
-		if (priv->settings != NULL)
-			g_object_unref (priv->settings);
-		if (priv->udisks_client != NULL)
-			g_object_unref (priv->udisks_client);
-		if (priv->usb_ctx != NULL)
-			g_object_unref (priv->usb_ctx);
-		if (priv->image_file != NULL)
-			g_object_unref (priv->image_file);
-		if (priv->image_monitor != NULL)
-			g_object_unref (priv->image_monitor);
-		if (priv->cancellable != NULL)
-			g_object_unref (priv->cancellable);
-		if (priv->application != NULL)
-			g_object_unref (priv->application);
-		g_thread_pool_free (priv->thread_pool, TRUE, TRUE);
-		g_mutex_clear (&priv->thread_pool_mutex);
-		g_mutex_clear (&priv->devices_mutex);
-		g_mutex_clear (&priv->idle_id_mutex);
-		g_ptr_array_unref (priv->devices);
-		g_free (priv);
-	}
-	return status;
+	return g_application_run (G_APPLICATION (priv->application), argc, argv);
 }
