@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
  <gresource prefix="/org/gnome/MultiWriter">
-  <file compressed="true" alias="gtk/menus.ui">gmw-menus.ui</file>
   <file compressed="true">gmw-main.ui</file>
   <file compressed="true" alias="usb-symbolic.svg">usb.svg</file>
  </gresource>

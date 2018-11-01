@@ -66,6 +66,9 @@ typedef struct {
 	GtkWidget		*switch_probe;
 } GmwPrivate;
 
+
+static void	 gmw_import_filename	(GmwPrivate	*priv);
+
 static void
 gmw_error_dialog (GmwPrivate *priv, const gchar *title, const gchar *message)
 {
@@ -96,6 +99,12 @@ static void
 gmw_cancel_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
 {
 	g_cancellable_cancel (priv->cancellable);
+}
+
+static void
+gmw_import_clicked_cb (GtkWidget *widget, GmwPrivate *priv)
+{
+	gmw_import_filename (priv);
 }
 
 static gint
@@ -1383,6 +1392,9 @@ gmw_startup_cb (GApplication *application, GmwPrivate *priv)
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_cancel"));
 	g_signal_connect (w, "clicked",
 			  G_CALLBACK (gmw_cancel_clicked_cb), priv);
+	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_import"));
+	g_signal_connect (w, "clicked",
+			  G_CALLBACK (gmw_import_clicked_cb), priv);
 
 	/* setup USB image */
 	w = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_usb"));
