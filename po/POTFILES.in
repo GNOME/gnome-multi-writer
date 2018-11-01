@@ -7,5 +7,4 @@ data/org.gnome.MultiWriter.policy.in
 src/gmw-device.c
 src/gmw-main.c
 src/gmw-main.ui
-src/gmw-menus.ui
 src/gmw-probe.c
