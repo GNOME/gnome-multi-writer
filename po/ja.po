@@ -1,0 +1,346 @@
+# Japanese translation for gnome-multi-writer.
+# Copyright (C) 2019 gnome-multi-writer's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-multi-writer package.
+# sicklylife <translation@sicklylife.jp>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-multi-writer master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues\n"
+"POT-Creation-Date: 2019-02-07 12:50+0000\n"
+"PO-Revision-Date: 2019-02-12 21:50+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: the application name
+#. set the title
+#. TRANSLATORS: Application window title
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: src/gmw-main.ui:98
+msgid "MultiWriter"
+msgstr "マルチライター"
+
+#. TRANSLATORS: one-line description for the app
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
+msgid "Write an ISO file to multiple USB devices at once"
+msgstr "ISO ファイルを同時に複数の USB デバイスへ書き込みます"
+
+#. TRANSLATORS: AppData description marketing paragraph
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:13
+msgid ""
+"GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
+"at once. Supported drive sizes are between 1GB and 32GB."
+msgstr ""
+
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
+#. GNOME refers to the desktop environment
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
+msgid ""
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+
+#. TRANSLATORS: saturate as in the throughput can get no more
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
+msgid ""
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
+msgstr ""
+
+#. TRANSLATORS: storage devices refers to the things we're writing to
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
+msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
+msgstr ""
+
+#. TRANSLATORS: PCIe is the data bus, don't translate please
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
+msgid "Install another USB 2.0 PCIe root hub"
+msgstr ""
+
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
+msgid ""
+"MultiWriter was originally written as part of the ColorHug project but was "
+"split off as an independent application in 2015."
+msgstr ""
+
+#. TRANSLATORS: the 1st screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
+msgid "Initial screen for the application"
+msgstr ""
+
+#. TRANSLATORS: the 2nd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:52
+msgid "Writing and verifying images"
+msgstr ""
+
+#. TRANSLATORS: the 3rd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:57
+msgid "All devices have been written"
+msgstr ""
+
+#. TRANSLATORS: Do NOT translate or transliterate this text (this is an icon file name)!
+#: data/org.gnome.MultiWriter.desktop.in:6
+msgid "org.gnome.MultiWriter"
+msgstr ""
+
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: data/org.gnome.MultiWriter.desktop.in:12
+msgid "Image;Writer;ISO;USB;"
+msgstr "Image;Writer;ISO;USB;イメージ;ライター;"
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:6
+msgid "The filename to write to the USB disks"
+msgstr ""
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:8
+msgid "The filename of the ISO image to write to the connected USB disks."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:13
+msgid "The maximum number of threads to use"
+msgstr ""
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:15
+msgid "The maximum number of parallel threads to use when copying data."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:20
+msgid "Completely blank drive when writing"
+msgstr ""
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:22
+msgid "Write the ISO to the drive and then blank the remainder of the drive."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:27
+msgid "Verify the ISO image was written correctly"
+msgstr ""
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:29
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:34
+msgid "Inspect the device before writing images"
+msgstr ""
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:36
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr ""
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:41
+msgid "Show a warning before writing to a drive"
+msgstr ""
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:43
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
+msgstr ""
+
+#: data/org.gnome.MultiWriter.policy.in:17
+msgid "Check the device"
+msgstr "デバイスのチェック"
+
+#: data/org.gnome.MultiWriter.policy.in:18
+msgid "Authentication is required to probe the device"
+msgstr "デバイスの精査には権限が必要です"
+
+#. TRANSLATORS: The image has been written and verified to
+#. * *one* device, not all
+#: src/gmw-device.c:224
+msgid "Written successfully"
+msgstr "正常に書き込まれました"
+
+#. TRANSLATORS: we're writing the image to the device
+#. * and we now know the speed
+#: src/gmw-device.c:232
+#, c-format
+msgid "Writing at %.1f MB/s…"
+msgstr "%.1f MB/s で書き込み中…"
+
+#. TRANSLATORS: we're writing the image to the USB device
+#: src/gmw-device.c:236
+msgid "Writing…"
+msgstr "書き込み中…"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data and we now know the speed
+#: src/gmw-device.c:245
+#, c-format
+msgid "Verifying at %.1f MB/s…"
+msgstr "%.1f MB/s でベリファイ中…"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data
+#: src/gmw-device.c:250
+msgid "Verifying…"
+msgstr "ベリファイ中…"
+
+#. TRANSLATORS: This is a generic no-name USB flash disk
+#: src/gmw-device.c:307
+msgid "USB Flash Drive"
+msgstr "USB フラッシュドライブ"
+
+#. TRANSLATORS: window title renaming labels
+#: src/gmw-main.c:277
+msgid "New hub label"
+msgstr ""
+
+#. TRANSLATORS: the application name
+#. TRANSLATORS: the application name for the about UI
+#. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
+msgid "GNOME MultiWriter"
+msgstr "GNOME マルチライター"
+
+#. TRANSLATORS: the success sound description
+#: src/gmw-main.c:434
+msgid "Image written successfully"
+msgstr ""
+
+#. TRANSLATORS: copy aborted
+#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
+msgid "Cancelled"
+msgstr "キャンセルしました"
+
+#. TRANSLATORS: we couldn't open the ISO file the user chose
+#: src/gmw-main.c:933 src/gmw-main.c:947
+msgid "Failed to open"
+msgstr "開くのに失敗しました"
+
+#. TRANSLATORS: window title for the file-chooser, file is an ISO
+#: src/gmw-main.c:964
+msgid "Choose the file to write"
+msgstr "書き込むファイルの選択"
+
+#. TRANSLATORS: button title
+#. TRANSLATORS: button to cancel a copy process
+#: src/gmw-main.c:968 src/gmw-main.ui:115
+msgid "Cancel"
+msgstr "キャンセル"
+
+#. TRANSLATORS: button title
+#: src/gmw-main.c:970
+msgid "Import"
+msgstr "インポート"
+
+#. TRANSLATORS: the file filter description, e.g. *.iso
+#: src/gmw-main.c:974
+msgid "ISO files"
+msgstr "ISO ファイル"
+
+#. TRANSLATORS: error dialog title:
+#. * we probably didn't authenticate
+#: src/gmw-main.c:1118 src/gmw-main.c:1137
+msgid "Failed to copy"
+msgstr "コピーに失敗しました"
+
+#. TRANSLATORS: the inhibit reason
+#: src/gmw-main.c:1154
+msgid "Writing ISO to devices"
+msgstr "ISO をデバイスに書き込み中です"
+
+#. TRANSLATORS: window title for the warning dialog
+#: src/gmw-main.c:1201
+msgid "Write to all disks?"
+msgstr "すべてのディスクに書き込みますか?"
+
+#. TRANSLATORS: check that we can nuke everything from all disks
+#: src/gmw-main.c:1206
+msgid "All data on the drives will be deleted."
+msgstr "ドライブ上のすべてのデータを削除します。"
+
+#. TRANSLATORS: if the image file is smaller than the disks and
+#. * we've disabled wiping the device we only write enough data
+#. * to transfer the image
+#: src/gmw-main.c:1211
+msgid "The ISO file is smaller than the disk capacity."
+msgstr "この ISO ファイルはディスク容量よりも小さいサイズです。"
+
+#. TRANSLATORS: this could leave your personal files on the drive
+#: src/gmw-main.c:1216
+msgid ""
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
+msgstr ""
+"コピー後にフォレンジックツールを使用することで、現在ドライブにあるデータの"
+"一部を復元できる可能性があります。"
+
+#. TRANSLATORS: button text for the warning dialog
+#: src/gmw-main.c:1223
+msgid "I Understand"
+msgstr "理解しています"
+
+#. TRANSLATORS: the title of the about window
+#: src/gmw-main.c:1255
+msgid "About GNOME MultiWriter"
+msgstr "GNOME マルチライターについて"
+
+#. TRANSLATORS: you can put your name here :)
+#: src/gmw-main.c:1265
+msgid "translator-credits"
+msgstr ""
+"sicklylife <translation@sicklylife.jp>"
+
+#. TRANSLATORS: a switch label: verify the image by
+#. * reading back the original image from the device
+#: src/gmw-main.c:1312
+msgid "Verify"
+msgstr "ベリファイ"
+
+#. TRANSLATORS: a switch label: we write zeros after
+#. * the image so it erases the entire device
+#: src/gmw-main.c:1318
+msgid "Wipe"
+msgstr "ゼロフィル"
+
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: src/gmw-main.c:1324
+msgid "Probe"
+msgstr "プローブ"
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1679
+msgid "Allow renaming the labels on hubs"
+msgstr ""
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1682 src/gmw-probe.c:474
+msgid "Show extra debugging information"
+msgstr "追加のデバッグ情報を表示する"
+
+#. TRANSLATORS: the user has sausages for fingers
+#: src/gmw-main.c:1700
+msgid "Failed to parse command line options"
+msgstr "不明なコマンドラインオプション"
+
+#. TRANSLATORS: button to start the copy
+#: src/gmw-main.ui:102
+msgid "Start Copying"
+msgstr "コピー開始"
