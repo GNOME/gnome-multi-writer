@@ -1,0 +1,15 @@
+Feb 22 2018  On Solus Linux with software uptodate I have this problem.
+
+After successfully creating a USB with a manjaro ISO I tried to do the same with a Debian ISO.
+
+However it copied the original manjaro ISO.
+
+In the filemager, I right-clicked the Debian ISO and selected "open with/other program/gnome-multi-writer"
+
+It copied the original manjaro ISO
+
+I renamed the manjaro ISO and gnomewriter failed with a file not found message.
+
+As a workaround I renamed the debian ISO (mv debian.ISO manjaro.ISO) and the multiwriter tells me it was successful.
+
+I could not see an option to raise an issue on this project, so I hope you get my feedback
