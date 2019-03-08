@@ -61,6 +61,14 @@
    Validate with `appstream-util validate *.appdata.xml`
   -->
   <releases>
+    <release date="2019-03-08" version="3.32.0">
+      <description>
+        <p>
+          This is the first stable release for GNOME 3.32 which updates several
+          translations and fixes some build issues.
+        </p>
+      </description>
+    </release>
     <release date="2018-09-04" version="3.30.0">
       <description>
         <p>
