@@ -28,6 +28,7 @@
 #include "gmw-device.h"
 
 struct _GmwDevice {
+	GObject			 parent_instance;
 	GError			*error;		/* the error, if any */
 	GMutex			 mutex;		/* mutex for the device */
 	GmwDeviceState		 state;		/* the #GmwDeviceState, e.g. %GMW_DEVICE_STATE_WRITE */
