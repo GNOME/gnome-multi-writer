@@ -61,6 +61,14 @@
    Validate with `appstream-util validate *.appdata.xml`
   -->
   <releases>
+    <release date="2019-05-22" version="3.32.1">
+      <description>
+        <p>
+          This fixes a memory corruption issue causing the UI to crash and also
+          fixes some build issues.
+        </p>
+      </description>
+    </release>
     <release date="2019-03-08" version="3.32.0">
       <description>
         <p>
