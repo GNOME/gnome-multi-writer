@@ -5,12 +5,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-"
-"writer/issues\n"
-"POT-Creation-Date: 2019-02-07 12:50+0000\n"
-"PO-Revision-Date: 2019-02-20 00:00+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues\n"
+"POT-Creation-Date: 2019-05-22 12:39+0000\n"
+"PO-Revision-Date: 2019-03-10 00:00+0100\n"
 "Last-Translator: scootergrisen\n"
-"Language-Team: Danish\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,11 +97,6 @@ msgstr "Skriver og verificerer aftryk"
 msgid "All devices have been written"
 msgstr "Alle enheder er blevet skrevet"
 
-#. TRANSLATORS: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.MultiWriter.desktop.in:6
-msgid "org.gnome.MultiWriter"
-msgstr "org.gnome.MultiWriter"
-
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 #: data/org.gnome.MultiWriter.desktop.in:12
 msgid "Image;Writer;ISO;USB;"
@@ -126,7 +121,8 @@ msgstr "Maksimalt antal tråde som skal bruges"
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:15
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr "Maksimalt antal parallelle tråde som skal bruges ved kopiering af data."
+msgstr ""
+"Maksimalt antal parallelle tråde som skal bruges ved kopiering af data."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:20
@@ -173,8 +169,8 @@ msgstr "Vis en advarsel inden der skrives til et drev"
 #: data/org.gnome.MultiWriter.gschema.xml:43
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
-msgstr "Vis en advarselsdialog til til bekræftelse af, at enhedens indhold "
-"skal ryddes."
+msgstr ""
+"Vis en advarselsdialog til bekræftelse af, at enhedens indhold skal ryddes."
 
 #: data/org.gnome.MultiWriter.policy.in:17
 msgid "Check the device"
@@ -186,37 +182,37 @@ msgstr "Der kræves autentifikation for at undersøge enheden"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: src/gmw-device.c:224
+#: src/gmw-device.c:225
 msgid "Written successfully"
 msgstr "Skrivning lykkedes"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: src/gmw-device.c:232
+#: src/gmw-device.c:233
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Skriver med %.1f MB/s …"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: src/gmw-device.c:236
+#: src/gmw-device.c:237
 msgid "Writing…"
 msgstr "Skriver …"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: src/gmw-device.c:245
+#: src/gmw-device.c:246
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Verificerer med %.1f MB/s …"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: src/gmw-device.c:250
+#: src/gmw-device.c:251
 msgid "Verifying…"
 msgstr "Verificerer …"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: src/gmw-device.c:307
+#: src/gmw-device.c:308
 msgid "USB Flash Drive"
 msgstr "USB-flashdrev"
 
@@ -357,3 +353,6 @@ msgstr "Kunne ikke fortolke kommandolinjetilvalgene"
 #: src/gmw-main.ui:102
 msgid "Start Copying"
 msgstr "Start kopiering"
+
+#~ msgid "org.gnome.MultiWriter"
+#~ msgstr "org.gnome.MultiWriter"
