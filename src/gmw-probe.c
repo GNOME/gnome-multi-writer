@@ -60,6 +60,8 @@ typedef struct {
 	GUdevDevice		*udev_device;
 } GmwProbeDevice;
 
+static guint32 seed = 0;
+
 #define GMW_ERROR		1
 #define GMW_ERROR_FAILED	0
 #define GMW_ERROR_IS_FAKE	1
@@ -246,7 +248,8 @@ gmw_probe_device_data_verify (GmwProbeDevice *dev,
 			g_set_error (error,
 				     GMW_ERROR,
 				     GMW_ERROR_FAILED,
-				     "Failed to read data");
+				     "Failed to read data (seed: %u)",
+				     seed);
 			return FALSE;
 		}
 		item->valid = memcmp (item->data_random,
@@ -379,7 +382,8 @@ gmw_probe_scan_device (GmwProbeDevice *dev, GCancellable *cancellable, GError **
 				     GMW_ERROR,
 				     GMW_ERROR_IS_FAKE,
 				     "Failed to verify data at %" G_GUINT64_FORMAT "MB",
-				     item->address / ONE_MB);
+				     item->address / ONE_MB,
+				     seed);
 			return FALSE;
 		}
 	}
@@ -472,11 +476,16 @@ main (int argc, char **argv)
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose,
 			/* TRANSLATORS: command line option */
 			_("Show extra debugging information"), NULL },
+		{ "seed", 's', 0, G_OPTION_ARG_INT, &seed,
+			/* TRANSLATORS: command line option */
+			_("Random seed for predictability"), NULL },
 		{ NULL}
 	};
 
-	/* make this predictable */
-	g_random_set_seed (0xdead);
+	if (seed == 0)
+		seed = g_random_int_range (0, G_MAXINT);
+	g_random_set_seed (seed);
+	g_debug ("Using %u as a random seed", seed);
 
 	/* TRANSLATORS: A program to copy the LiveUSB image onto USB hardware */
 	context = g_option_context_new (NULL);
