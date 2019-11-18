@@ -66,6 +66,10 @@ static guint32 seed = 0;
 #define GMW_ERROR_FAILED	0
 #define GMW_ERROR_IS_FAKE	1
 
+/* The number of chunks of data to read and write to
+ * verify integrity */
+#define NUM_CHUNKS 256
+
 static guint8 *
 gmw_probe_get_random_data (guint len)
 {
@@ -176,10 +180,10 @@ gmw_probe_device_data_save (GmwProbeDevice *dev,
 			    GError **error)
 {
 	/* aim for roughtly the same number of chunks for all device sizes */
-	guint64 chunk_size = dev->disk_size / 256;
+	guint64 chunk_size = dev->disk_size / NUM_CHUNKS;
 	g_debug ("using chunk size of %" G_GUINT64_FORMAT "MB",
 		 chunk_size / ONE_MB);
-	for (guint i = 1; i < 40; i++) {
+	for (guint i = 1; i < NUM_CHUNKS; i++) {
 		GmwProbeBlock *item = g_new0 (GmwProbeBlock, 1);
 		item->valid = TRUE;
 		item->offset = g_random_int_range (1, 0xff);
