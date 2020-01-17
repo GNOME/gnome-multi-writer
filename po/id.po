@@ -2,34 +2,34 @@
 # Copyright (C) 2015 gnome-multi-writer's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-multi-writer package.
 # Andika Triwidada <andika@gmail.com>, 2015, 2016.
-#
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-04-10 15:02+0000\n"
-"PO-Revision-Date: 2017-04-14 10:18+0700\n"
-"Last-Translator: Andika Triwidada <atriwidada@gnome.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues\n"
+"POT-Creation-Date: 2019-11-19 12:53+0000\n"
+"PO-Revision-Date: 2020-01-15 19:40+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. TRANSLATORS: the application name
 #. set the title
 #. TRANSLATORS: Application window title
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
-#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:795
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
 #: src/gmw-main.ui:98
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: one-line description for the app
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
-#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1273
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Menulis sebuah berkas ISO ke beberapa perangkat USB sekaligus"
 
@@ -97,11 +97,6 @@ msgstr "Menulis dan memverifikasi citra"
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:57
 msgid "All devices have been written"
 msgstr "Semua perangkat telah ditulis"
-
-#. TRANSLATORS: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.MultiWriter.desktop.in:6
-msgid "org.gnome.MultiWriter"
-msgstr "org.gnome.MultiWriter"
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 #: data/org.gnome.MultiWriter.desktop.in:12
@@ -188,118 +183,118 @@ msgstr "Otentikasi diperlukan untuk .. perangkat"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: src/gmw-device.c:243
+#: src/gmw-device.c:225
 msgid "Written successfully"
 msgstr "Sukses ditulis"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: src/gmw-device.c:251
+#: src/gmw-device.c:233
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Menulis pada %.1f MB/d…"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: src/gmw-device.c:255
+#: src/gmw-device.c:237
 msgid "Writing…"
-msgstr "Menulis"
+msgstr "Menulis…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: src/gmw-device.c:264
+#: src/gmw-device.c:246
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Memverifikasi pada %.1f MB/d…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: src/gmw-device.c:269
+#: src/gmw-device.c:251
 msgid "Verifying…"
 msgstr "Memberifikasi…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: src/gmw-device.c:331
+#: src/gmw-device.c:308
 msgid "USB Flash Drive"
 msgstr "USB Flash Drive"
 
 #. TRANSLATORS: window title renaming labels
-#: src/gmw-main.c:281
+#: src/gmw-main.c:277
 msgid "New hub label"
 msgstr "_Label Baru"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: src/gmw-main.c:439 src/gmw-main.c:1270 src/gmw-main.c:1684
+#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: src/gmw-main.c:441
+#: src/gmw-main.c:434
 msgid "Image written successfully"
 msgstr "Ditulis oleh"
 
 #. TRANSLATORS: copy aborted
-#: src/gmw-main.c:544 src/gmw-main.c:584 src/gmw-main.c:687 src/gmw-main.c:722
+#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
 msgid "Cancelled"
 msgstr "Dibatalkan"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: src/gmw-main.c:942 src/gmw-main.c:956
+#: src/gmw-main.c:933 src/gmw-main.c:947
 msgid "Failed to open"
 msgstr "Gagal membuka"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: src/gmw-main.c:973
+#: src/gmw-main.c:964
 msgid "Choose the file to write"
 msgstr "Pilih berkas yang akan ditulisi"
 
 #. TRANSLATORS: button title
 #. TRANSLATORS: button to cancel a copy process
-#: src/gmw-main.c:977 src/gmw-main.ui:115
+#: src/gmw-main.c:968 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "Batal"
 
 #. TRANSLATORS: button title
-#: src/gmw-main.c:979
+#: src/gmw-main.c:970
 msgid "Import"
 msgstr "Impor"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: src/gmw-main.c:983
+#: src/gmw-main.c:974
 msgid "ISO files"
 msgstr "Berkas ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: src/gmw-main.c:1131 src/gmw-main.c:1150
+#: src/gmw-main.c:1118 src/gmw-main.c:1137
 msgid "Failed to copy"
 msgstr "Gagal menyalin"
 
 #. TRANSLATORS: the inhibit reason
-#: src/gmw-main.c:1167
+#: src/gmw-main.c:1154
 msgid "Writing ISO to devices"
 msgstr "Menulis ISO ke perangkat"
 
 #. TRANSLATORS: window title for the warning dialog
-#: src/gmw-main.c:1214
+#: src/gmw-main.c:1201
 msgid "Write to all disks?"
 msgstr "Tulis ke semua disk?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: src/gmw-main.c:1219
+#: src/gmw-main.c:1206
 msgid "All data on the drives will be deleted."
 msgstr "Semua data pada drive akan dihapus."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: src/gmw-main.c:1224
+#: src/gmw-main.c:1211
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "Berkas ISO lebih kecil daripada kapasitas disk."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: src/gmw-main.c:1229
+#: src/gmw-main.c:1216
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -308,50 +303,52 @@ msgstr ""
 "forensic setelah penyalinan."
 
 #. TRANSLATORS: button text for the warning dialog
-#: src/gmw-main.c:1236
+#: src/gmw-main.c:1223
 msgid "I Understand"
 msgstr "Saya Paham"
 
 #. TRANSLATORS: the title of the about window
-#: src/gmw-main.c:1268
+#: src/gmw-main.c:1255
 msgid "About GNOME MultiWriter"
 msgstr "Damned Lies tentang GNOME"
 
 #. TRANSLATORS: you can put your name here :)
-#: src/gmw-main.c:1278
+#: src/gmw-main.c:1265
 msgid "translator-credits"
-msgstr "Andika Triwidada <andika@gmail.com>, 2015."
+msgstr ""
+"Andika Triwidada <andika@gmail.com>, 2015.\n"
+"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2020."
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: src/gmw-main.c:1325
+#: src/gmw-main.c:1312
 msgid "Verify"
 msgstr "Memastikan"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: src/gmw-main.c:1331
+#: src/gmw-main.c:1318
 msgid "Wipe"
 msgstr "Hapus"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
-#: src/gmw-main.c:1337
+#: src/gmw-main.c:1324
 msgid "Probe"
 msgstr "Probe"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1668
+#: src/gmw-main.c:1679
 msgid "Allow renaming the labels on hubs"
 msgstr "Ijinkan penamaan ulang label pada hub"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1671 src/gmw-probe.c:497
+#: src/gmw-main.c:1682 src/gmw-probe.c:482
 msgid "Show extra debugging information"
 msgstr "Tampilkan informasi pengawakutuan ekstra"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: src/gmw-main.c:1690
+#: src/gmw-main.c:1700
 msgid "Failed to parse command line options"
 msgstr "Gagal mengurai opsi baris perintah"
 
@@ -360,17 +357,19 @@ msgstr "Gagal mengurai opsi baris perintah"
 msgid "Start Copying"
 msgstr "Mulai Menyalin"
 
-#. TRANSLATORS: app menu item for the file chooser
-#: src/gmw-menus.ui:7
-msgid "Import ISO file…"
-msgstr "Impor berkas ISO…"
+#. TRANSLATORS: command line option
+#: src/gmw-probe.c:485
+msgid "Random seed for predictability"
+msgstr "Benih acak untuk dapat diprediksi"
 
-#. TRANSLATORS: app menu item for the About UI
-#: src/gmw-menus.ui:13
-msgid "_About"
-msgstr "Tent_ang"
+#~ msgid "org.gnome.MultiWriter"
+#~ msgstr "org.gnome.MultiWriter"
 
-#. TRANSLATORS: app menu item for Quit
-#: src/gmw-menus.ui:17
-msgid "_Quit"
-msgstr "_Keluar"
+#~ msgid "Import ISO file…"
+#~ msgstr "Impor berkas ISO…"
+
+#~ msgid "_About"
+#~ msgstr "Tent_ang"
+
+#~ msgid "_Quit"
+#~ msgstr "_Keluar"
