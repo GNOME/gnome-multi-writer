@@ -1,257 +1,371 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Mahdi Gerami <mahdi.gerami77@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 10:52+0000\n"
-"PO-Revision-Date: 2015-01-08 15:41+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues\n"
+"POT-Creation-Date: 2019-11-19 12:53+0000\n"
+"PO-Revision-Date: 2020-02-07 17:23+0000\n"
 "Last-Translator: Mahdi Gerami <mahdi.gerami77@gmail.com>\n"
-"Language-Team: Persian (http://www.transifex.com/projects/p/gnome-multi-writer/language/fa/)\n"
+"Language-Team: Persian (http://www.transifex.com/projects/p/gnome-multi-"
+"writer/language/fa/)\n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.2.4\n"
 
-#. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
 #. set the title
+#. TRANSLATORS: Application window title
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: src/gmw-main.ui:98
 msgid "MultiWriter"
-msgstr "MultiWriter"
-
-#. TRANSLATORS: button to start the copy
-msgid "Start Copying"
-msgstr "آغاز کپی کردن"
-
-#. TRANSLATORS: app menu item for the file chooser
-msgid "Import ISO file…"
-msgstr "فایل ISO را وارد کنید..."
-
-#. TRANSLATORS: app menu item for the About UI
-msgid "_About"
-msgstr "ـ درباره"
-
-#. TRANSLATORS: app menu item for Quit
-msgid "_Quit"
-msgstr "ـ خروج"
+msgstr "مولتی‌رایتر"
 
 #. TRANSLATORS: one-line description for the app
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr "یک فایل ISO را روی چندین دستگاه USB به طور همزمان حک (رایت) کنید"
+msgstr "نوشتن یک پروندهٔ ISO روی چندین افزارهٔ USB به صورت هم‌زمان"
 
 #. TRANSLATORS: AppData description marketing paragraph
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:13
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Supported drive sizes are between 1GB and 32GB."
-msgstr "GNOME MultiWriter می تواند برای حک کردن یک فایل ISO به چندین دستگاه USB به طور همزمان استفاده شود.\nدستگاه های با اندازه 1GB تا 32GB پشتیبانی می شوند."
+msgstr ""
+"مولتی‌رایتر گنوم می‌تواند برای نوشتن یک پروندهٔ ISO روی چندین افزارهٔ USB به "
+"صورت هم‌زمان استفاده شود. اندازه‌های گردانندهٔ پشتیبانی‌شده بین ۱گ‌ب و ۳۲ گ‌ب "
+"هستند."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
 msgid ""
-"MultiWriter may be useful for QA testing, to create a GNOME Live image for a"
-" code sprint or to create hundreds of LiveUSB drives for a trade show."
-msgstr "MultiWriter می تواند برای آزمون بررسی کیفیت، ایجاد یک GNOME Live image برای code sprint یا ایجاد صد ها دستگاه LiveUSB برای یک نمایش تجاری استفاده شود."
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+"مولتی‌رایتر می‌تواند برای آزمون بررسی کیفیت، ایجاد یک تصویر زندهٔ گنوم برای "
+"code sprint یا ایجاد صدها دستگاه USB زنده برای یک نمایش تجاری استفاده شود."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
 msgid ""
 "Writing a more than 10 devices simultaneously can easy saturate the USB bus "
 "for most storage devices. There are two ways to write more devices in "
 "parallel:"
-msgstr "حک کردن بیشتر از ۱۰ دستگاه در یک زمان میتواند به راحتی گذر USB را برای بیشتر دستگاه های حافظه اشباح کند. دو راه برای حک کردن دستگاه های بیشتر به طور همزمان و موازی وجود دارد:"
+msgstr ""
+"نوشتن بیشتر از ۱۰ دستگاه در یک زمان میتواند به راحتا گذر USB را برای بیشتر "
+"دستگاه های حافظه اشباح کند. دو راه برای نوشتن دستگاه های بیشتر به طور همزمان "
+"و موازی وجود دارد:"
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
-msgstr "از درگاه USB 3.0 استفاده کنید، حتی اگر دسگاه حافظه USB 2.0 است"
+msgstr "از درگاه USB 3.0 استفاده کنید، حتا اگر دسگاه حافظه USB 2.0 است"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
 msgid "Install another USB 2.0 PCIe root hub"
 msgstr "یک USB 2.0 root hub دیگر نصب کنید"
 
-#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
-#. name
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
-msgstr "MultiWriter در ابتدا به عنوان قسمتی از پرو‍ژه ColorHug نوشته شد اما در سال ۲۰۱۵ به عنوان یک برنامه مستقل از آن جدا شد."
+msgstr ""
+"MultiWriter در ابتدا به عنوان قسمتی از پرو‍ژه ColorHug نوشته شد اما در سال "
+"۲۰۱۵ به عنوان یک برنامه مستقل از آن جدا شد."
 
 #. TRANSLATORS: the 1st screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
 msgid "Initial screen for the application"
-msgstr "صفحه نمایش اولیه برای برنامه"
+msgstr "صفحهٔ نخستین برای برنامه"
 
 #. TRANSLATORS: the 2nd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:52
 msgid "Writing and verifying images"
-msgstr "حک وتایید کردن image ها"
+msgstr "نوشتن و تأیید تصویرها"
 
 #. TRANSLATORS: the 3rd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:57
 msgid "All devices have been written"
-msgstr "همه ی دستگاه ها حک شده اند"
+msgstr "تمام افزاره‌ها نوشته شده‌اند"
+
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: data/org.gnome.MultiWriter.desktop.in:12
+msgid "Image;Writer;ISO;USB;"
+msgstr "Image;Writer;ISO;USB;تصویر;نوشتن;"
 
 #. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:6
 msgid "The filename to write to the USB disks"
-msgstr "اسم فایلی که باید به دیسک USB حک شود"
+msgstr "نام پرونده برای نوشتن روی دیسک‌های USB"
 
 #. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:8
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr "اسم ISO image که قرار است به دیسک USB متصل شده حک شود."
+msgstr "نام پروندهٔ تصویر ISO برای نوشتن روی دیسک‌های USB متصل."
 
 #. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:13
 msgid "The maximum number of threads to use"
-msgstr "حداکثر تعداد رشته تا thread ها برای استفاده"
+msgstr "تعداد بیشینهٔ رشته‌های مورد استفاده"
 
 #. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:15
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr "حداکثر تعداد رشته تا thread های موازی برای استفاده موقع کپی کردن اطلاعات"
+msgstr "تعداد بیشینهٔ رشته‌های موازی مورد استفاده برای رونوشت داده‌ها."
 
 #. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:20
 msgid "Completely blank drive when writing"
-msgstr "درایو کاملا خالی موقع حک کردن"
+msgstr "درایو کاملا خالی موقع نوشتن"
 
 #. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:22
 msgid "Write the ISO to the drive and then blank the remainder of the drive."
-msgstr "ISO را به درایو حک کن سپس باقی مانده درایو را خالی کن."
+msgstr "نوشتن ISO روی گرداننده و سپس خالی کردن باقی‌ماندهٔ گرداننده."
 
 #. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:27
 msgid "Verify the ISO image was written correctly"
-msgstr "اطمینان حاصل کنید که  ISO image ها به درستی حک شده اند"
+msgstr "تأیید درست نوشته شدن تصویرهای ISO"
 
 #. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:29
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
-msgstr " بعد از اتمام عملیات حک ISO image را از هر یک از دستگاه ها باز بینی کنید."
+msgstr "خواندن و تأیید تصویر ISO از هر افزاره پس از اتمام نوشتن."
 
 #. TRANSLATORS: schema summary
-msgid "Show a warning before writing to a drive"
-msgstr "یک هشدار قبل از حک کردن به درایو نشان بده"
+#: data/org.gnome.MultiWriter.gschema.xml:34
+msgid "Inspect the device before writing images"
+msgstr "وارسی افزاره پیش از نوشتن تصویرها"
 
 #. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:36
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr ""
+"وارسی افزاره برای تأیید این که اندازهٔ اعلامی گرداننده، همان اندازهٔ واقعی "
+"رسانه است."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:41
+msgid "Show a warning before writing to a drive"
+msgstr "یک هشدار قبل از نوشتن به درایو نشان بده"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:43
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr "یک صفحه هشدار برای تایید حذف محتوی دستگاه نشان بده."
 
-#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
-msgid "Image;Writer;ISO;USB;"
-msgstr "Image;Writer;ISO;USB;"
+#: data/org.gnome.MultiWriter.policy.in:17
+msgid "Check the device"
+msgstr "بررسی افزاره"
+
+#: data/org.gnome.MultiWriter.policy.in:18
+msgid "Authentication is required to probe the device"
+msgstr "برای وارسی افزاره نیاز به تآیید هویت است"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
+#: src/gmw-device.c:225
 msgid "Written successfully"
-msgstr "با موفقیت حک شد"
+msgstr "با موفقیت نوشته شد"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
+#: src/gmw-device.c:233
 #, c-format
 msgid "Writing at %.1f MB/s…"
-msgstr "حک کردن در %.1f MB/s"
+msgstr "در حال نوشتن با %I.1f م‌ب/ث…"
 
 #. TRANSLATORS: we're writing the image to the USB device
+#: src/gmw-device.c:237
 msgid "Writing…"
-msgstr "در حال حک کردن..."
+msgstr "در حال نوشتن…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
+#: src/gmw-device.c:246
 #, c-format
 msgid "Verifying at %.1f MB/s…"
-msgstr "بررسی در %.1f MB/s"
+msgstr "در حال تأیید با %I.1f م‌ب/ث…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
+#: src/gmw-device.c:251
 msgid "Verifying…"
-msgstr "در حال بررسی..."
+msgstr "در حال تأیید…"
+
+#. TRANSLATORS: This is a generic no-name USB flash disk
+#: src/gmw-device.c:308
+msgid "USB Flash Drive"
+msgstr "گردانندهٔ فلش USB"
+
+#. TRANSLATORS: window title renaming labels
+#: src/gmw-main.c:277
+msgid "New hub label"
+msgstr "برچسب هاب جدید"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
 msgid "GNOME MultiWriter"
-msgstr "GNOME MultiWriter"
+msgstr "مولتی‌رایتر"
 
 #. TRANSLATORS: the success sound description
+#: src/gmw-main.c:434
 msgid "Image written successfully"
-msgstr "Image با موفقییت حک شد"
+msgstr "تصویر با موفقیت نوشته شد"
 
 #. TRANSLATORS: copy aborted
+#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
 msgid "Cancelled"
 msgstr "لغو شد"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
+#: src/gmw-main.c:933 src/gmw-main.c:947
 msgid "Failed to open"
 msgstr "موفق به باز کردن نشد"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
+#: src/gmw-main.c:964
 msgid "Choose the file to write"
-msgstr "فایل را برای حک انتخاب کنید"
+msgstr "گزینش پرونده برای نوشتن"
 
 #. TRANSLATORS: button title
+#. TRANSLATORS: button to cancel a copy process
+#: src/gmw-main.c:968 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "لغو"
 
 #. TRANSLATORS: button title
+#: src/gmw-main.c:970
 msgid "Import"
 msgstr "وارد کردن"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
+#: src/gmw-main.c:974
 msgid "ISO files"
-msgstr "فایل ISO"
+msgstr "پرونده ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
+#: src/gmw-main.c:1118 src/gmw-main.c:1137
 msgid "Failed to copy"
 msgstr "موفق به کپی نشد"
 
 #. TRANSLATORS: the inhibit reason
+#: src/gmw-main.c:1154
 msgid "Writing ISO to devices"
-msgstr "در حال حک کردن ISO به دستگاه ها"
+msgstr "در حال نوشتن ISO به دستگاه ها"
 
 #. TRANSLATORS: window title for the warning dialog
+#: src/gmw-main.c:1201
 msgid "Write to all disks?"
-msgstr "حک کردن به همه ی دیسک ها؟"
+msgstr "نوشتن به همه ی دیسک ها؟"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
+#: src/gmw-main.c:1206
 msgid "All data on the drives will be deleted."
 msgstr "همه ی اطلاعات این دستگاه ها حذف خواهند شد."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
+#: src/gmw-main.c:1211
 msgid "The ISO file is smaller than the disk capacity."
-msgstr "فایل ISO از ظرفیت دیسک کوچکتر است."
+msgstr "پرونده ISO از ظرفیت دیسک کوچکتر است."
 
 #. TRANSLATORS: this could leave your personal files on the drive
+#: src/gmw-main.c:1216
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
-msgstr "بخشی از محتوای فعلی درایو ها می توانند با استفاده از foresinc tools حتی بعد از کپی شدن یافت شوند."
+msgstr ""
+"بخشی از محتوای فعلی درایو ها می توانند با استفاده از foresinc tools حتا بعد "
+"از کپی شدن یافت شوند."
 
 #. TRANSLATORS: button text for the warning dialog
+#: src/gmw-main.c:1223
 msgid "I Understand"
-msgstr "متوجه میشوم"
+msgstr "فهمیدم"
 
 #. TRANSLATORS: the title of the about window
+#: src/gmw-main.c:1255
 msgid "About GNOME MultiWriter"
-msgstr "در مورد GNOME MultiWriter"
+msgstr "دربارهٔ مولتی‌رایتر گنوم"
 
 #. TRANSLATORS: you can put your name here :)
+#: src/gmw-main.c:1265
 msgid "translator-credits"
-msgstr "مهدی گرامی <mahdi.gerami77@gmail.com>"
+msgstr ""
+"مهدی گرامی <mahdi.gerami77@gmail.com>\n"
+"دانیال بهزادی <dani.behzi@ubuntu.com>"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
+#: src/gmw-main.c:1312
 msgid "Verify"
-msgstr "بررسی"
+msgstr "تأیید"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
+#: src/gmw-main.c:1318
 msgid "Wipe"
 msgstr "پاک کردن"
 
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: src/gmw-main.c:1324
+msgid "Probe"
+msgstr "وارسی"
+
 #. TRANSLATORS: command line option
+#: src/gmw-main.c:1679
+msgid "Allow renaming the labels on hubs"
+msgstr "اجازه به تغییر نام برچسب‌ها روی هاب‌ها"
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1682 src/gmw-probe.c:482
 msgid "Show extra debugging information"
-msgstr "نشان دادن اطلاعات اشکال زدایی بیشتر"
+msgstr "نشان دادن اطلاعات اضافی اشکال‌زدايی"
 
 #. TRANSLATORS: the user has sausages for fingers
+#: src/gmw-main.c:1700
 msgid "Failed to parse command line options"
-msgstr "موفق به تجزیه گزینه های کامند لاین نشد"
+msgstr "شکست در تجزیهٔ گزینه‌های خط فرمان"
+
+#. TRANSLATORS: button to start the copy
+#: src/gmw-main.ui:102
+msgid "Start Copying"
+msgstr "آغاز رونوشت"
+
+#. TRANSLATORS: command line option
+#: src/gmw-probe.c:485
+msgid "Random seed for predictability"
+msgstr "هستهٔ کاتوره‌ای برای قابلیت پیش‌بینی"
+
+#~ msgid "Import ISO file…"
+#~ msgstr "فایل ISO را وارد کنید..."
+
+#~ msgid "_About"
+#~ msgstr "ـ درباره"
+
+#~ msgid "_Quit"
+#~ msgstr "ـ خروج"
