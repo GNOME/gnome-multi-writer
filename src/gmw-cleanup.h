@@ -20,12 +20,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __GMW_CLEANUP_H__
-#define __GMW_CLEANUP_H__
+#pragma once
 
 #include <gio/gio.h>
-
-G_BEGIN_DECLS
 
 #define GS_DEFINE_CLEANUP_FUNCTION0(Type, name, func) \
   static inline void name (void *v) \
@@ -37,7 +34,3 @@ G_BEGIN_DECLS
 GS_DEFINE_CLEANUP_FUNCTION0(GObject*, gs_local_obj_unref, g_object_unref)
 
 #define _cleanup_object_unref_ __attribute__ ((cleanup(gs_local_obj_unref)))
-
-G_END_DECLS
-
-#endif

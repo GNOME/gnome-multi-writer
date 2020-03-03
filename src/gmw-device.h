@@ -19,8 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef __GMW_DEVICE_H__
-#define __GMW_DEVICE_H__
+#pragma once
 
 #include <gio/gio.h>
 #include <glib-object.h>
@@ -95,8 +94,3 @@ void		 gmw_device_set_write_alloc	(GmwDevice	*self,
 						 gdouble	 write_alloc);
 void		 gmw_device_set_error		(GmwDevice	*self,
 						 const GError	*error);
-
-G_END_DECLS
-
-#endif /* __GMW_DEVICE_H__ */
-
