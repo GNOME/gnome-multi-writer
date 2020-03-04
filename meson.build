@@ -1,5 +1,5 @@
 project('gnome-multi-writer', 'c',
-  version : '3.32.2',
+  version : '3.35.90',
   default_options : ['warning_level=1'],
   meson_version : '>=0.46.0'
 )
