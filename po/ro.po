@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer gnome-3-32\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
 "issues\n"
-"POT-Creation-Date: 2020-04-04 13:51+0000\n"
-"PO-Revision-Date: 2020-07-03 07:47+0200\n"
+"POT-Creation-Date: 2020-07-03 05:49+0000\n"
+"PO-Revision-Date: 2020-07-03 07:50+0200\n"
+"Last-Translator: \n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -17,21 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"Last-Translator: \n"
 "X-Generator: Poedit 2.3.1\n"
 
 #. TRANSLATORS: the application name
 #. set the title
 #. TRANSLATORS: Application window title
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
-#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:772
 #: src/gmw-main.ui:98
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: one-line description for the app
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
-#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1246
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Scrie un fișier ISO simultan pe dispozitive USB multiple"
 
@@ -187,118 +187,118 @@ msgstr "Autentificarea este necesară pentru a investiga dispozitivul"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: src/gmw-device.c:225
+#: src/gmw-device.c:211
 msgid "Written successfully"
 msgstr "Scris cu succes"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: src/gmw-device.c:233
+#: src/gmw-device.c:219
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Se scrie la %.1f MB/s…"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: src/gmw-device.c:237
+#: src/gmw-device.c:223
 msgid "Writing…"
 msgstr "Se scrie…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: src/gmw-device.c:246
+#: src/gmw-device.c:232
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Se verifică la %.1f MB/s…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: src/gmw-device.c:251
+#: src/gmw-device.c:237
 msgid "Verifying…"
 msgstr "Se verifică…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: src/gmw-device.c:308
+#: src/gmw-device.c:294
 msgid "USB Flash Drive"
 msgstr "Stick USB"
 
 #. TRANSLATORS: window title renaming labels
-#: src/gmw-main.c:277
+#: src/gmw-main.c:263
 msgid "New hub label"
 msgstr "Etichetă hub nouă"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
+#: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: src/gmw-main.c:434
+#: src/gmw-main.c:420
 msgid "Image written successfully"
 msgstr "Imagine scrisă cu succes"
 
 #. TRANSLATORS: copy aborted
-#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
+#: src/gmw-main.c:523 src/gmw-main.c:563 src/gmw-main.c:666 src/gmw-main.c:701
 msgid "Cancelled"
 msgstr "Anulat"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: src/gmw-main.c:933 src/gmw-main.c:947
+#: src/gmw-main.c:919 src/gmw-main.c:933
 msgid "Failed to open"
 msgstr "Eșec la deschidere"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: src/gmw-main.c:964
+#: src/gmw-main.c:950
 msgid "Choose the file to write"
 msgstr "Alegeți un fișier pentru scriere"
 
 #. TRANSLATORS: button title
 #. TRANSLATORS: button to cancel a copy process
-#: src/gmw-main.c:968 src/gmw-main.ui:115
+#: src/gmw-main.c:954 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "Anulează"
 
 #. TRANSLATORS: button title
-#: src/gmw-main.c:970
+#: src/gmw-main.c:956
 msgid "Import"
 msgstr "Importă"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: src/gmw-main.c:974
+#: src/gmw-main.c:960
 msgid "ISO files"
 msgstr "Fișiere ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: src/gmw-main.c:1118 src/gmw-main.c:1137
+#: src/gmw-main.c:1104 src/gmw-main.c:1123
 msgid "Failed to copy"
 msgstr "Eșec la copiere"
 
 #. TRANSLATORS: the inhibit reason
-#: src/gmw-main.c:1154
+#: src/gmw-main.c:1140
 msgid "Writing ISO to devices"
 msgstr "Se scrie ISO-ul pe dispozitive"
 
 #. TRANSLATORS: window title for the warning dialog
-#: src/gmw-main.c:1201
+#: src/gmw-main.c:1187
 msgid "Write to all disks?"
 msgstr "Scriu toate discurile?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: src/gmw-main.c:1206
+#: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
 msgstr "Toate datele de pe dispozitive vor fi șterse."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: src/gmw-main.c:1211
+#: src/gmw-main.c:1197
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "Fișierul ISO este mai mic decât capacitatea discului."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: src/gmw-main.c:1216
+#: src/gmw-main.c:1202
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -307,50 +307,50 @@ msgstr ""
 "după copiere."
 
 #. TRANSLATORS: button text for the warning dialog
-#: src/gmw-main.c:1223
+#: src/gmw-main.c:1209
 msgid "I Understand"
 msgstr "Înțeleg"
 
 #. TRANSLATORS: the title of the about window
-#: src/gmw-main.c:1255
+#: src/gmw-main.c:1241
 msgid "About GNOME MultiWriter"
 msgstr "Despre GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
-#: src/gmw-main.c:1265
+#: src/gmw-main.c:1251
 msgid "translator-credits"
 msgstr "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2020"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: src/gmw-main.c:1312
+#: src/gmw-main.c:1298
 msgid "Verify"
 msgstr "Verifică"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: src/gmw-main.c:1318
+#: src/gmw-main.c:1304
 msgid "Wipe"
 msgstr "Curăță"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
-#: src/gmw-main.c:1324
+#: src/gmw-main.c:1310
 msgid "Probe"
 msgstr "Investighează"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1679
+#: src/gmw-main.c:1665
 msgid "Allow renaming the labels on hubs"
 msgstr "Permite redenumirea etichetelor huburilor"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1682 src/gmw-probe.c:474
+#: src/gmw-main.c:1668 src/gmw-probe.c:468
 msgid "Show extra debugging information"
 msgstr "Arată informații de depanare adiționale"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: src/gmw-main.c:1700
+#: src/gmw-main.c:1686
 msgid "Failed to parse command line options"
 msgstr "Eșec la parsarea opțiunilor din linia de comandă"
 
@@ -358,3 +358,8 @@ msgstr "Eșec la parsarea opțiunilor din linia de comandă"
 #: src/gmw-main.ui:102
 msgid "Start Copying"
 msgstr "Începe copierea"
+
+#. TRANSLATORS: command line option
+#: src/gmw-probe.c:471
+msgid "Random seed for predictability"
+msgstr "Sămânță aleatorie pentru prezicere"
