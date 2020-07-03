@@ -1,0 +1,360 @@
+# Romanian translation for gnome-multi-writer.
+# Copyright (C) 2020 gnome-multi-writer's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-multi-writer package.
+# Daniel Șerbănescu <daniel@serbanescu.dk>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-multi-writer gnome-3-32\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues\n"
+"POT-Creation-Date: 2020-04-04 13:51+0000\n"
+"PO-Revision-Date: 2020-07-03 07:47+0200\n"
+"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.3.1\n"
+
+#. TRANSLATORS: the application name
+#. set the title
+#. TRANSLATORS: Application window title
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: src/gmw-main.ui:98
+msgid "MultiWriter"
+msgstr "MultiWriter"
+
+#. TRANSLATORS: one-line description for the app
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
+msgid "Write an ISO file to multiple USB devices at once"
+msgstr "Scrie un fișier ISO simultan pe dispozitive USB multiple"
+
+#. TRANSLATORS: AppData description marketing paragraph
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:13
+msgid ""
+"GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
+"at once. Supported drive sizes are between 1GB and 32GB."
+msgstr ""
+"GNOME MultiWriter poate fi folosit pentru a scrie simultan un fișier ISO pe "
+"dispozitive USB multiple. Dimensiunea dispozitivelor suportate este între "
+"1GB și 32GB."
+
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
+#. GNOME refers to the desktop environment
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
+msgid ""
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+"MultiWriter poate fi folosit pentru testarea calității, pentru a crea o "
+"imagine live cu GNOME, pentru un sprint de codare sau pentru a crea sute de "
+"USB-uri live pentru vânzare."
+
+#. TRANSLATORS: saturate as in the throughput can get no more
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
+msgid ""
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
+msgstr ""
+"Scriind mai mult de 10 dispozitive simultan poate satura soclurile USB pe "
+"majoritatea dispozitivelor de stocare. Există două moduri de a scrie mai "
+"multe dispozitive în paralel:"
+
+#. TRANSLATORS: storage devices refers to the things we're writing to
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
+msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
+msgstr ""
+"Utilizați huburi USB 3.0, chiar dacă dispozitivele de stocare sunt USB 2.0"
+
+#. TRANSLATORS: PCIe is the data bus, don't translate please
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
+msgid "Install another USB 2.0 PCIe root hub"
+msgstr "Instalați încă un hub de bază USB 2.0 PCIe"
+
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
+msgid ""
+"MultiWriter was originally written as part of the ColorHug project but was "
+"split off as an independent application in 2015."
+msgstr ""
+"MultiWriter a fost original scris ca parte a proiectului ColorHug dar s-a "
+"împărțit ca aplicație independentă în 2015."
+
+#. TRANSLATORS: the 1st screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
+msgid "Initial screen for the application"
+msgstr "Ecranul inițial al aplicației"
+
+#. TRANSLATORS: the 2nd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:52
+msgid "Writing and verifying images"
+msgstr "Scrierea și verificarea imaginilor"
+
+#. TRANSLATORS: the 3rd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:57
+msgid "All devices have been written"
+msgstr "Toate dispozitivele au fost scrise"
+
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: data/org.gnome.MultiWriter.desktop.in:12
+msgid "Image;Writer;ISO;USB;"
+msgstr "Image;Writer;ISO;USB;Imagine;Dispozitiv;Live;"
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:6
+msgid "The filename to write to the USB disks"
+msgstr "Numele fișierului de scris pe discurile USB"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:8
+msgid "The filename of the ISO image to write to the connected USB disks."
+msgstr "Numele fișierului imaginii ISO de scris pe discurile USB conectate."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:13
+msgid "The maximum number of threads to use"
+msgstr "Numărul maxim de fire de execuție de folosit"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:15
+msgid "The maximum number of parallel threads to use when copying data."
+msgstr "Numărul maxim de fire de execuție de folosit când se copiază date."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:20
+msgid "Completely blank drive when writing"
+msgstr "Dispozitiv complet gol când se scrie"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:22
+msgid "Write the ISO to the drive and then blank the remainder of the drive."
+msgstr "Scrie ISO-ul pe dispozitiv și apoi golește restul dispozitivului."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:27
+msgid "Verify the ISO image was written correctly"
+msgstr "Verifică dacă imaginea ISO a fost corect scrisă"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:29
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
+msgstr ""
+"Citește și verifică imaginea ISO pentru fiecare dispozitiv după ce scrierea "
+"este completă."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:34
+msgid "Inspect the device before writing images"
+msgstr "Inspectează dispozitivul după scrierea imaginilor"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:36
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr ""
+"Inspectează dispozitivul pentru a verifica dacă dimensiunea raportată este "
+"și cea actuală."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:41
+msgid "Show a warning before writing to a drive"
+msgstr "Arată o avertizare înainte de a scrie pe dispozitiv"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:43
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
+msgstr ""
+"Arată un dialog de avertizare ce confirmă că dispozitivul va fi curățat de "
+"conținut."
+
+#: data/org.gnome.MultiWriter.policy.in:17
+msgid "Check the device"
+msgstr "Verifică dispozitivul"
+
+#: data/org.gnome.MultiWriter.policy.in:18
+msgid "Authentication is required to probe the device"
+msgstr "Autentificarea este necesară pentru a investiga dispozitivul"
+
+#. TRANSLATORS: The image has been written and verified to
+#. * *one* device, not all
+#: src/gmw-device.c:225
+msgid "Written successfully"
+msgstr "Scris cu succes"
+
+#. TRANSLATORS: we're writing the image to the device
+#. * and we now know the speed
+#: src/gmw-device.c:233
+#, c-format
+msgid "Writing at %.1f MB/s…"
+msgstr "Se scrie la %.1f MB/s…"
+
+#. TRANSLATORS: we're writing the image to the USB device
+#: src/gmw-device.c:237
+msgid "Writing…"
+msgstr "Se scrie…"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data and we now know the speed
+#: src/gmw-device.c:246
+#, c-format
+msgid "Verifying at %.1f MB/s…"
+msgstr "Se verifică la %.1f MB/s…"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data
+#: src/gmw-device.c:251
+msgid "Verifying…"
+msgstr "Se verifică…"
+
+#. TRANSLATORS: This is a generic no-name USB flash disk
+#: src/gmw-device.c:308
+msgid "USB Flash Drive"
+msgstr "Stick USB"
+
+#. TRANSLATORS: window title renaming labels
+#: src/gmw-main.c:277
+msgid "New hub label"
+msgstr "Etichetă hub nouă"
+
+#. TRANSLATORS: the application name
+#. TRANSLATORS: the application name for the about UI
+#. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
+msgid "GNOME MultiWriter"
+msgstr "GNOME MultiWriter"
+
+#. TRANSLATORS: the success sound description
+#: src/gmw-main.c:434
+msgid "Image written successfully"
+msgstr "Imagine scrisă cu succes"
+
+#. TRANSLATORS: copy aborted
+#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
+msgid "Cancelled"
+msgstr "Anulat"
+
+#. TRANSLATORS: we couldn't open the ISO file the user chose
+#: src/gmw-main.c:933 src/gmw-main.c:947
+msgid "Failed to open"
+msgstr "Eșec la deschidere"
+
+#. TRANSLATORS: window title for the file-chooser, file is an ISO
+#: src/gmw-main.c:964
+msgid "Choose the file to write"
+msgstr "Alegeți un fișier pentru scriere"
+
+#. TRANSLATORS: button title
+#. TRANSLATORS: button to cancel a copy process
+#: src/gmw-main.c:968 src/gmw-main.ui:115
+msgid "Cancel"
+msgstr "Anulează"
+
+#. TRANSLATORS: button title
+#: src/gmw-main.c:970
+msgid "Import"
+msgstr "Importă"
+
+#. TRANSLATORS: the file filter description, e.g. *.iso
+#: src/gmw-main.c:974
+msgid "ISO files"
+msgstr "Fișiere ISO"
+
+#. TRANSLATORS: error dialog title:
+#. * we probably didn't authenticate
+#: src/gmw-main.c:1118 src/gmw-main.c:1137
+msgid "Failed to copy"
+msgstr "Eșec la copiere"
+
+#. TRANSLATORS: the inhibit reason
+#: src/gmw-main.c:1154
+msgid "Writing ISO to devices"
+msgstr "Se scrie ISO-ul pe dispozitive"
+
+#. TRANSLATORS: window title for the warning dialog
+#: src/gmw-main.c:1201
+msgid "Write to all disks?"
+msgstr "Scriu toate discurile?"
+
+#. TRANSLATORS: check that we can nuke everything from all disks
+#: src/gmw-main.c:1206
+msgid "All data on the drives will be deleted."
+msgstr "Toate datele de pe dispozitive vor fi șterse."
+
+#. TRANSLATORS: if the image file is smaller than the disks and
+#. * we've disabled wiping the device we only write enough data
+#. * to transfer the image
+#: src/gmw-main.c:1211
+msgid "The ISO file is smaller than the disk capacity."
+msgstr "Fișierul ISO este mai mic decât capacitatea discului."
+
+#. TRANSLATORS: this could leave your personal files on the drive
+#: src/gmw-main.c:1216
+msgid ""
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
+msgstr ""
+"Conținutul dispozitivelor poate încă fi găsit utilizând unelte judiciare "
+"după copiere."
+
+#. TRANSLATORS: button text for the warning dialog
+#: src/gmw-main.c:1223
+msgid "I Understand"
+msgstr "Înțeleg"
+
+#. TRANSLATORS: the title of the about window
+#: src/gmw-main.c:1255
+msgid "About GNOME MultiWriter"
+msgstr "Despre GNOME MultiWriter"
+
+#. TRANSLATORS: you can put your name here :)
+#: src/gmw-main.c:1265
+msgid "translator-credits"
+msgstr "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2020"
+
+#. TRANSLATORS: a switch label: verify the image by
+#. * reading back the original image from the device
+#: src/gmw-main.c:1312
+msgid "Verify"
+msgstr "Verifică"
+
+#. TRANSLATORS: a switch label: we write zeros after
+#. * the image so it erases the entire device
+#: src/gmw-main.c:1318
+msgid "Wipe"
+msgstr "Curăță"
+
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: src/gmw-main.c:1324
+msgid "Probe"
+msgstr "Investighează"
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1679
+msgid "Allow renaming the labels on hubs"
+msgstr "Permite redenumirea etichetelor huburilor"
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1682 src/gmw-probe.c:474
+msgid "Show extra debugging information"
+msgstr "Arată informații de depanare adiționale"
+
+#. TRANSLATORS: the user has sausages for fingers
+#: src/gmw-main.c:1700
+msgid "Failed to parse command line options"
+msgstr "Eșec la parsarea opțiunilor din linia de comandă"
+
+#. TRANSLATORS: button to start the copy
+#: src/gmw-main.ui:102
+msgid "Start Copying"
+msgstr "Începe copierea"
