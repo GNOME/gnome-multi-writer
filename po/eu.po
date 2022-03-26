@@ -7,9 +7,9 @@
 msgid ""
 msgstr "Project-Id-Version: gnome-multi-writer gnome-3-30\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/issues\n"
-"POT-Creation-Date: 2019-07-20 08:05+0000\n"
-"PO-Revision-Date: 2019-10-26 10:00+0100\n"
-"Last-Translator: Asier Sarasua Garmendia <asier.sarasua@gmail.com>\n"
+"POT-Creation-Date: 2021-05-13 18:50+0000\n"
+"PO-Revision-Date: 2022-03-26 10:00+0100\n"
+"Last-Translator: Asier Sarasua Garmendia <asier.sarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -20,14 +20,14 @@ msgstr "Project-Id-Version: gnome-multi-writer gnome-3-30\n"
 #. set the title
 #. TRANSLATORS: Application window title
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
-#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:772
 #: src/gmw-main.ui:98
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: one-line description for the app
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
-#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1246
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Idatzi ISO fitxategi bat USB gailu anitzetara aldi berean"
 
@@ -165,168 +165,168 @@ msgstr "Autentifikazioa behar da gailua aztertzeko"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: src/gmw-device.c:225
+#: src/gmw-device.c:211
 msgid "Written successfully"
 msgstr "Ongi idatzi da"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: src/gmw-device.c:233
+#: src/gmw-device.c:219
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "%.1f MB/s-ko abiaduran idazten…"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: src/gmw-device.c:237
+#: src/gmw-device.c:223
 msgid "Writing…"
 msgstr "Idazten…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: src/gmw-device.c:246
+#: src/gmw-device.c:232
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "%.1f MB/s-ko abiaduran egiaztatzen…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: src/gmw-device.c:251
+#: src/gmw-device.c:237
 msgid "Verifying…"
 msgstr "Egiaztatzen…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: src/gmw-device.c:308
+#: src/gmw-device.c:294
 msgid "USB Flash Drive"
 msgstr "USB Flash unitatea"
 
 #. TRANSLATORS: window title renaming labels
-#: src/gmw-main.c:277
+#: src/gmw-main.c:263
 msgid "New hub label"
 msgstr "Kontzentragailu-etiketa berria"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
+#: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: src/gmw-main.c:434
+#: src/gmw-main.c:420
 msgid "Image written successfully"
 msgstr "Irudia ongi idatzi da"
 
 #. TRANSLATORS: copy aborted
-#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
+#: src/gmw-main.c:523 src/gmw-main.c:563 src/gmw-main.c:666 src/gmw-main.c:701
 msgid "Cancelled"
 msgstr "Bertan behera utzita"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: src/gmw-main.c:933 src/gmw-main.c:947
+#: src/gmw-main.c:919 src/gmw-main.c:933
 msgid "Failed to open"
 msgstr "Ezin izan da ireki"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: src/gmw-main.c:964
+#: src/gmw-main.c:950
 msgid "Choose the file to write"
 msgstr "Aukeratu idatziko den fitxategia"
 
 #. TRANSLATORS: button title
 #. TRANSLATORS: button to cancel a copy process
-#: src/gmw-main.c:968 src/gmw-main.ui:115
+#: src/gmw-main.c:954 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "Utzi"
 
 #. TRANSLATORS: button title
-#: src/gmw-main.c:970
+#: src/gmw-main.c:956
 msgid "Import"
 msgstr "Inportatu"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: src/gmw-main.c:974
+#: src/gmw-main.c:960
 msgid "ISO files"
 msgstr "ISO fitxategiak"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: src/gmw-main.c:1118 src/gmw-main.c:1137
+#: src/gmw-main.c:1104 src/gmw-main.c:1123
 msgid "Failed to copy"
 msgstr "Huts egin du kopiatzean"
 
 #. TRANSLATORS: the inhibit reason
-#: src/gmw-main.c:1154
+#: src/gmw-main.c:1140
 msgid "Writing ISO to devices"
 msgstr "ISOa gailuetan idazten"
 
 #. TRANSLATORS: window title for the warning dialog
-#: src/gmw-main.c:1201
+#: src/gmw-main.c:1187
 msgid "Write to all disks?"
 msgstr "DIsko guztietan idatzi?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: src/gmw-main.c:1206
+#: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
 msgstr "Unitateetako datu guztiak ezabatuko dira."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: src/gmw-main.c:1211
+#: src/gmw-main.c:1197
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "ISO fitxategia diskoaren edukiera baino txikiagoa da."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: src/gmw-main.c:1216
+#: src/gmw-main.c:1202
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
 msgstr "Unitateetako zenbait eduki forentse-tresnak erabilita aurkitu ahal dira, baita kopiatu ondoren ere."
 
 #. TRANSLATORS: button text for the warning dialog
-#: src/gmw-main.c:1223
+#: src/gmw-main.c:1209
 msgid "I Understand"
 msgstr "Ulertzen dut"
 
 #. TRANSLATORS: the title of the about window
-#: src/gmw-main.c:1255
+#: src/gmw-main.c:1241
 msgid "About GNOME MultiWriter"
 msgstr "GNOME MultiWriter aplikazioari buruz"
 
 #. TRANSLATORS: you can put your name here :)
-#: src/gmw-main.c:1265
+#: src/gmw-main.c:1251
 msgid "translator-credits"
-msgstr "Asier Sarasua Garmendia <asier.sarasua@gmail.com>"
+msgstr "translator-credits"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: src/gmw-main.c:1312
+#: src/gmw-main.c:1298
 msgid "Verify"
 msgstr "Egiaztatu"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: src/gmw-main.c:1318
+#: src/gmw-main.c:1304
 msgid "Wipe"
 msgstr "Garbitu"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
-#: src/gmw-main.c:1324
+#: src/gmw-main.c:1310
 msgid "Probe"
 msgstr "Aztertu"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1679
+#: src/gmw-main.c:1665
 msgid "Allow renaming the labels on hubs"
 msgstr "Onartu kontzentragailuetako etiketen izenak aldatzea"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1682 src/gmw-probe.c:474
+#: src/gmw-main.c:1668 src/gmw-probe.c:468
 msgid "Show extra debugging information"
 msgstr "Erakutsi arazketa-informazio gehigarria"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: src/gmw-main.c:1700
+#: src/gmw-main.c:1686
 msgid "Failed to parse command line options"
 msgstr "Huts egin du komando-lerroko aukeren analisiak"
 
@@ -334,6 +334,11 @@ msgstr "Huts egin du komando-lerroko aukeren analisiak"
 #: src/gmw-main.ui:102
 msgid "Start Copying"
 msgstr "Hasi kopiatzen"
+
+#. TRANSLATORS: command line option
+#: src/gmw-probe.c:471
+msgid "Random seed for predictability"
+msgstr "Aurresangarritasunerako ausazko hazia"
 
 #~ msgid "org.gnome.MultiWriter"
 #~ msgstr "org.gnome.MultiWriter"
