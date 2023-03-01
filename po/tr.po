@@ -10,30 +10,30 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
 "issues\n"
-"POT-Creation-Date: 2019-11-19 12:53+0000\n"
-"PO-Revision-Date: 2020-02-19 16:24+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2023-01-25 19:09+0000\n"
+"PO-Revision-Date: 2023-02-23 05:49+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-POOTLE-MTIME: 1428863410.000000\n"
 
 #. TRANSLATORS: the application name
 #. set the title
 #. TRANSLATORS: Application window title
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
-#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:772
 #: src/gmw-main.ui:98
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: one-line description for the app
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
-#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1246
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Bir ISO dosyasını birden çok USB aygıtına tek seferde yazın"
 
@@ -185,118 +185,118 @@ msgstr "Aygıtı incelemek için kimlik doğrulaması gerekiyor"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: src/gmw-device.c:225
+#: src/gmw-device.c:211
 msgid "Written successfully"
 msgstr "Başarılı bir şekilde yazıldı"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: src/gmw-device.c:233
+#: src/gmw-device.c:219
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Yazılıyor %.1f MB/s…"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: src/gmw-device.c:237
+#: src/gmw-device.c:223
 msgid "Writing…"
 msgstr "Yazılıyor…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: src/gmw-device.c:246
+#: src/gmw-device.c:232
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Doğrulanıyor %.1f MB/s…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: src/gmw-device.c:251
+#: src/gmw-device.c:237
 msgid "Verifying…"
 msgstr "Doğrulanıyor…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: src/gmw-device.c:308
+#: src/gmw-device.c:294
 msgid "USB Flash Drive"
 msgstr "USB Bellek"
 
 #. TRANSLATORS: window title renaming labels
-#: src/gmw-main.c:277
+#: src/gmw-main.c:263
 msgid "New hub label"
 msgstr "Yeni hub etiketi"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
+#: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: src/gmw-main.c:434
+#: src/gmw-main.c:420
 msgid "Image written successfully"
 msgstr "Kalıp başarılı biçimde yazıldı"
 
 #. TRANSLATORS: copy aborted
-#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
+#: src/gmw-main.c:523 src/gmw-main.c:563 src/gmw-main.c:666 src/gmw-main.c:701
 msgid "Cancelled"
 msgstr "İptal Edildi"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: src/gmw-main.c:933 src/gmw-main.c:947
+#: src/gmw-main.c:919 src/gmw-main.c:933
 msgid "Failed to open"
-msgstr "Açma işlemi başarısız oldu"
+msgstr "Açılamadı"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: src/gmw-main.c:964
+#: src/gmw-main.c:950
 msgid "Choose the file to write"
 msgstr "Yazılacak dosyayı seç"
 
 #. TRANSLATORS: button title
 #. TRANSLATORS: button to cancel a copy process
-#: src/gmw-main.c:968 src/gmw-main.ui:115
+#: src/gmw-main.c:954 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "İptal Et"
 
 #. TRANSLATORS: button title
-#: src/gmw-main.c:970
+#: src/gmw-main.c:956
 msgid "Import"
 msgstr "İçeri Aktar"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: src/gmw-main.c:974
+#: src/gmw-main.c:960
 msgid "ISO files"
 msgstr "ISO dosyaları"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: src/gmw-main.c:1118 src/gmw-main.c:1137
+#: src/gmw-main.c:1104 src/gmw-main.c:1123
 msgid "Failed to copy"
-msgstr "Kopyalama başarısız oldu"
+msgstr "Kopyalanamadı"
 
 #. TRANSLATORS: the inhibit reason
-#: src/gmw-main.c:1154
+#: src/gmw-main.c:1140
 msgid "Writing ISO to devices"
 msgstr "ISO aygıtlara yazılıyor"
 
 #. TRANSLATORS: window title for the warning dialog
-#: src/gmw-main.c:1201
+#: src/gmw-main.c:1187
 msgid "Write to all disks?"
 msgstr "Tüm disklere yazılsın mı?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: src/gmw-main.c:1206
+#: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
 msgstr "Sürücülerdeki tüm veriler silinecektir."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: src/gmw-main.c:1211
+#: src/gmw-main.c:1197
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "ISO dosyası disk kapasitesinden daha küçüktür."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: src/gmw-main.c:1216
+#: src/gmw-main.c:1202
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -305,17 +305,17 @@ msgstr ""
 "kullanılarak bulunabilir."
 
 #. TRANSLATORS: button text for the warning dialog
-#: src/gmw-main.c:1223
+#: src/gmw-main.c:1209
 msgid "I Understand"
 msgstr "Anladım"
 
 #. TRANSLATORS: the title of the about window
-#: src/gmw-main.c:1255
+#: src/gmw-main.c:1241
 msgid "About GNOME MultiWriter"
 msgstr "GNOME MultiWriter Hakkında"
 
 #. TRANSLATORS: you can put your name here :)
-#: src/gmw-main.c:1265
+#: src/gmw-main.c:1251
 msgid "translator-credits"
 msgstr ""
 "Simge Sezgin <simgeszgn@gmail.com>\n"
@@ -323,34 +323,34 @@ msgstr ""
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: src/gmw-main.c:1312
+#: src/gmw-main.c:1298
 msgid "Verify"
 msgstr "Doğrula"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: src/gmw-main.c:1318
+#: src/gmw-main.c:1304
 msgid "Wipe"
 msgstr "Sil"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
-#: src/gmw-main.c:1324
+#: src/gmw-main.c:1310
 msgid "Probe"
 msgstr "Araştır"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1679
+#: src/gmw-main.c:1665
 msgid "Allow renaming the labels on hubs"
 msgstr "Hubʼlar üzerindeki etiketleri yeniden adlandırmaya izin ver"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1682 src/gmw-probe.c:482
+#: src/gmw-main.c:1668 src/gmw-probe.c:468
 msgid "Show extra debugging information"
 msgstr "Ek hata ayıklama bilgisi göster"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: src/gmw-main.c:1700
+#: src/gmw-main.c:1686
 msgid "Failed to parse command line options"
 msgstr "Komut satırı seçenekleri ayrıştırılamadı"
 
@@ -360,7 +360,7 @@ msgid "Start Copying"
 msgstr "Kopyalamayı Başlat"
 
 #. TRANSLATORS: command line option
-#: src/gmw-probe.c:485
+#: src/gmw-probe.c:471
 msgid "Random seed for predictability"
 msgstr "Tahmin edilebilirlik için rastgele parçacık"
 
