@@ -1,5 +1,6 @@
 # Turkish translation for gnome-multi-writer.
-# Copyright (C) 2015 gnome-multi-writer's COPYRIGHT HOLDER
+# Copyright (C) 2015-2023 gnome-multi-writer's COPYRIGHT HOLDER
+#
 # This file is distributed under the same license as the gnome-multi-writer package.
 # Simge Sezgin <simgesezgin88@gmail.com>, 2015.
 # Muhammet Kara <muhammetk@gmail.com>, 2015, 2016.
@@ -10,10 +11,10 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
 "issues\n"
-"POT-Creation-Date: 2023-01-25 19:09+0000\n"
+"POT-Creation-Date: 2023-03-01 22:14+0000\n"
 "PO-Revision-Date: 2023-02-23 05:49+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -363,16 +364,3 @@ msgstr "Kopyalamayı Başlat"
 #: src/gmw-probe.c:471
 msgid "Random seed for predictability"
 msgstr "Tahmin edilebilirlik için rastgele parçacık"
-
-#~| msgid "MultiWriter"
-#~ msgid "org.gnome.MultiWriter"
-#~ msgstr "org.gnome.MultiWriter"
-
-#~ msgid "Import ISO file…"
-#~ msgstr "ISO dosyasını içe aktar…"
-
-#~ msgid "_About"
-#~ msgstr "_Hakkında"
-
-#~ msgid "_Quit"
-#~ msgstr "_Çıkış"
