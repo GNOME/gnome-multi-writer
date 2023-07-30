@@ -4,16 +4,16 @@
 #
 # Translators:
 # Olivier Banus <olivier@banuscorp.eu>, 2015
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2023
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
-"issues\n"
-"POT-Creation-Date: 2020-07-03 05:49+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/issues\n"
+"POT-Creation-Date: 2023-03-01 22:14+0000\n"
 "PO-Revision-Date: 2023-01-29 16:04+0100\n"
-"Last-Translator: Richard Hughes <richard@hughsie.com>\n"
-"Language-Team: Catalan (http://www.transifex.com/projects/p/gnome-multi-"
-"writer/language/ca/)\n"
+"Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
+"Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,15 +43,18 @@ msgid ""
 "at once. Supported drive sizes are between 1GB and 32GB."
 msgstr ""
 "GNOME MultiWriter es pot utilitzar per escriure un fitxer ISO a múltiples "
-"dispositius USB alhora. Les mides d’unitats admeses són d’entre 1GB i 32GB."
+"dispositius USB alhora. Les mides d'unitats admeses són d'entre 1GB i 32GB."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
 msgid ""
-"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
-"code sprint or to create hundreds of LiveUSB drives for a trade show."
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a"
+" code sprint or to create hundreds of LiveUSB drives for a trade show."
 msgstr ""
+"MultiWriter pot ser útil per a proves de qualitat, per a crear una imatge de GNOME "
+"Live per a una marató de codi o per a crear centenars d'unitats LiveUSB per a "
+"una fira de mostres."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
@@ -60,30 +63,31 @@ msgid ""
 "for most storage devices. There are two ways to write more devices in "
 "parallel:"
 msgstr ""
-"Escriure més de 10 dispositius simultàniament pot saturar fàcilment el bus "
-"USB per a la majoria de dispositius d’emmagatzematge. Hi ha dues maneres "
-"d’escriure més dispositius en paral·lel:"
+"Escriure a més de 10 dispositius simultàniament pot saturar fàcilment el bus "
+"USB per a la majoria de dispositius d'emmagatzematge. Hi ha dues maneres "
+"d'escriure a més dispositius en paral·lel:"
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
 msgstr ""
-"Utilitzeu els ports d’USB 3.0, encara que els dispositius d’emmagatzematge "
+"Utilitzeu ports USB 3.0, encara que els dispositius d'emmagatzematge "
 "siguin USB 2.0"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
 msgid "Install another USB 2.0 PCIe root hub"
-msgstr ""
+msgstr "Instal·leu un altre USB 2.0 PCIe root hub"
 
-#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the
+#. name
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr ""
-"MultiWriter va ser escrit originalment com a part del projecte ColorHug però "
-"es va separar com una aplicació independent el 2015."
+"MultiWriter va ser escrit originalment com a part del projecte ColorHug però"
+" es va separar com una aplicació independent el 2015."
 
 #. TRANSLATORS: the 1st screenshot caption
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
@@ -103,55 +107,57 @@ msgstr "Tots els dispositius han estat escrits"
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
 #: data/org.gnome.MultiWriter.desktop.in:12
 msgid "Image;Writer;ISO;USB;"
-msgstr "Imatge;Writer;ISO;USB;"
+msgstr "Imatge;Gravador;ISO;USB;"
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:6
 msgid "The filename to write to the USB disks"
-msgstr "Nom del fitxer per escriure en els dispositius USB"
+msgstr "Nom del fitxer a escriure en els dispositius USB"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:8
 msgid "The filename of the ISO image to write to the connected USB disks."
 msgstr ""
-"Nom del fitxer de la imatge ISO per escriure en els dispositius USB "
+"Nom del fitxer de la imatge ISO a escriure en els dispositius USB "
 "connectats."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:13
 msgid "The maximum number of threads to use"
-msgstr "Nombre màxim de subprocessos per utilitzar"
+msgstr "Nombre màxim de subprocessos a utilitzar"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:15
 msgid "The maximum number of parallel threads to use when copying data."
-msgstr "Nombre màxim subprocessos per utilitzar en copiar dades."
+msgstr "Nombre màxim subprocessos a utilitzar en copiar dades."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:20
 msgid "Completely blank drive when writing"
-msgstr ""
+msgstr "Unitat completament buida en escriure"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:22
 msgid "Write the ISO to the drive and then blank the remainder of the drive."
-msgstr ""
+msgstr "Escriu l'ISO a la unitat i després esborra la resta de la unitat."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:27
 msgid "Verify the ISO image was written correctly"
-msgstr ""
+msgstr "Verifica que la imatge ISO s'ha escrit correctament"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:29
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
 msgstr ""
+"Llegiu i verifiqueu la imatge ISO de cada dispositiu després de completar "
+"l'escriptura."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:34
 msgid "Inspect the device before writing images"
-msgstr ""
+msgstr "Inspecciona el dispositiu abans d'escriure imatges"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:36
@@ -159,18 +165,20 @@ msgid ""
 "Inspect the device to verify the reported device size is the actual media "
 "size."
 msgstr ""
+"Inspecciona el dispositiu per verificar que la mida del dispositiu reportat "
+"és la mida real del suport."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:41
 msgid "Show a warning before writing to a drive"
-msgstr "Mostra una advertència abans d’escriure una unitat"
+msgstr "Mostra una advertència abans d'escriure a una unitat"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:43
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
-"Mostra un diàleg d’avís confirmant que el contingut del dispositiu serà "
+"Mostra un diàleg d'avís confirmant que el contingut del dispositiu serà "
 "suprimit."
 
 #: data/org.gnome.MultiWriter.policy.in:17
@@ -192,25 +200,25 @@ msgstr "Escrit correctament"
 #: src/gmw-device.c:219
 #, c-format
 msgid "Writing at %.1f MB/s…"
-msgstr "S’està escrivint a %.1f MB/s…"
+msgstr "S'està escrivint a %.1f MB/s…"
 
 #. TRANSLATORS: we're writing the image to the USB device
 #: src/gmw-device.c:223
 msgid "Writing…"
-msgstr "S’està escrivint…"
+msgstr "S'està escrivint…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
 #: src/gmw-device.c:232
 #, c-format
 msgid "Verifying at %.1f MB/s…"
-msgstr "S’està verificant a %.1f MB/s…"
+msgstr "S'està verificant a %.1f MB/s…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
 #: src/gmw-device.c:237
 msgid "Verifying…"
-msgstr "S’està verificant…"
+msgstr "S'està verificant…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
 #: src/gmw-device.c:294
@@ -220,7 +228,7 @@ msgstr "Memòria USB"
 #. TRANSLATORS: window title renaming labels
 #: src/gmw-main.c:263
 msgid "New hub label"
-msgstr ""
+msgstr "Etiqueta nova del concentrador"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
@@ -299,6 +307,8 @@ msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
 msgstr ""
+"Alguns dels continguts actuals de les unitats encara es poden trobar "
+"utilitzant eines forenses fins i tot després de copiar."
 
 #. TRANSLATORS: button text for the warning dialog
 #: src/gmw-main.c:1209
@@ -313,30 +323,30 @@ msgstr "Quant a GNOME MultiWriter"
 #. TRANSLATORS: you can put your name here :)
 #: src/gmw-main.c:1251
 msgid "translator-credits"
-msgstr "Crèdits de traducció"
+msgstr "Jordi Mas i Hernàndez <jmas@softcatala.org>"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
 #: src/gmw-main.c:1298
 msgid "Verify"
-msgstr ""
+msgstr "Verifica"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
 #: src/gmw-main.c:1304
 msgid "Wipe"
-msgstr ""
+msgstr "Esborrat"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
 #: src/gmw-main.c:1310
 msgid "Probe"
-msgstr ""
+msgstr "Sonda"
 
 #. TRANSLATORS: command line option
 #: src/gmw-main.c:1665
 msgid "Allow renaming the labels on hubs"
-msgstr ""
+msgstr "Permet canviar el nom de les etiquetes als hubs"
 
 #. TRANSLATORS: command line option
 #: src/gmw-main.c:1668 src/gmw-probe.c:468
@@ -356,13 +366,6 @@ msgstr "Comença a copiar"
 #. TRANSLATORS: command line option
 #: src/gmw-probe.c:471
 msgid "Random seed for predictability"
-msgstr ""
+msgstr "Llavor aleatòria per a la previsibilitat"
 
-#~ msgid "Import ISO file…"
-#~ msgstr "Importar fitxer ISO ..."
 
-#~ msgid "_About"
-#~ msgstr "_Quant a"
-
-#~ msgid "_Quit"
-#~ msgstr "_Tanca"
