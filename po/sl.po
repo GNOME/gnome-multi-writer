@@ -7,11 +7,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"multi-writer&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-28 20:03+0000\n"
-"PO-Revision-Date: 2015-02-28 21:50+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues\n"
+"POT-Creation-Date: 2022-09-28 21:09+0000\n"
+"PO-Revision-Date: 2024-04-07 18:58+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
@@ -20,47 +20,25 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.2.1\n"
 
-#. TRANSLATORS: Application window title
 #. TRANSLATORS: the application name
 #. set the title
-#: ../data/gmw-main.ui.h:2
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:2
-#: ../data/org.gnome.MultiWriter.desktop.in.h:1 ../src/gmw-main.c:855
+#. TRANSLATORS: Application window title
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:772
+#: src/gmw-main.ui:98
 msgid "MultiWriter"
 msgstr ""
 
-#. TRANSLATORS: button to start the copy
-#: ../data/gmw-main.ui.h:4
-#, fuzzy
-msgid "Start Copying"
-msgstr "Kopiranje DVD nosilca"
-
-#. TRANSLATORS: app menu item for the file chooser
-#: ../data/gmw-menus.ui.h:2
-#, fuzzy
-msgid "Import ISO file…"
-msgstr "Dodaj _izvorno datoteko ..."
-
-#. TRANSLATORS: app menu item for the About UI
-#: ../data/gmw-menus.ui.h:4
-msgid "_About"
-msgstr "_O programu"
-
-#. TRANSLATORS: app menu item for Quit
-#: ../data/gmw-menus.ui.h:6
-msgid "_Quit"
-msgstr "_Končaj"
-
 #. TRANSLATORS: one-line description for the app
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:4
-#: ../data/org.gnome.MultiWriter.desktop.in.h:2 ../src/gmw-main.c:1380
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
+#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1246
 msgid "Write an ISO file to multiple USB devices at once"
-msgstr ""
+msgstr "Zapišite datoteko ISO na več napravah USB hkrati"
 
 #. TRANSLATORS: AppData description marketing paragraph
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:6
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:13
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Supported drive sizes are between 1GB and 32GB."
@@ -68,14 +46,14 @@ msgstr ""
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:9
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
 msgid ""
 "MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
 "code sprint or to create hundreds of LiveUSB drives for a trade show."
 msgstr ""
 
 #. TRANSLATORS: saturate as in the throughput can get no more
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:11
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
 msgid ""
 "Writing a more than 10 devices simultaneously can easy saturate the USB bus "
 "for most storage devices. There are two ways to write more devices in "
@@ -83,117 +61,115 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:13
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
 msgstr ""
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:15
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
 msgid "Install another USB 2.0 PCIe root hub"
 msgstr ""
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:17
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr ""
 
 #. TRANSLATORS: the 1st screenshot caption
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:19
-#, fuzzy
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
 msgid "Initial screen for the application"
-msgstr "Privzeta koordinata X programa."
+msgstr "Začetni zaslon za program"
 
 #. TRANSLATORS: the 2nd screenshot caption
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:21
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:52
 #, fuzzy
 msgid "Writing and verifying images"
 msgstr "Prebrskaj in zavrti slike"
 
 #. TRANSLATORS: the 3rd screenshot caption
-#: ../data/appdata/org.gnome.MultiWriter.appdata.xml.in.h:23
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:57
 #, fuzzy
 msgid "All devices have been written"
 msgstr "Naprave še niso preučene"
 
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: data/org.gnome.MultiWriter.desktop.in:12
+#, fuzzy
+msgid "Image;Writer;ISO;USB;"
+msgstr "image;zapisovalnik;ISO;USB;"
+
 #. TRANSLATORS: schema summary
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:2
+#: data/org.gnome.MultiWriter.gschema.xml:6
 msgid "The filename to write to the USB disks"
 msgstr ""
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:4
+#: data/org.gnome.MultiWriter.gschema.xml:8
 msgid "The filename of the ISO image to write to the connected USB disks."
 msgstr ""
 
 #. TRANSLATORS: schema summary
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:6
+#: data/org.gnome.MultiWriter.gschema.xml:13
 #, fuzzy
 msgid "The maximum number of threads to use"
 msgstr "Največje število vozlov za dodelitev"
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:8
+#: data/org.gnome.MultiWriter.gschema.xml:15
 msgid "The maximum number of parallel threads to use when copying data."
 msgstr ""
 
 #. TRANSLATORS: schema summary
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:10
+#: data/org.gnome.MultiWriter.gschema.xml:20
 msgid "Completely blank drive when writing"
 msgstr ""
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:12
+#: data/org.gnome.MultiWriter.gschema.xml:22
 msgid "Write the ISO to the drive and then blank the remainder of the drive."
 msgstr ""
 
 #. TRANSLATORS: schema summary
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:14
+#: data/org.gnome.MultiWriter.gschema.xml:27
 msgid "Verify the ISO image was written correctly"
 msgstr ""
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:16
+#: data/org.gnome.MultiWriter.gschema.xml:29
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
 msgstr ""
 
 #. TRANSLATORS: schema summary
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:18
+#: data/org.gnome.MultiWriter.gschema.xml:34
 msgid "Inspect the device before writing images"
 msgstr ""
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:20
+#: data/org.gnome.MultiWriter.gschema.xml:36
 msgid ""
 "Inspect the device to verify the reported device size is the actual media "
 "size."
 msgstr ""
 
 #. TRANSLATORS: schema summary
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:22
+#: data/org.gnome.MultiWriter.gschema.xml:41
 msgid "Show a warning before writing to a drive"
-msgstr ""
+msgstr "Pokaži opozorilo pred pisanjem na pogon"
 
 #. TRANSLATORS: schema description
-#: ../data/org.gnome.MultiWriter.gschema.xml.h:24
+#: data/org.gnome.MultiWriter.gschema.xml:43
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
 
-#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
-#: ../data/org.gnome.MultiWriter.desktop.in.h:4
-#, fuzzy
-msgid "Image;Writer;ISO;USB;"
-msgstr "Prejem programa za zapis odtisa na USB nosilec"
-
-#: ../data/org.gnome.MultiWriter.policy.in.h:1
-#, fuzzy
+#: data/org.gnome.MultiWriter.policy.in:17
 msgid "Check the device"
-msgstr "Podpora napravam"
+msgstr "Preveri napravo"
 
-#: ../data/org.gnome.MultiWriter.policy.in.h:2
+#: data/org.gnome.MultiWriter.policy.in:18
 #, fuzzy
 msgid "Authentication is required to probe the device"
 msgstr ""
@@ -202,44 +178,44 @@ msgstr ""
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: ../src/gmw-device.c:294
+#: src/gmw-device.c:211
 #, fuzzy
 msgid "Written successfully"
 msgstr "Slika je uspešno zapisana v %1"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: ../src/gmw-device.c:302
+#: src/gmw-device.c:219
 #, c-format
 msgid "Writing at %.1f MB/s…"
-msgstr ""
+msgstr "Pisanje pri %.1f MB/s ..."
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: ../src/gmw-device.c:306
+#: src/gmw-device.c:223
 msgid "Writing…"
 msgstr "Poteka zapisovanje ..."
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: ../src/gmw-device.c:315
+#: src/gmw-device.c:232
 #, c-format
 msgid "Verifying at %.1f MB/s…"
-msgstr ""
+msgstr "Preverjanje pri %.1f MB/s ..."
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: ../src/gmw-device.c:320
+#: src/gmw-device.c:237
 msgid "Verifying…"
 msgstr "Poteka preverjanje ..."
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: ../src/gmw-device.c:396
+#: src/gmw-device.c:294
 #, fuzzy
 msgid "USB Flash Drive"
-msgstr "Za zapis odtisa na pogon USB:"
+msgstr "Pomnilniški ključek USB"
 
 #. TRANSLATORS: window title renaming labels
-#: ../src/gmw-main.c:317
+#: src/gmw-main.c:263
 #, fuzzy
 msgid "New hub label"
 msgstr "Nova nalepka ali vizitka"
@@ -247,138 +223,139 @@ msgstr "Nova nalepka ali vizitka"
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: ../src/gmw-main.c:487 ../src/gmw-main.c:1377 ../src/gmw-main.c:1833
+#: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
 #, fuzzy
 msgid "GNOME MultiWriter"
-msgstr "GNOME Pasjansa"
+msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: ../src/gmw-main.c:489
-#, fuzzy
+#: src/gmw-main.c:420
 msgid "Image written successfully"
-msgstr "Slika je uspešno zapisana v %1"
+msgstr "Slika je uspešno zapisana"
 
 #. TRANSLATORS: copy aborted
-#: ../src/gmw-main.c:598 ../src/gmw-main.c:638 ../src/gmw-main.c:744
-#: ../src/gmw-main.c:779
+#: src/gmw-main.c:523 src/gmw-main.c:563 src/gmw-main.c:666 src/gmw-main.c:701
 msgid "Cancelled"
 msgstr "Preklicano"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: ../src/gmw-main.c:1020 ../src/gmw-main.c:1034
+#: src/gmw-main.c:919 src/gmw-main.c:933
 msgid "Failed to open"
 msgstr "Ni mogoče odpreti"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: ../src/gmw-main.c:1054
-#, fuzzy
+#: src/gmw-main.c:950
 msgid "Choose the file to write"
-msgstr "Ni mogoče zapisati datoteke `%s' %s"
+msgstr "Izberite datoteko, ki jo želite zapisati"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:1058
+#. TRANSLATORS: button to cancel a copy process
+#: src/gmw-main.c:954 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "Prekliči"
 
 #. TRANSLATORS: button title
-#: ../src/gmw-main.c:1060
+#: src/gmw-main.c:956
 msgid "Import"
 msgstr "Uvozi"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: ../src/gmw-main.c:1064
-#, fuzzy
+#: src/gmw-main.c:960
 msgid "ISO files"
-msgstr "Besedilne datoteke"
+msgstr "Datoteke ISO"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: ../src/gmw-main.c:1231 ../src/gmw-main.c:1244
-#, fuzzy
+#: src/gmw-main.c:1104 src/gmw-main.c:1123
 msgid "Failed to copy"
-msgstr "Kopiranje profila je spodletelo"
+msgstr "Kopiranje je spodletelo"
 
 #. TRANSLATORS: the inhibit reason
-#: ../src/gmw-main.c:1262
-#, fuzzy
+#: src/gmw-main.c:1140
 msgid "Writing ISO to devices"
-msgstr "Prišlo je do napake med pisanjem na %s."
+msgstr "Pisanje ISO v naprave"
 
 #. TRANSLATORS: window title for the warning dialog
-#: ../src/gmw-main.c:1315
-#, fuzzy
+#: src/gmw-main.c:1187
 msgid "Write to all disks?"
-msgstr "_Vse premakni v smeti"
+msgstr "Ali želite pisati na vse diske?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: ../src/gmw-main.c:1320
-#, fuzzy
+#: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
-msgstr "Vsi podatki na nosilcu bodo nepovratno izgubljeni."
+msgstr "Vsi podatki na pogonih bodo izbrisani."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: ../src/gmw-main.c:1325
+#: src/gmw-main.c:1197
 msgid "The ISO file is smaller than the disk capacity."
-msgstr ""
+msgstr "Datoteka ISO je manjša od zmogljivosti diska."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: ../src/gmw-main.c:1330
+#: src/gmw-main.c:1202
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
 msgstr ""
 
 #. TRANSLATORS: button text for the warning dialog
-#: ../src/gmw-main.c:1337
-#, fuzzy
+#: src/gmw-main.c:1209
 msgid "I Understand"
-msgstr "Ni razumne vrste `%s'\n"
+msgstr "Razumem"
 
 #. TRANSLATORS: the title of the about window
-#: ../src/gmw-main.c:1375
+#: src/gmw-main.c:1241
 #, fuzzy
 msgid "About GNOME MultiWriter"
-msgstr "O programu GNOME Commander"
+msgstr "O programu GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
-#: ../src/gmw-main.c:1385
+#: src/gmw-main.c:1251
 msgid "translator-credits"
 msgstr "Matej Urbančič <matej.u@svn.gnome.org>"
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: ../src/gmw-main.c:1438
-#, fuzzy
+#: src/gmw-main.c:1298
 msgid "Verify"
-msgstr "Prostorninski pretok"
+msgstr "Preveri"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: ../src/gmw-main.c:1444
+#: src/gmw-main.c:1304
 msgid "Wipe"
 msgstr "Varno izbriši"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
-#: ../src/gmw-main.c:1450
+#: src/gmw-main.c:1310
 msgid "Probe"
 msgstr ""
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1817
+#: src/gmw-main.c:1665
 msgid "Allow renaming the labels on hubs"
 msgstr ""
 
 #. TRANSLATORS: command line option
-#: ../src/gmw-main.c:1820 ../src/gmw-probe.c:535
+#: src/gmw-main.c:1668 src/gmw-probe.c:468
 #, fuzzy
 msgid "Show extra debugging information"
 msgstr "Pokaži dodatne podrobnosti razhroščevanja"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: ../src/gmw-main.c:1839
+#: src/gmw-main.c:1686
 #, fuzzy
 msgid "Failed to parse command line options"
 msgstr "Ni mogoče razčleniti možnosti ukazne vrstice: %s\n"
+
+#. TRANSLATORS: button to start the copy
+#: src/gmw-main.ui:102
+msgid "Start Copying"
+msgstr "Začni kopirati"
+
+#. TRANSLATORS: command line option
+#: src/gmw-probe.c:471
+msgid "Random seed for predictability"
+msgstr ""
