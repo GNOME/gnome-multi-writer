@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
-"issues\n"
-"POT-Creation-Date: 2024-04-07 16:59+0000\n"
-"PO-Revision-Date: 2024-04-28 00:28+0200\n"
+"issues/\n"
+"POT-Creation-Date: 2024-04-27 22:29+0000\n"
+"PO-Revision-Date: 2024-04-28 08:44+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -28,7 +28,6 @@ msgstr ""
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
 #: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:772
 #: src/gmw-main.ui:98
-#, fuzzy
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
@@ -40,59 +39,54 @@ msgstr "Zapišite datoteko ISO na več napravah USB hkrati"
 
 #. TRANSLATORS: AppData description marketing paragraph
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:13
-#, fuzzy
 msgid ""
 "GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
 "at once. Supported drive sizes are between 1GB and 32GB."
 msgstr ""
-"GNOME MultiWriter se lahko uporablja za pisanje datoteke ISO na več naprav "
+"MultiWriter GNOME se lahko uporablja za pisanje datoteke ISO na več naprav "
 "USB hkrati. Podprte velikosti pogonov so med 1 GB in 32 GB."
 
 #. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
 #. GNOME refers to the desktop environment
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
-#, fuzzy
 msgid ""
 "MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
 "code sprint or to create hundreds of LiveUSB drives for a trade show."
 msgstr ""
-"MultiWriter je lahko uporaben za testiranje kakovosti, za ustvarjanje slike "
-"GNOME Live za sprint kode ali za ustvarjanje na stotine pogonov LiveUSB za "
-"sejem."
+"MultiWriter je lahko uporaben za preizkušanje kakovosti, za ustvarjanje "
+"slike GNOME Live za kodni sprint ali za ustvarjanje na stotine pogonov "
+"LiveUSB za sejme."
 
 #. TRANSLATORS: saturate as in the throughput can get no more
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
-#, fuzzy
 msgid ""
 "Writing a more than 10 devices simultaneously can easy saturate the USB bus "
 "for most storage devices. There are two ways to write more devices in "
 "parallel:"
 msgstr ""
-"Pisanje več kot 10 naprav hkrati lahko enostavno nasiči vodilo USB za večino "
-"naprav za shranjevanje. Več naprav lahko napišete na dva načina vzporedno:"
+"Pisanje na več kot 10 naprav hkrati lahko enostavno zasiči vodilo USB za "
+"večino naprav za hrambo. Za pisanje na več naprav hkrati obstajata dva "
+"načina:"
 
 #. TRANSLATORS: storage devices refers to the things we're writing to
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
-#, fuzzy
 msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
 msgstr ""
 "Uporabljajte zvezdišča USB 3.0, tudi če so naprave za shranjevanje USB 2.0"
 
 #. TRANSLATORS: PCIe is the data bus, don't translate please
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
-#, fuzzy
 msgid "Install another USB 2.0 PCIe root hub"
 msgstr "Namestite drugo korensko zvezdišče USB 2.0 PCIe"
 
 #. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
-#, fuzzy
 msgid ""
 "MultiWriter was originally written as part of the ColorHug project but was "
 "split off as an independent application in 2015."
 msgstr ""
 "MultiWriter je bil prvotno napisan kot del projekta ColorHug, vendar je bil "
-"leta 2015 ločen kot samostojna aplikacija."
+"leta 2015 ločen kot samostojen program."
 
 #. TRANSLATORS: the 1st screenshot caption
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
@@ -136,7 +130,6 @@ msgstr "Največje število vzporednih niti za kopiranje podatkov."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:20
-#, fuzzy
 msgid "Completely blank drive when writing"
 msgstr "Popolnoma prazen pogon pri pisanju"
 
@@ -178,7 +171,6 @@ msgstr "Pokaži opozorilo pred pisanjem na pogon"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:43
-#, fuzzy
 msgid ""
 "Show a warning dialog confirming that the device contents are to be erased."
 msgstr ""
@@ -190,11 +182,8 @@ msgid "Check the device"
 msgstr "Preveri napravo"
 
 #: data/org.gnome.MultiWriter.policy.in:18
-#, fuzzy
 msgid "Authentication is required to probe the device"
-msgstr ""
-"Za ustvarjanje naprave, s katero lahko je mogoče barvno upravljanje, je "
-"zahtevana overitev"
+msgstr "Za sondiranje naprave je potrebno preverjanje pristnosti"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
@@ -234,15 +223,13 @@ msgstr "Pomnilniški ključek USB"
 
 #. TRANSLATORS: window title renaming labels
 #: src/gmw-main.c:263
-#, fuzzy
 msgid "New hub label"
-msgstr "Nova nalepka ali vizitka"
+msgstr "Nova oznaka zvezdišča"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
 #: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
-#, fuzzy
 msgid "GNOME MultiWriter"
 msgstr "MultiWriter GNOME"
 
@@ -312,7 +299,6 @@ msgstr "Datoteka ISO je manjša od zmogljivosti diska."
 
 #. TRANSLATORS: this could leave your personal files on the drive
 #: src/gmw-main.c:1202
-#, fuzzy
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -327,7 +313,6 @@ msgstr "Razumem"
 
 #. TRANSLATORS: the title of the about window
 #: src/gmw-main.c:1241
-#, fuzzy
 msgid "About GNOME MultiWriter"
 msgstr "O programu MultiWriter GNOME"
 
@@ -351,13 +336,11 @@ msgstr "Varno izbriši"
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
 #: src/gmw-main.c:1310
-#, fuzzy
 msgid "Probe"
-msgstr "Sondo"
+msgstr "Sondiraj"
 
 #. TRANSLATORS: command line option
 #: src/gmw-main.c:1665
-#, fuzzy
 msgid "Allow renaming the labels on hubs"
 msgstr "Dovoli preimenovanje oznak v zvezdiščih"
 
