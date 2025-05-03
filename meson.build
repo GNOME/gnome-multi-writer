@@ -124,13 +124,12 @@ if meson.version().version_compare('<0.41.0')
   endif
 endif
 
-appstream_util = find_program('appstream-util', required : false)
-if appstream_util.found()
+appstreamcli = find_program('appstreamcli', required : false)
+if appstreamcli.found()
   custom_target('NEWS',
     output : 'NEWS',
     input : 'data/appdata/org.gnome.MultiWriter.appdata.xml.in',
-    command : [appstream_util, 'appdata-to-news', '@INPUT@'],
-    capture : true
+    command : [appstreamcli, 'metainfo-to-news', '@INPUT@', '@OUTPUT@'],
   )
 endif
 
