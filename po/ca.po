@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/issues\n"
 "POT-Creation-Date: 2023-03-01 22:14+0000\n"
-"PO-Revision-Date: 2023-01-29 16:04+0100\n"
+"PO-Revision-Date: 2025-09-15 16:04+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -292,7 +292,7 @@ msgstr "Escriure tots els discs?"
 #. TRANSLATORS: check that we can nuke everything from all disks
 #: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
-msgstr "Totes les dades a les unitats seràn suprimides."
+msgstr "Totes les dades a les unitats seran suprimides."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
@@ -341,7 +341,7 @@ msgstr "Esborrat"
 #. * is actually the size it says it is
 #: src/gmw-main.c:1310
 msgid "Probe"
-msgstr "Sonda"
+msgstr "Comprova"
 
 #. TRANSLATORS: command line option
 #: src/gmw-main.c:1665
