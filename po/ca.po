@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/issues\n"
 "POT-Creation-Date: 2023-03-01 22:14+0000\n"
-"PO-Revision-Date: 2025-09-15 16:04+0100\n"
+"PO-Revision-Date: 2026-02-16 16:04+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -287,7 +287,7 @@ msgstr "Escrivint ISO als dispositius"
 #. TRANSLATORS: window title for the warning dialog
 #: src/gmw-main.c:1187
 msgid "Write to all disks?"
-msgstr "Escriure tots els discs?"
+msgstr "Escriure a tots els discs?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
 #: src/gmw-main.c:1192
