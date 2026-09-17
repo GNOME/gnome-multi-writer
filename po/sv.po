@@ -1,20 +1,20 @@
 # Swedish translation for gnome multi writer.
-# Copyright © 2015-2019 gnome-multi-writer's COPYRIGHT HOLDER
+# Copyright © 2015-2026 gnome-multi-writer's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-multi-writer package.
 #
 # Translators:
 # Andreas Henriksson <andreas+github@fatal.se>, 2015
 # Daniel Sandman <revoltism@gmail.com>, 2015
 # Josef Andersson <josef.andersson@fripost.org>, 2015.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2019.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2019, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-multi-writer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
-"issues\n"
-"POT-Creation-Date: 2019-11-19 12:53+0000\n"
-"PO-Revision-Date: 2019-12-02 21:15+0100\n"
+"issues/\n"
+"POT-Creation-Date: 2025-05-03 05:04+0000\n"
+"PO-Revision-Date: 2026-09-17 23:24+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,20 +22,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 3.9\n"
 
 #. TRANSLATORS: the application name
 #. set the title
 #. TRANSLATORS: Application window title
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
-#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:786
+#: data/org.gnome.MultiWriter.desktop.in:2 src/gmw-main.c:772
 #: src/gmw-main.ui:98
 msgid "MultiWriter"
 msgstr "MultiWriter"
 
 #. TRANSLATORS: one-line description for the app
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
-#: data/org.gnome.MultiWriter.desktop.in:4 src/gmw-main.c:1260
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:1246
 msgid "Write an ISO file to multiple USB devices at once"
 msgstr "Skriv en ISO-fil till flera USB-enheter samtidigt"
 
@@ -105,7 +105,7 @@ msgid "All devices have been written"
 msgstr "Alla enheter har skrivits"
 
 #. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
-#: data/org.gnome.MultiWriter.desktop.in:12
+#: data/org.gnome.MultiWriter.desktop.in:11
 msgid "Image;Writer;ISO;USB;"
 msgstr "Avbildning;Skrivning;ISO;USB;"
 
@@ -163,8 +163,8 @@ msgid ""
 "Inspect the device to verify the reported device size is the actual media "
 "size."
 msgstr ""
-"Inspektera enheten för att verifiera att den rapporterade enheten är av det "
-"aktuella mediets storlek."
+"Inspektera enheten för att verifiera att den rapporterade enhetsstorleken är "
+"den faktiska mediastorleken."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:41
@@ -188,118 +188,118 @@ msgstr "Autentisering krävs för att undersöka enheten"
 
 #. TRANSLATORS: The image has been written and verified to
 #. * *one* device, not all
-#: src/gmw-device.c:225
+#: src/gmw-device.c:211
 msgid "Written successfully"
 msgstr "Skrivningen lyckades"
 
 #. TRANSLATORS: we're writing the image to the device
 #. * and we now know the speed
-#: src/gmw-device.c:233
+#: src/gmw-device.c:219
 #, c-format
 msgid "Writing at %.1f MB/s…"
 msgstr "Skriver i %.1f MB/s…"
 
 #. TRANSLATORS: we're writing the image to the USB device
-#: src/gmw-device.c:237
+#: src/gmw-device.c:223
 msgid "Writing…"
 msgstr "Skriver…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data and we now know the speed
-#: src/gmw-device.c:246
+#: src/gmw-device.c:232
 #, c-format
 msgid "Verifying at %.1f MB/s…"
 msgstr "Verifierar i %.1f MB/s…"
 
 #. TRANSLATORS: We're verifying the USB device contains
 #. * the correct image data
-#: src/gmw-device.c:251
+#: src/gmw-device.c:237
 msgid "Verifying…"
 msgstr "Verifierar…"
 
 #. TRANSLATORS: This is a generic no-name USB flash disk
-#: src/gmw-device.c:308
+#: src/gmw-device.c:294
 msgid "USB Flash Drive"
 msgstr "USB-flashminne"
 
 #. TRANSLATORS: window title renaming labels
-#: src/gmw-main.c:277
+#: src/gmw-main.c:263
 msgid "New hub label"
 msgstr "Ny hubbetikett"
 
 #. TRANSLATORS: the application name
 #. TRANSLATORS: the application name for the about UI
 #. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
-#: src/gmw-main.c:432 src/gmw-main.c:1257 src/gmw-main.c:1695
+#: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
 msgid "GNOME MultiWriter"
 msgstr "GNOME MultiWriter"
 
 #. TRANSLATORS: the success sound description
-#: src/gmw-main.c:434
+#: src/gmw-main.c:420
 msgid "Image written successfully"
 msgstr "Skrivning av avbildning lyckades"
 
 #. TRANSLATORS: copy aborted
-#: src/gmw-main.c:537 src/gmw-main.c:577 src/gmw-main.c:680 src/gmw-main.c:715
+#: src/gmw-main.c:523 src/gmw-main.c:563 src/gmw-main.c:666 src/gmw-main.c:701
 msgid "Cancelled"
 msgstr "Avbruten"
 
 #. TRANSLATORS: we couldn't open the ISO file the user chose
-#: src/gmw-main.c:933 src/gmw-main.c:947
+#: src/gmw-main.c:919 src/gmw-main.c:933
 msgid "Failed to open"
 msgstr "Misslyckade att öppna"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
-#: src/gmw-main.c:964
+#: src/gmw-main.c:950
 msgid "Choose the file to write"
 msgstr "Välj fil att skriva"
 
 #. TRANSLATORS: button title
 #. TRANSLATORS: button to cancel a copy process
-#: src/gmw-main.c:968 src/gmw-main.ui:115
+#: src/gmw-main.c:954 src/gmw-main.ui:115
 msgid "Cancel"
 msgstr "Avbryt"
 
 #. TRANSLATORS: button title
-#: src/gmw-main.c:970
+#: src/gmw-main.c:956
 msgid "Import"
 msgstr "Importera"
 
 #. TRANSLATORS: the file filter description, e.g. *.iso
-#: src/gmw-main.c:974
+#: src/gmw-main.c:960
 msgid "ISO files"
 msgstr "ISO-filer"
 
 #. TRANSLATORS: error dialog title:
 #. * we probably didn't authenticate
-#: src/gmw-main.c:1118 src/gmw-main.c:1137
+#: src/gmw-main.c:1104 src/gmw-main.c:1123
 msgid "Failed to copy"
 msgstr "Misslyckades att kopiera"
 
 #. TRANSLATORS: the inhibit reason
-#: src/gmw-main.c:1154
+#: src/gmw-main.c:1140
 msgid "Writing ISO to devices"
 msgstr "Skriver ISO till enheter"
 
 #. TRANSLATORS: window title for the warning dialog
-#: src/gmw-main.c:1201
+#: src/gmw-main.c:1187
 msgid "Write to all disks?"
 msgstr "Skriv till alla skivor?"
 
 #. TRANSLATORS: check that we can nuke everything from all disks
-#: src/gmw-main.c:1206
+#: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
 msgstr "All data på enheterna kommer att raderas."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
 #. * to transfer the image
-#: src/gmw-main.c:1211
+#: src/gmw-main.c:1197
 msgid "The ISO file is smaller than the disk capacity."
 msgstr "ISO-filen är mindre än skivans kapacitet."
 
 #. TRANSLATORS: this could leave your personal files on the drive
-#: src/gmw-main.c:1216
+#: src/gmw-main.c:1202
 msgid ""
 "Some of the current contents of the drives could be still found using "
 "forensic tools even after copying."
@@ -308,17 +308,17 @@ msgstr ""
 "verktyg även efter kopiering."
 
 #. TRANSLATORS: button text for the warning dialog
-#: src/gmw-main.c:1223
+#: src/gmw-main.c:1209
 msgid "I Understand"
 msgstr "Jag förstår"
 
 #. TRANSLATORS: the title of the about window
-#: src/gmw-main.c:1255
+#: src/gmw-main.c:1241
 msgid "About GNOME MultiWriter"
 msgstr "Om GNOME MultiWriter"
 
 #. TRANSLATORS: you can put your name here :)
-#: src/gmw-main.c:1265
+#: src/gmw-main.c:1251
 msgid "translator-credits"
 msgstr ""
 "Andreas Henriksson\n"
@@ -328,34 +328,34 @@ msgstr ""
 
 #. TRANSLATORS: a switch label: verify the image by
 #. * reading back the original image from the device
-#: src/gmw-main.c:1312
+#: src/gmw-main.c:1298
 msgid "Verify"
 msgstr "Verifiera"
 
 #. TRANSLATORS: a switch label: we write zeros after
 #. * the image so it erases the entire device
-#: src/gmw-main.c:1318
+#: src/gmw-main.c:1304
 msgid "Wipe"
 msgstr "Rensa"
 
 #. TRANSLATORS: a switch label: we check the device
 #. * is actually the size it says it is
-#: src/gmw-main.c:1324
+#: src/gmw-main.c:1310
 msgid "Probe"
 msgstr "Undersök"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1679
+#: src/gmw-main.c:1665
 msgid "Allow renaming the labels on hubs"
 msgstr "Tillåt namnändring av etiketter på hubbar"
 
 #. TRANSLATORS: command line option
-#: src/gmw-main.c:1682 src/gmw-probe.c:482
+#: src/gmw-main.c:1668 src/gmw-probe.c:468
 msgid "Show extra debugging information"
 msgstr "Visa extra felsökningsinformation"
 
 #. TRANSLATORS: the user has sausages for fingers
-#: src/gmw-main.c:1700
+#: src/gmw-main.c:1686
 msgid "Failed to parse command line options"
 msgstr "Misslyckades att tolka kommandoradsflaggor"
 
@@ -365,19 +365,6 @@ msgid "Start Copying"
 msgstr "Starta kopiering"
 
 #. TRANSLATORS: command line option
-#: src/gmw-probe.c:485
+#: src/gmw-probe.c:471
 msgid "Random seed for predictability"
 msgstr "Slumpfrö för förutsägbarhet"
-
-#~| msgid "MultiWriter"
-#~ msgid "org.gnome.MultiWriter"
-#~ msgstr "org.gnome.MultiWriter"
-
-#~ msgid "Import ISO file…"
-#~ msgstr "Importera ISO-fil…"
-
-#~ msgid "_About"
-#~ msgstr "_Om"
-
-#~ msgid "_Quit"
-#~ msgstr "_Avsluta"
