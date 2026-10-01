@@ -1,0 +1,360 @@
+# Norwegian Nynorsk translation for gnome-multi-writer.
+# Copyright (C) 2026 gnome-multi-writer's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-multi-writer package.
+# Roy-Magne Mo <rmo@sunnmore.net>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-multi-writer master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
+"issues/\n"
+"POT-Creation-Date: 2025-05-03 05:04+0000\n"
+"PO-Revision-Date: 2026-10-01 13:49+0200\n"
+"Last-Translator: Roy-Magne Mo <rmo@sunnmore.net>\n"
+"Language-Team: Norwegian Nynorsk <nn@li.org>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. TRANSLATORS: the application name
+#. set the title
+#. TRANSLATORS: Application window title
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:8
+#: data/org.gnome.MultiWriter.desktop.in:2 src/gmw-main.c:772
+#: src/gmw-main.ui:98
+msgid "MultiWriter"
+msgstr "MultiWriter"
+
+#. TRANSLATORS: one-line description for the app
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:10
+#: data/org.gnome.MultiWriter.desktop.in:3 src/gmw-main.c:1246
+msgid "Write an ISO file to multiple USB devices at once"
+msgstr "Skriv ei ISO-fil til fleire USB-einingar samtidig"
+
+#. TRANSLATORS: AppData description marketing paragraph
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:13
+msgid ""
+"GNOME MultiWriter can be used to write an ISO file to multiple USB devices "
+"at once. Supported drive sizes are between 1GB and 32GB."
+msgstr ""
+"GNOME MultiWriter kan brukast til å skrive ei ISO-fil til fleire USB-"
+"einingar samtidig. Støtta einingsstorleikar er mellom 1 GB og 32 GB."
+
+#. TRANSLATORS: QA refers to quality assurance, aka people testing stuff,
+#. GNOME refers to the desktop environment
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:20
+msgid ""
+"MultiWriter may be useful for QA testing, to create a GNOME Live image for a "
+"code sprint or to create hundreds of LiveUSB drives for a trade show."
+msgstr ""
+"MultiWriter kan vere nyttig for QA-testing, til å lage GNOME Live-bilete for"
+" ein sprint eller til å lage hundrevis av LiveUSB-einingar for ei messe."
+
+#. TRANSLATORS: saturate as in the throughput can get no more
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:26
+msgid ""
+"Writing a more than 10 devices simultaneously can easy saturate the USB bus "
+"for most storage devices. There are two ways to write more devices in "
+"parallel:"
+msgstr ""
+"Å skrive til meir enn 10 einingar samtidig kan lett mette USB-bussen for dei"
+" fleste lagringseiningar. Det finst to måtar å skrive til fleire einingar "
+"parallelt:"
+
+#. TRANSLATORS: storage devices refers to the things we're writing to
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:33
+msgid "Use USB 3.0 hubs, even if the storage devices are USB 2.0"
+msgstr "Bruk USB 3.0-hubar, sjølv om lagringseiningane er USB 2.0"
+
+#. TRANSLATORS: PCIe is the data bus, don't translate please
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:35
+msgid "Install another USB 2.0 PCIe root hub"
+msgstr "Installer ein annan USB 2.0 PCIe-rot-hub"
+
+#. TRANSLATORS: the ColorHug is an open hardware product, don't translate the name
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:38
+msgid ""
+"MultiWriter was originally written as part of the ColorHug project but was "
+"split off as an independent application in 2015."
+msgstr ""
+"MultiWriter vart opphavleg skriven som del av ColorHug-prosjektet, men vart "
+"skild ut som ein sjølvstendig app i 2015."
+
+#. TRANSLATORS: the 1st screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
+msgid "Initial screen for the application"
+msgstr "Startskjerm for appen"
+
+#. TRANSLATORS: the 2nd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:52
+msgid "Writing and verifying images"
+msgstr "Skrive og stadfeste bilete"
+
+#. TRANSLATORS: the 3rd screenshot caption
+#: data/appdata/org.gnome.MultiWriter.appdata.xml.in:57
+msgid "All devices have been written"
+msgstr "Alle einingane er skrivne"
+
+#. TRANSLATORS: these are desktop keywords - remember the trailing ';' :)
+#: data/org.gnome.MultiWriter.desktop.in:11
+msgid "Image;Writer;ISO;USB;"
+msgstr "Image;Writer;Bilete;Skrivar;ISO;USB;"
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:6
+msgid "The filename to write to the USB disks"
+msgstr "Filnamnet som skal skrivast til USB-einingane"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:8
+msgid "The filename of the ISO image to write to the connected USB disks."
+msgstr ""
+"Filnamnet til ISO-biletet som skal skrivast til dei tilkopla USB-einingane."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:13
+msgid "The maximum number of threads to use"
+msgstr "Maksimumstalet på trådar som skal brukast"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:15
+msgid "The maximum number of parallel threads to use when copying data."
+msgstr ""
+"Maksimumstalet på parallelle trådar som skal brukast når data vert kopiert."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:20
+msgid "Completely blank drive when writing"
+msgstr "Tøm heile eininga ved skriving"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:22
+msgid "Write the ISO to the drive and then blank the remainder of the drive."
+msgstr "Skriv ISO-en til eininga og tøm deretter resten av eininga."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:27
+msgid "Verify the ISO image was written correctly"
+msgstr "Stadfest at ISO-biletet vart rett skrive"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:29
+msgid ""
+"Read and verify the ISO image from each device after writing is complete."
+msgstr "Les og stadfest ISO-biletet frå kvar eining når skrivinga er ferdig."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:34
+msgid "Inspect the device before writing images"
+msgstr "Inspiser eininga før du skriv bilete"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:36
+msgid ""
+"Inspect the device to verify the reported device size is the actual media "
+"size."
+msgstr ""
+"Undersøk eininga for å stadfeste at den rapporterte storleiken til eininga "
+"er den faktiske storleiken til mediet."
+
+#. TRANSLATORS: schema summary
+#: data/org.gnome.MultiWriter.gschema.xml:41
+msgid "Show a warning before writing to a drive"
+msgstr "Vis ei åtvaring før du skriv til ei eining"
+
+#. TRANSLATORS: schema description
+#: data/org.gnome.MultiWriter.gschema.xml:43
+msgid ""
+"Show a warning dialog confirming that the device contents are to be erased."
+msgstr ""
+"Vis eit åtvaringsvindauge som ber deg stadfeste at innhaldet på eininga skal"
+" slettast."
+
+#: data/org.gnome.MultiWriter.policy.in:17
+msgid "Check the device"
+msgstr "Sjekk eininga"
+
+#: data/org.gnome.MultiWriter.policy.in:18
+msgid "Authentication is required to probe the device"
+msgstr "Autentisering er påkravd for å undersøkje eininga"
+
+#. TRANSLATORS: The image has been written and verified to
+#. * *one* device, not all
+#: src/gmw-device.c:211
+msgid "Written successfully"
+msgstr "Skriven"
+
+#. TRANSLATORS: we're writing the image to the device
+#. * and we now know the speed
+#: src/gmw-device.c:219
+#, c-format
+msgid "Writing at %.1f MB/s…"
+msgstr "Skriv med %.1f MB/s …"
+
+#. TRANSLATORS: we're writing the image to the USB device
+#: src/gmw-device.c:223
+msgid "Writing…"
+msgstr "Skriv …"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data and we now know the speed
+#: src/gmw-device.c:232
+#, c-format
+msgid "Verifying at %.1f MB/s…"
+msgstr "Stadfestar %.1f MB/s …"
+
+#. TRANSLATORS: We're verifying the USB device contains
+#. * the correct image data
+#: src/gmw-device.c:237
+msgid "Verifying…"
+msgstr "Stadfestar …"
+
+#. TRANSLATORS: This is a generic no-name USB flash disk
+#: src/gmw-device.c:294
+msgid "USB Flash Drive"
+msgstr "USB-minnepinn"
+
+#. TRANSLATORS: window title renaming labels
+#: src/gmw-main.c:263
+msgid "New hub label"
+msgstr "Ny hub-etikett"
+
+#. TRANSLATORS: the application name
+#. TRANSLATORS: the application name for the about UI
+#. TRANSLATORS: A program to copy the LiveUSB image onto USB hardware
+#: src/gmw-main.c:418 src/gmw-main.c:1243 src/gmw-main.c:1681
+msgid "GNOME MultiWriter"
+msgstr "GNOME MultiWriter"
+
+#. TRANSLATORS: the success sound description
+#: src/gmw-main.c:420
+msgid "Image written successfully"
+msgstr "Biletet vart skrive med hell"
+
+#. TRANSLATORS: copy aborted
+#: src/gmw-main.c:523 src/gmw-main.c:563 src/gmw-main.c:666 src/gmw-main.c:701
+msgid "Cancelled"
+msgstr "Avbrote"
+
+#. TRANSLATORS: we couldn't open the ISO file the user chose
+#: src/gmw-main.c:919 src/gmw-main.c:933
+msgid "Failed to open"
+msgstr "Klarte ikkje opne"
+
+#. TRANSLATORS: window title for the file-chooser, file is an ISO
+#: src/gmw-main.c:950
+msgid "Choose the file to write"
+msgstr "Vel fila som skal skrivast"
+
+#. TRANSLATORS: button title
+#. TRANSLATORS: button to cancel a copy process
+#: src/gmw-main.c:954 src/gmw-main.ui:115
+msgid "Cancel"
+msgstr "Avbryt"
+
+#. TRANSLATORS: button title
+#: src/gmw-main.c:956
+msgid "Import"
+msgstr "Importer"
+
+#. TRANSLATORS: the file filter description, e.g. *.iso
+#: src/gmw-main.c:960
+msgid "ISO files"
+msgstr "ISO-filer"
+
+#. TRANSLATORS: error dialog title:
+#. * we probably didn't authenticate
+#: src/gmw-main.c:1104 src/gmw-main.c:1123
+msgid "Failed to copy"
+msgstr "Klarte ikkje kopiere"
+
+#. TRANSLATORS: the inhibit reason
+#: src/gmw-main.c:1140
+msgid "Writing ISO to devices"
+msgstr "Skriv ISO-fila til einingane"
+
+#. TRANSLATORS: window title for the warning dialog
+#: src/gmw-main.c:1187
+msgid "Write to all disks?"
+msgstr "Skriv til alle einingar?"
+
+#. TRANSLATORS: check that we can nuke everything from all disks
+#: src/gmw-main.c:1192
+msgid "All data on the drives will be deleted."
+msgstr "All data på einingane vert sletta."
+
+#. TRANSLATORS: if the image file is smaller than the disks and
+#. * we've disabled wiping the device we only write enough data
+#. * to transfer the image
+#: src/gmw-main.c:1197
+msgid "The ISO file is smaller than the disk capacity."
+msgstr "ISO-fila er mindre enn kapasiteten til eininga."
+
+#. TRANSLATORS: this could leave your personal files on the drive
+#: src/gmw-main.c:1202
+msgid ""
+"Some of the current contents of the drives could be still found using "
+"forensic tools even after copying."
+msgstr ""
+"Noko av det noverande innhaldet på einingane kan framleis finnast med "
+"etterforskingsverktøy sjølv etter kopiering."
+
+#. TRANSLATORS: button text for the warning dialog
+#: src/gmw-main.c:1209
+msgid "I Understand"
+msgstr "Eg forstår"
+
+#. TRANSLATORS: the title of the about window
+#: src/gmw-main.c:1241
+msgid "About GNOME MultiWriter"
+msgstr "Om GNOME MultiWriter"
+
+#. TRANSLATORS: you can put your name here :)
+#: src/gmw-main.c:1251
+msgid "translator-credits"
+msgstr "Roy-Magne Mo <rmo@sunnmore.net>"
+
+#. TRANSLATORS: a switch label: verify the image by
+#. * reading back the original image from the device
+#: src/gmw-main.c:1298
+msgid "Verify"
+msgstr "Stadfest"
+
+#. TRANSLATORS: a switch label: we write zeros after
+#. * the image so it erases the entire device
+#: src/gmw-main.c:1304
+msgid "Wipe"
+msgstr "Tørk ut"
+
+#. TRANSLATORS: a switch label: we check the device
+#. * is actually the size it says it is
+#: src/gmw-main.c:1310
+msgid "Probe"
+msgstr "Undersøk"
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1665
+msgid "Allow renaming the labels on hubs"
+msgstr "Tillat å endre etikettane på hubar"
+
+#. TRANSLATORS: command line option
+#: src/gmw-main.c:1668 src/gmw-probe.c:468
+msgid "Show extra debugging information"
+msgstr "Vis ekstra feilsøkingsinformasjon"
+
+#. TRANSLATORS: the user has sausages for fingers
+#: src/gmw-main.c:1686
+msgid "Failed to parse command line options"
+msgstr "Klarte ikkje tolke kommandolinjeval"
+
+#. TRANSLATORS: button to start the copy
+#: src/gmw-main.ui:102
+msgid "Start Copying"
+msgstr "Start kopieringa"
+
+#. TRANSLATORS: command line option
+#: src/gmw-probe.c:471
+msgid "Random seed for predictability"
+msgstr "Tilfeldig frø for reproduserbarheit"
