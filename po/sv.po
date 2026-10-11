@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-multi-writer/"
 "issues/\n"
 "POT-Creation-Date: 2025-05-03 05:04+0000\n"
-"PO-Revision-Date: 2026-09-17 23:24+0200\n"
+"PO-Revision-Date: 2026-10-11 21:48+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -87,12 +87,12 @@ msgid ""
 "split off as an independent application in 2015."
 msgstr ""
 "MultiWriter skrevs ursprungligen som en del av ColorHug-projektet men "
-"delades av som en separat applikation under 2015."
+"delades av som ett separat program under 2015."
 
 #. TRANSLATORS: the 1st screenshot caption
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:47
 msgid "Initial screen for the application"
-msgstr "Initial skärmbild för applikationen"
+msgstr "Initial skärmbild för programmet"
 
 #. TRANSLATORS: the 2nd screenshot caption
 #: data/appdata/org.gnome.MultiWriter.appdata.xml.in:52
@@ -117,7 +117,7 @@ msgstr "Filnamnet att skriva till USB-diskar"
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:8
 msgid "The filename of the ISO image to write to the connected USB disks."
-msgstr "Filnamnet av ISO-avbildningen att skriva till anslutna USB-diskar."
+msgstr "Filnamnet för ISO-avbildningen att skriva till anslutna USB-diskar."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:13
@@ -133,7 +133,7 @@ msgstr ""
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:20
 msgid "Completely blank drive when writing"
-msgstr "Töm enheten helt innan skrivning"
+msgstr "Töm enheten helt vid skrivning"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:22
@@ -143,14 +143,14 @@ msgstr "Skriv ISO:n till enheten och töm sedan återstoden av enheten."
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:27
 msgid "Verify the ISO image was written correctly"
-msgstr "Verifiera att ISO-avbilden blev skriven korrekt"
+msgstr "Verifiera att ISO-avbilden skrevs korrekt"
 
 #. TRANSLATORS: schema description
 #: data/org.gnome.MultiWriter.gschema.xml:29
 msgid ""
 "Read and verify the ISO image from each device after writing is complete."
 msgstr ""
-"Läs och verifiera att ISO-avbilden från varje enhet efter skrivning är klar."
+"Läs och verifiera ISO-avbilden från varje enhet efter skrivning är klar."
 
 #. TRANSLATORS: schema summary
 #: data/org.gnome.MultiWriter.gschema.xml:34
@@ -247,7 +247,7 @@ msgstr "Avbruten"
 #. TRANSLATORS: we couldn't open the ISO file the user chose
 #: src/gmw-main.c:919 src/gmw-main.c:933
 msgid "Failed to open"
-msgstr "Misslyckade att öppna"
+msgstr "Misslyckades att öppna"
 
 #. TRANSLATORS: window title for the file-chooser, file is an ISO
 #: src/gmw-main.c:950
@@ -289,7 +289,7 @@ msgstr "Skriv till alla skivor?"
 #. TRANSLATORS: check that we can nuke everything from all disks
 #: src/gmw-main.c:1192
 msgid "All data on the drives will be deleted."
-msgstr "All data på enheterna kommer att raderas."
+msgstr "Alla data på enheterna kommer att raderas."
 
 #. TRANSLATORS: if the image file is smaller than the disks and
 #. * we've disabled wiping the device we only write enough data
